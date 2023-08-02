@@ -4,39 +4,36 @@ public class Main {
 
     public static void main(String[] args) {
         //Display Functions to act as a preface to the game starting.
-        displayIntro();
+        DisplayMethods.printTextFile("src/main/textFiles/Welcome_Screen.txt");
+        DisplayMethods.displayIntro();
 
-        //Make a game loop
-            //boolean isGameOver = false;
-            //Scanner scanner = new Scanner(System.in) to be able to take user input throughout the game.
-            //while (!isGameOver){
-                //insert game logic here
-            //}
-        //gameOver function to either end game or start over
-
-
-    }
-
-    public static void displayIntro() {
-        // Display the game's title and introductory message
-        System.out.println();
-        System.out.println("Welcome to The Lost Kingdom!");
-        System.out.println("Where magic flows through the very air,a young hero stands at the crossroads of destiny.");
-        System.out.println("The legends of the Kingdom have reached their ears, and an insatiable desire to uncover its secrets burns within them.");
-        System.out.println("In this text-based RPG, you will embark on a thrilling adventure through a mysterious realm.");
-        System.out.println("Your journey will be full of puzzles, treasures, and ancient secrets waiting to be uncovered.");
-        System.out.println("Use natural language commands to interact with the world and discover the fate of the lost kingdom.");
-        System.out.println("Type 'help' at any time to see a list of available commands.");
-        System.out.println();
-        System.out.println();
-        System.out.println("Prepare yourself for an epic quest!");
-        System.out.println();
-        System.out.println("===========================================");
-        System.out.println();
-        System.out.print("Press Enter to begin your adventure...");
-
-        // Wait for the player to press Enter before continuing
+        // Game loop starts here
+        boolean isGameOver = false;
         Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+
+        while (!isGameOver) {
+            // Display the prompt to the player and read their input
+            System.out.print("> ");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            // Process the player's input and handle game actions
+            if (input.equals("quit")) {
+                // Player wants to quit, ask for confirmation
+                if (GameMethods.confirmQuit(scanner)) {
+                    // Player confirmed to quit, set isGameOver to true to end the game loop
+                    isGameOver = true;
+                } else {
+                    // Player did not confirm, continue the game loop
+                    System.out.println("Resuming game...");
+                }
+            } else {
+                // Handle other game actions based on the input
+                // For example, process movement, interactions, etc.
+                System.out.println("You entered: " + input);
+            }
+        }
+
+        // Game loop ends here
+        System.out.println("Thank you for playing The Lost Kingdom of Eldoria!");
     }
 }
