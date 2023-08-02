@@ -1,20 +1,14 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 
 public class GameMethods {
 
-    public static void printtextFile(String fileName) {
-        // Prints the opening splash screen
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.out.println("An I/O Error Occurred");
-        }
+    public static boolean confirmQuit(Scanner scanner) {
+        // Prompt the player for confirmation
+        System.out.print("Are you sure you want to quit? (yes/no): ");
+        String input = scanner.nextLine().trim().toLowerCase();
+        // Check if the player's input is "yes" (case-insensitive)
+        return input.equals("yes");
     }
 
 }

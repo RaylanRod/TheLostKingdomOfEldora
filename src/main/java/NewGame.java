@@ -5,14 +5,14 @@ import java.util.Scanner;
 class NewGame {
     private boolean isPlaying;
     private final Scanner scanner = new Scanner(System.in); // read input from console
-    GameMethods textFiles = new GameMethods();
+    DisplayMethods textFiles = new DisplayMethods();
     private final HashMap<String, Location> locations;
     private Location playerLocation;
 
 
     public NewGame() {
         isPlaying = false;
-        textFiles = new GameMethods(); // Initialize GameMethods to read item data from JSON
+        textFiles = new DisplayMethods(); // Initialize GameMethods to read item data from JSON
         locations = initializeLocations(); // Create and set up all the locations in the game
         playerLocation = locations.get("Starting Location"); // Set the player's starting location
     }
@@ -21,7 +21,7 @@ class NewGame {
         isPlaying = true;
         clearScreen();
         // function to call the welcome screen
-        textFiles.printtextFile("src/main/textFiles/Welcome_Screen.txt");
+        textFiles.printTextFile("src/main/textFiles/Welcome_Screen.txt");
         displayLocation();
     }
     private HashMap<String, Location> initializeLocations() {
