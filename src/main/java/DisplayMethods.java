@@ -20,11 +20,6 @@ public class DisplayMethods {
         System.out.println();
         System.out.println("===========================================");
         System.out.println();
-        System.out.print("Press Enter to begin your adventure...");
-
-        // Wait for the player to press Enter before continuing
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
     }
 
     public static void printTextFile(String fileName) {
@@ -36,6 +31,18 @@ public class DisplayMethods {
             }
         } catch (IOException e) {
             System.out.println("An I/O Error Occurred");
+        }
+
+        System.out.print("Press Enter to begin your adventure...");
+        // Wait for the player to press Enter before continuing
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+    public static void clearScreen() {
+        // Print 50 empty lines to simulate screen clearing
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
         }
     }
 }
