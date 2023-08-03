@@ -1,22 +1,51 @@
 import java.util.Scanner;
+import java.io.IOException;
+
 
 public class Main {
 
     public static void main(String[] args) {
+        // Load JSON files
+        try {
+            Rooms.loadRoomsFromJSON();
+            Items.loadItemsFromJSON();
+        } catch (IOException e) {
+            System.out.println("Error loading game data: " + e.getMessage());
+            return;
+        }
+
         //Display Functions to act as a preface to the game starting.
         DisplayMethods.printTextFile("src/main/textFiles/Welcome_Screen.txt");
         DisplayMethods.displayIntro();
 
         // Game loop starts here
         boolean isGameOver = false;
+        int currentRoomId = 1; // Start in room ID 1
         Scanner scanner = new Scanner(System.in);
 
         // Ask the player if they want to start a new game
         if (GameMethods.startNewGame(scanner)) {
             DisplayMethods.clearScreen();
             while (!isGameOver) {
+                // Get the current room based on the currentRoomId
+                Room currentRoom = Rooms.getRoomById(currentRoomId);
+
+                // Display the room name and description
+                System.out.println("=== " + currentRoom.getName() + " ===");
+                System.out.println(currentRoom.getDescription());
+
+                // Display the item name if there is one in the room
+                if (!currentRoom.getItems().isEmpty()) {
+                    System.out.print("Items in the room: ");
+                    for (Integer itemId : currentRoom.getItems()) {
+                        String itemName = Items.getItemById(itemId).getName();
+                        System.out.print(itemName + " ");
+                    }
+                    System.out.println();
+                }
+
                 // Display the prompt to the player and read their input
-                System.out.print("> ");
+                System.out.print("What would you like to do? > ");
                 String input = scanner.nextLine().trim().toLowerCase();
 
                 // Process the player's input and handle game actions

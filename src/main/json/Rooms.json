@@ -1,0 +1,144 @@
+{
+  "rooms": [
+    {
+      "room_id": 1,
+      "name": "The Forgotten Courtyard",
+      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom. Now, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\n",
+      "exits": {
+        "north": 2,
+        "east": 3,
+        "south": null,
+        "west": 4,
+        "up": null,
+        "down": null
+      },
+      "items": []
+    },
+    {
+      "room_id": 2,
+      "name": "The Enchanted Ballroom",
+      "description": "An opulent ballroom frozen in time, adorned with shimmering chandeliers and exquisite décor. Soft music plays from an unseen source, and faint footsteps echo.\n",
+      "exits": {
+        "north": 5,
+        "east": 7,
+        "south": 1,
+        "west": 6,
+        "up": null,
+        "down": null
+      },
+      "items": [5]
+    },
+    {
+      "room_id": 3,
+      "name": "The Cursed Well",
+      "description": "A small courtyard with a well, it has been said to grant wishes but cursed to grant at a heavy price. The water in the well reflects dark secrets.\n",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": 1,
+        "up": null,
+        "down": null
+      },
+      "items": [1]
+    },
+    {
+      "room_id": 4,
+      "name": "The Living Gardens",
+      "description": "An enchanted garden filled with mystical flora and fauna. The plants seem to respond to the Hero's presence, guiding their path or hindering their progress.\n",
+      "exits": {
+        "north": null,
+        "east": 1,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": null
+      },
+      "items": [5]
+    },
+    {
+      "room_id": 5,
+      "name": "The Throne Room",
+      "description": "The grand throne room, now deserted and draped in faded banners of the kingdom. The empty throne holds a pivotal secret. \n",
+      "exits": {
+        "north": null,
+        "east": 8,
+        "south": 2,
+        "west": null,
+        "up": 9,
+        "down": 10
+      },
+      "items": []
+    },
+    {
+      "room_id": 6,
+      "name": "The Whispering Library",
+      "description": "A vast Library filled with dusty tomes and shelves stretching to high vaulted ceilings. Soft whispers seem to echo from the books themselves, revealing forgotten knowledge.\n",
+      "exits": {
+        "north": null,
+        "east": 2,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": null
+      },
+      "items": [5]
+    },
+    {
+      "room_id": 7,
+      "name": "The Haunted Gallery",
+      "description": "A gallery filled with portraits of the past royals, each with haunting eyes that seem to follow your every move. Whispers of betrayal and tragedy fill the air.\n",
+      "exits": {
+        "north": 8,
+        "east": null,
+        "south": null,
+        "west": 2,
+        "up": null,
+        "down": null
+      },
+      "items": [3]
+    },
+    {
+      "room_id": 8,
+      "name": "The Starlit Observatory ",
+      "description": "A domed observatory atop the Kingdoms tallest tower, revealing a breathtaking view of the night sky. Constellations and celestial bodies adorn the ceiling. \n",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": 7,
+        "west": 5,
+        "up": null,
+        "down": null
+      },
+      "items": [2]
+    },
+    {
+      "room_id": 9,
+      "name": "The Timeless Clocktower",
+      "description": "A towering clock that stands in the heart of the kingdom, perpetually showing a mysterious symbol instead of the time. The clock tower holds the essence of time itself.\n",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": 5
+      },
+      "items": [5]
+    },
+    {
+      "room_id": 10,
+      "name": "The Labyrinthine Catacombs",
+      "description": "A labyrinth of dark, winding catacombs, lit only by flickering torches. It houses cryptic symbols and hidden traps, guarding the secrets of the past kings.\n",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": null,
+        "up": 5,
+        "down": null
+      },
+      "items": [4]
+    }
+  ]
+}
