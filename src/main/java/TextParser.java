@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -7,32 +8,47 @@ import java.util.regex.Pattern;
 public class TextParser {
 
     public static List<String> extractVerbsAndNouns(String input) {
+
         List<String> verbsAndNouns = new ArrayList<>();
+        List<String> defaultValue = new ArrayList<>(Arrays.asList("I don't understand, please try again.  Type 'Help' for a list of commands."));
+
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:attack|fight|take|go|head|walk|run|jump|duck|hit|smash|turn|touch|quit|help)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|vampire|crystalball|crown|sprit|stairs)\\b";
+        String verbRegex = "\\b(?:go|attack|take|look|inspect|quit|help)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|vampire|crystalball|crown|spirit|stairs)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
 
-        Matcher verbMatcher = verbPattern.matcher(input);
-        Matcher nounMatcher = nounPattern.matcher(input);
+        try{
+            Matcher verbMatcher = verbPattern.matcher(input);
+            Matcher nounMatcher = nounPattern.matcher(input);
 
-        // Extract verbs
-        while (verbMatcher.find()) {
-            String verb = verbMatcher.group();
-            verbsAndNouns.add(verb);
+            // Commands Extractor to String to List
+            String stringOfCommands = verbRegex.replace("\\b(?:", "").replace(")\\b", "");
+            String [] commands = stringOfCommands.split("\\|");
+            List<String> commandList = Arrays.asList(commands);
+
+            // Extract verb
+            while (verbMatcher.find()) {
+             String verb = verbMatcher.group();
+             verbsAndNouns.add(verb);
+            }
+
+            // Extract noun
+            while (nounMatcher.find()) {
+                String noun = nounMatcher.group();
+                verbsAndNouns.add(noun);
+            }
+            if (verbsAndNouns.get(0).equalsIgnoreCase("help")) {
+                return commandList;
+            } else {
+                //return verbsAndNouns;
+                        return verbsAndNouns;
+            }
+        } catch (Exception e) {
+            return defaultValue;
         }
-
-        // Extract nouns
-        while (nounMatcher.find()) {
-            String noun = nounMatcher.group();
-            verbsAndNouns.add(noun);
-        }
-
-        return verbsAndNouns;
     }
-
 
 
     public static void main(String[] args) {
@@ -48,13 +64,10 @@ public class TextParser {
             command = scanner.nextLine();
             response = extractVerbsAndNouns(command);
 
-            System.out.println("Verbs and Nouns:");
-            for (String word : response) {
-                System.out.println(word);
-            }
+            System.out.println(response);
 
             // Check for game over condition or other exit conditions
-            if (command.equalsIgnoreCase("quit")) {
+            if (response.get(0).equalsIgnoreCase("quit")) {
                 System.out.println("Exiting the game. Goodbye!");
                 break;
             }
