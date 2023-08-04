@@ -11,7 +11,7 @@ public class Items {
     // Method to load items from a JSON file into the 'itemMap'
     public static void loadItemsFromJSON() throws IOException {
         Gson gson = new Gson();
-        try (FileReader fileReader = new FileReader("json/Items.json")) {
+        try (FileReader fileReader = new FileReader("src/main/resources/json/Items.json")) {
             Item[] items = gson.fromJson(fileReader, Item[].class);
             for (Item item : items) {
                 itemMap.put(item.getItemID(), item); // Add items to the 'itemMap' with their IDs as keys
