@@ -15,7 +15,7 @@ public class Main {
         }
 
         //Display Functions to act as a preface to the game starting.
-        DisplayMethods.printTextFile("src/main/textFiles/Welcome_Screen.txt");
+        DisplayMethods.printTextFile("src/main/resources/textFiles/Welcome_Screen.txt");
         DisplayMethods.displayIntro();
 
         // Game loop starts here

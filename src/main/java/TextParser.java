@@ -30,8 +30,8 @@ public class TextParser {
 
             // Extract verb
             while (verbMatcher.find()) {
-             String verb = verbMatcher.group();
-             verbsAndNouns.add(verb);
+                String verb = verbMatcher.group();
+                verbsAndNouns.add(verb);
             }
 
             // Extract noun
@@ -42,8 +42,7 @@ public class TextParser {
             if (verbsAndNouns.get(0).equalsIgnoreCase("help")) {
                 return commandList;
             } else {
-                //return verbsAndNouns;
-                        return verbsAndNouns;
+                return verbsAndNouns;
             }
         } catch (Exception e) {
             return defaultValue;

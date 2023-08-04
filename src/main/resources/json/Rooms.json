@@ -1,5 +1,4 @@
-{
-  "rooms": [
+[
     {
       "room_id": 1,
       "name": "The Forgotten Courtyard",
@@ -10,10 +9,8 @@
         "south": null,
         "west": 4,
         "up": null,
-        "down": null
+        "down": null}
       },
-      "items": []
-    },
     {
       "room_id": 2,
       "name": "The Enchanted Ballroom",
@@ -24,9 +21,7 @@
         "south": 1,
         "west": 6,
         "up": null,
-        "down": null
-      },
-      "items": [5]
+        "down": null}
     },
     {
       "room_id": 3,
@@ -38,9 +33,7 @@
         "south": null,
         "west": 1,
         "up": null,
-        "down": null
-      },
-      "items": [1]
+        "down": null}
     },
     {
       "room_id": 4,
@@ -52,9 +45,7 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": null
-      },
-      "items": [5]
+        "down": null}
     },
     {
       "room_id": 5,
@@ -66,9 +57,7 @@
         "south": 2,
         "west": null,
         "up": 9,
-        "down": 10
-      },
-      "items": []
+        "down": 10}
     },
     {
       "room_id": 6,
@@ -80,9 +69,7 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": null
-      },
-      "items": [5]
+        "down": null}
     },
     {
       "room_id": 7,
@@ -94,9 +81,7 @@
         "south": null,
         "west": 2,
         "up": null,
-        "down": null
-      },
-      "items": [3]
+        "down": null}
     },
     {
       "room_id": 8,
@@ -108,10 +93,8 @@
         "south": 7,
         "west": 5,
         "up": null,
-        "down": null
+        "down": null}
       },
-      "items": [2]
-    },
     {
       "room_id": 9,
       "name": "The Timeless Clocktower",
@@ -122,9 +105,7 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": 5
-      },
-      "items": [5]
+        "down": 5}
     },
     {
       "room_id": 10,
@@ -136,9 +117,7 @@
         "south": null,
         "west": null,
         "up": 5,
-        "down": null
-      },
-      "items": [4]
+        "down": null}
     }
-  ]
-}
+]
+

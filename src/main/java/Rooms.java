@@ -9,7 +9,7 @@ public class Rooms {
     // Method to load rooms from a JSON file into the 'rooms' array
     public static void loadRoomsFromJSON() throws IOException {
         Gson gson = new Gson();
-        try (FileReader fileReader = new FileReader("src/main/json/Rooms.json")) {
+        try (FileReader fileReader = new FileReader("src/main/resources/json/Rooms.json")) {
             rooms = gson.fromJson(fileReader, Room[].class);
         }
     }
