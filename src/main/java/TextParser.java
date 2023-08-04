@@ -9,15 +9,17 @@ public class TextParser {
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:go|attack|take|look|inspect|quit|move|help)\\b";
+        String verbRegex = "\\b(?:look|quit|move|help)\\b";
         String nounRegex = "\\b(?:north|south|east|west|vampire|crystalball|crown|spirit|stairs)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
 
-
         Matcher verbMatcher = verbPattern.matcher(input.toLowerCase());
         Matcher nounMatcher = nounPattern.matcher(input.toLowerCase());
+
+        boolean verbFound = false;
+        boolean nounFound = false;
 
         //Create Return Statements
 
@@ -40,14 +42,21 @@ public class TextParser {
             String verb = verbMatcher.group();
             verbsAndNouns.add(verb);
         }
+        if (verbsAndNouns.size() == 1) {
+            verbFound = true;
+        }
 
         // Extract noun
         while (nounMatcher.find()) {
             String noun = nounMatcher.group();
             verbsAndNouns.add(noun);
         }
+        if (verbsAndNouns.size() == 1 && !verbFound) {
+            //nounFound = true;
+            verbsAndNouns.remove(0);
+        }
 
-        if (verbsAndNouns.size() == 1 && !verbsAndNouns.isEmpty()) {
+        if (verbFound && verbsAndNouns.size()==1) {
             switch (verbsAndNouns.get(0)) {
                 case "help":
                     verbsAndNouns.set(0, stringOfCommands);
@@ -61,7 +70,8 @@ public class TextParser {
                 default:
                     break;
             }
-        } else if (verbsAndNouns.isEmpty()){
+        }
+        if (verbsAndNouns.size() == 0){
             verbsAndNouns.add(badCommand);
         }
         return verbsAndNouns;
