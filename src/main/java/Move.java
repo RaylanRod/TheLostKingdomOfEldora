@@ -27,14 +27,6 @@ public class Move {
         return rooms.getRoomById(1); // sets the starting room as room_id 1
     }
 
-    public void handleMove(String command) {
-        List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(command);
-        if (verbsAndNouns.size() >= 2 && verbsAndNouns.get(0).equalsIgnoreCase("go")) {
-            String direction = verbsAndNouns.get(1);
-            moveDirection(direction);
-        }
-    }
-
     public void moveDirection(String direction) {
         if (currentRoom.getExits().containsKey(direction)) {
             Integer nextRoomId = currentRoom.getExits().get(direction);
@@ -42,10 +34,11 @@ public class Move {
                 System.out.println("There is no room in that direction");
             } else {
                 Room nextRoom = rooms.getRoomById(nextRoomId);
+                String roomName = nextRoom.getName();
                 if (nextRoom != null) {
                     // move the player to the next room
                     currentRoom = nextRoom;
-                    System.out.println(nextRoomId);
+                    System.out.println("your in room " + roomName);
                 }
             }
         } else {
