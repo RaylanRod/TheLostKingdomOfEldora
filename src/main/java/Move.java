@@ -37,12 +37,17 @@ public class Move {
 
     public void moveDirection(String direction) {
         if (currentRoom.getExits().containsKey(direction)) {
-            int nextRoomId = currentRoom.getExits().get(direction);
-            Room nextRoom = rooms.getRoomById(nextRoomId);
+            Integer nextRoomId = currentRoom.getExits().get(direction);
+            if (nextRoomId == null) {
+                System.out.println("There is no room in that direction");
+            } else {
+                Room nextRoom = rooms.getRoomById(nextRoomId);
                 if (nextRoom != null) {
                     // move the player to the next room
                     currentRoom = nextRoom;
+                    System.out.println(nextRoomId);
                 }
+            }
         } else {
             System.out.println("There is no room in that direction");
         }
