@@ -23,39 +23,19 @@ public class Room {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Map<String, Integer> getExits() {
         return exits;
     }
 
-    public void setExits(Map<String, Integer> exits) {
-        this.exits = exits;
-    }
-
     public List<Integer> getItems() {
         return items;
-    }
-
-    public void setItems(List<Integer> items) {
-        this.items = items;
     }
 }

@@ -12,7 +12,14 @@ public class Rooms {
         try (FileReader fileReader = new FileReader("src/main/resources/json/Rooms.json")) {
             rooms = gson.fromJson(fileReader, Room[].class);
         }
+
+//        // Debug statement: Print the loaded rooms and their IDs
+//        System.out.println("Loaded rooms:");
+//        for (Room room : rooms) {
+//            System.out.println("Room ID: " + room.getRoomId() + ", Name: " + room.getName() + ", Description: " + room.getDescription());
+//        }
     }
+
 
     // Method to get a room by its unique ID
     public static Room getRoomById(int roomId) {
