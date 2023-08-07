@@ -1,0 +1,123 @@
+[
+    {
+      "roomId": 1,
+      "name": "The Forgotten Courtyard",
+      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom.\nNow, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\nTo the north you see a grand gateway to enter the once majestic Kingdom.\n To the east you see decaying grass creeping onto a stone pathway leading to something in the distance.\nTo the west you see a beautiful flowered archway flowing into a lush green gardenscape.\n",
+      "exits": {
+        "north": 2,
+        "east": 3,
+        "south": null,
+        "west": 4,
+        "up": null,
+        "down": null}
+      },
+    {
+      "roomId": 2,
+      "name": "The Enchanted Ballroom",
+      "description": "An opulent ballroom frozen in time, adorned with shimmering chandeliers and exquisite décor. Soft music plays from an unseen source, and faint footsteps echo.\nBefore you, to the north, you see an embroidered golden doorway encrested with the finest jewels and gems of the land.\nTo the east, you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room adorned with books on every wall, screaming with silence.\nTo the south, you see the courtyard that began your journey.\n",
+      "exits": {
+        "north": 5,
+        "east": 7,
+        "south": 1,
+        "west": 6,
+        "up": null,
+        "down": null}
+    },
+    {
+      "roomId": 3,
+      "name": "The Cursed Well",
+      "description": "A small courtyard with a well, it has been said to grant wishes but cursed to grant at a heavy price. The water in the well reflects dark secrets.\nTo the west,you see the courtyard that began your journey.",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": 1,
+        "up": null,
+        "down": null}
+    },
+    {
+      "roomId": 4,
+      "name": "The Living Gardens",
+      "description": "An enchanted garden filled with mystical flora and fauna. The plants seem to respond to the Hero's presence, guiding their path or hindering their progress.\nTo the east, you see the courtyard that began your journey.",
+      "exits": {
+        "north": null,
+        "east": 1,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": null}
+    },
+    {
+      "roomId": 5,
+      "name": "The Throne Room",
+      "description": "The grand throne room, now deserted and draped in faded banners of the kingdom. The empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nBehind the throne you find a concealed door.",
+      "exits": {
+        "north": null,
+        "east": 8,
+        "south": 2,
+        "west": null,
+        "up": 9,
+        "down": 10}
+    },
+    {
+      "roomId": 6,
+      "name": "The Whispering Library",
+      "description": "A vast Library filled with dusty tomes and shelves stretching to high vaulted ceilings. Soft whispers seem to echo from the books themselves, revealing forgotten knowledge.\nTo the east, you see the doorway back to the ballroom.",
+      "exits": {
+        "north": null,
+        "east": 2,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": null}
+    },
+    {
+      "roomId": 7,
+      "name": "The Haunted Gallery",
+      "description": "A gallery filled with portraits of the past royals, each with haunting eyes that seem to follow your every move. Whispers of betrayal and tragedy fill the air.\nTo the north you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the west you see the doorway back to the ballroom.\n",
+      "exits": {
+        "north": 8,
+        "east": null,
+        "south": null,
+        "west": 2,
+        "up": null,
+        "down": null}
+    },
+    {
+      "roomId": 8,
+      "name": "The Starlit Observatory ",
+      "description": "A domed observatory atop the Kingdoms tallest tower, revealing a breathtaking view of the night sky. Constellations and celestial bodies adorn the ceiling.\nTo the south you see you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room with a golden throne perfectly centered within.\n",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": 7,
+        "west": 5,
+        "up": null,
+        "down": null}
+      },
+    {
+      "roomId": 9,
+      "name": "The Timeless Clocktower",
+      "description": "A towering clock that stands in the heart of the kingdom, perpetually showing a mysterious symbol instead of the time. The clock tower holds the essence of time itself.\n You see the ladder that you climbed up to enter the tower.",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": null,
+        "up": null,
+        "down": 5}
+    },
+    {
+      "roomId": 10,
+      "name": "The Labyrinthine Catacombs",
+      "description": "A labyrinth of dark, winding catacombs, lit only by flickering torches. It houses cryptic symbols and hidden traps, guarding the secrets of the past kings.\nYou see the ladder that you climbed down to enter this dark wretched place.",
+      "exits": {
+        "north": null,
+        "east": null,
+        "south": null,
+        "west": null,
+        "up": 5,
+        "down": null}
+    }
+]
+
