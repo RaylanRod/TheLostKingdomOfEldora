@@ -2,22 +2,24 @@
 import com.google.gson.Gson;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Items {
     private static Map<Integer, Item> itemMap = new HashMap<>(); // Map to hold all items with their IDs as keys
 
     // Method to load items from a JSON file into the 'itemMap'
     public static void loadItemsFromJSON() throws IOException {
-        Gson gson = new Gson();
-        try (FileReader fileReader = new FileReader("src/main/resources/json/Items.json")) {
-            Item[] items = gson.fromJson(fileReader, Item[].class);
-            for (Item item : items) {
-                itemMap.put(item.getItemID(), item); // Add items to the 'itemMap' with their IDs as keys
-            }
-        }
+        Item[] items = GameMethods.loadJSONFile("json/Items.json", Item[].class);
+        Arrays.stream(items)
+                .collect(Collectors.toMap(Item::getItemID, Function.identity()));
     }
+
+    // Method using Gson to read a json file and return the object
+
 
     // Method to get an item by its unique ID
     public static Item getItemById(int itemId) {

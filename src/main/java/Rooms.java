@@ -2,22 +2,15 @@
 import com.google.gson.Gson;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class Rooms {
     private static Room[] rooms; // Array to hold all the rooms in the game
 
     // Method to load rooms from a JSON file into the 'rooms' array
     public static void loadRoomsFromJSON() throws IOException {
-        Gson gson = new Gson();
-        try (FileReader fileReader = new FileReader("src/main/resources/json/Rooms.json")) {
-            rooms = gson.fromJson(fileReader, Room[].class);
-        }
-
-//        // Debug statement: Print the loaded rooms and their IDs
-//        System.out.println("Loaded rooms:");
-//        for (Room room : rooms) {
-//            System.out.println("Room ID: " + room.getRoomId() + ", Name: " + room.getName() + ", Description: " + room.getDescription());
-//        }
+        rooms = GameMethods.loadJSONFile("json/Rooms.json", Room[].class);
     }
 
 

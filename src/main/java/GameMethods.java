@@ -1,5 +1,11 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.*;
 
 
 public class GameMethods {
@@ -35,6 +41,20 @@ public class GameMethods {
         }
     }
 
+    public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
+        //noinspection ConstantConditions
+        try (Reader reader = new InputStreamReader(GameMethods.class.getClassLoader().getResourceAsStream(path))) {
+            Gson gson = new Gson();
+            return gson.fromJson(reader, clazz);
+        }
+    }
+
+//    public static void main(String[] args) throws IOException {
+//        Map<Integer, Item> test = new HashMap<>();
+//        test = loadJSONFile("src/main/resources/json/Description.json");
+//        test.forEach((integer, Item) -> System.out.println(Item));
+//
+//    }
 }
 
 //class Tests {
