@@ -1,9 +1,12 @@
+import com.google.gson.annotations.SerializedName;
+
 // Item class represents an in-game item that can be found in rooms or used by the player
 public class Item {
     private int itemID;          // Unique identifier for each item
     private String name;         // Name of the item
     private String description;  // Description of the item
     private String usage;        // How the item can be used
+    @SerializedName("can_be_used")
     private boolean canBeUsed;   // Whether the item can be used by the player
 
     // Constructor to initialize the item properties
