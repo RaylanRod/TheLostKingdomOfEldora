@@ -55,7 +55,8 @@ public class Main {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            System.out.println("I'm executing the MOVE function to go: " + verbsAndNouns.get(1));
+                            Move move = new Move();
+                            move.moveDirection(verbsAndNouns.get(1));
                             break;
                         case "look":
                             //Execute the Move Function

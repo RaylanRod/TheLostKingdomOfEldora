@@ -78,26 +78,26 @@ public class TextParser {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Lost Kingdom of Eldoria!");
-        System.out.println("Type 'help' for a list of commands.");
-        Scanner scanner = new Scanner(System.in);
-        String command = "";
-        List<String> response = new ArrayList<>();
-
-
-        while (true) {
-            System.out.print("> ");
-            command = scanner.nextLine();
-            response = extractVerbsAndNouns(command);
-
-            System.out.println(response);
-
-            //Check for game over condition or other exit conditions
-            if (response.get(0).equalsIgnoreCase("quit")) {
-                System.out.println("Exiting the game. Goodbye!");
-                break;
-            }
-        }
-    }
+//    public static void main(String[] args) {
+//        System.out.println("Welcome to Lost Kingdom of Eldoria!");
+//        System.out.println("Type 'help' for a list of commands.");
+//        Scanner scanner = new Scanner(System.in);
+//        String command = "";
+//        List<String> response = new ArrayList<>();
+//
+//
+//        while (true) {
+//            System.out.print("> ");
+//            command = scanner.nextLine();
+//            response = extractVerbsAndNouns(command);
+//
+//            System.out.println(response);
+//
+//            //Check for game over condition or other exit conditions
+//            if (response.get(0).equalsIgnoreCase("quit")) {
+//                System.out.println("Exiting the game. Goodbye!");
+//                break;
+//            }
+//        }
+//    }
 }
