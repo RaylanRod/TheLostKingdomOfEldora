@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class DisplayMethods {
@@ -24,13 +25,14 @@ public class DisplayMethods {
 
     public static void printTextFile(String fileName) {
         // Prints the opening splash screen
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        //noinspection ConstantConditions
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(fileName)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
         } catch (IOException e) {
-            System.out.println("An I/O Error Occurred");
+            throw new RuntimeException(e);
         }
 
         System.out.print("Press Enter to begin your adventure...");
