@@ -18,7 +18,7 @@ public class Main {
 
         //Display Functions to act as a preface to the game starting.
         DisplayMethods.printTextFile("textFiles/Welcome_Screen.txt");
-        DisplayMethods.displayIntro();
+        DisplayMethods.printTextJsonFile("src/main/resources/json/Description.json");
 
         // Game loop starts here
         boolean isGameOver = false;
@@ -29,7 +29,7 @@ public class Main {
             DisplayMethods.clearScreen();
 
             // Player is starting in room ID, pass it to the playerLocation method
-//            GameMethods.playerLocation(1);
+            // GameMethods.playerLocation(1);
 
             Room startingRoom = Rooms.getRoomById(1);
             Character player = new Character("Player name", 100, startingRoom);
