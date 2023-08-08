@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
+        
         // Load JSON files
         try {
             Rooms.loadRoomsFromJSON();
@@ -28,7 +29,11 @@ public class Main {
             DisplayMethods.clearScreen();
 
             // Player is starting in room ID, pass it to the playerLocation method
-            GameMethods.playerLocation(1);
+//            GameMethods.playerLocation(1);
+
+            Room startingRoom = Rooms.getRoomById(1);
+            Character player = new Character("Player name", 100, startingRoom);
+            System.out.println(player);
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -55,8 +60,8 @@ public class Main {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            Move move = new Move();
-                            move.moveDirection(verbsAndNouns.get(1));
+                            player.moveDirection(verbsAndNouns.get(1));
+                            System.out.println(player);
                             break;
                         case "look":
                             //Execute the Move Function

@@ -26,20 +26,20 @@ public class GameMethods {
         return input.equals("yes");
     }
 
-    public static void playerLocation(int roomId) {
-        // Get the Room object from the Rooms class using the provided roomId
-        Room room = Rooms.getRoomById(roomId);
-
-        // Check if the room object is not null, meaning the room with the given ID was found
-        if (room != null) {
-            // Display the room name and description to the player
-            System.out.println("You are in the " + room.getName());
-            System.out.println(room.getDescription());
-        } else {
-            // The room with the provided ID was not found in the game's rooms collection
-            System.out.println("Invalid room ID. Unable to determine your location.");
-        }
-    }
+//    public static void playerLocation(int roomId) {
+//        // Get the Room object from the Rooms class using the provided roomId
+//        Room room = Rooms.getRoomById(roomId);
+//
+//        // Check if the room object is not null, meaning the room with the given ID was found
+//        if (room != null) {
+//            // Display the room name and description to the player
+//            System.out.println("You are in the " + room.getName());
+//            System.out.println(room.getDescription());
+//        } else {
+//            // The room with the provided ID was not found in the game's rooms collection
+//            System.out.println("Invalid room ID. Unable to determine your location.");
+//        }
+//    }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
         //noinspection ConstantConditions
