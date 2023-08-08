@@ -9,7 +9,18 @@
         "south": null,
         "west": 4,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 6,
+        "name": "rock",
+        "description": "A simple rock for testing",
+        "usage": "Tests [grab],[inspect],[drop]",
+        "can_be_used": false
+      },
+      "NPC": {
+        "name": "Bardleston",
+        "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here. An ancient prophecy speaks of a hero who will reassemble the Crown of Light. Are you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. You can start by seeking the Crystal Ball with a trapped spirit inside. It may hold the key to a new future. Find it in the depths of the abandoned tower, guarded by puzzles and spectral foes.\" "
+      }
       },
     {
       "roomId": 2,
@@ -21,7 +32,18 @@
         "south": 1,
         "west": 6,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 5,
+        "name": "Royal Crown Piece",
+        "description": "a magnificent artifact that once adorned the head of the revered rulers of the kingdom, but it's not complete.",
+        "usage": "When all four pieces are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
+        "can_be_used": false
+      },
+      "NPC": {
+        "name": "Crystal Ball with a Trapped Spirit",
+        "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \n\nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom. Only a kind and brave soul can release me. Will you be that soul?\"  \n\nPlayer: \"I will help you find your freedom, spirit.\"  \n\nSpirit: \"Then you must venture to the [room] and find item that bound me. It will reveal the path to my liberation, and once freed, I shall become your steadfast companion.\" "
+      }
     },
     {
       "roomId": 3,
@@ -33,7 +55,14 @@
         "south": null,
         "west": 1,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 1,
+        "name": "Royal Seal",
+        "description": "A regal seal marked with the symbol of the lost kingdom's royalty. It opens locked doors and bestows authority upon the bearer.",
+        "usage": "Unlocks a mysterious door deep within the kingdom.",
+        "can_be_used": true
+      }
     },
     {
       "roomId": 4,
@@ -45,7 +74,18 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 5,
+        "name": "Royal Crown Piece",
+        "description": "a magnificent artifact that once adorned the head of the revered rulers of the kingdom, but it's not complete.",
+        "usage": "When all four pieces are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
+        "can_be_used": false
+      },
+      "NPC": {
+        "name": "Enigma",
+        "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  "
+      }
     },
     {
       "roomId": 5,
@@ -57,7 +97,12 @@
         "south": 2,
         "west": null,
         "up": 9,
-        "down": 10}
+        "down": 10},
+      "items": {},
+      "NPC": {
+        "name": "Enigma",
+        "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  "
+      }
     },
     {
       "roomId": 6,
@@ -69,7 +114,18 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 5,
+        "name": "Royal Crown Piece",
+        "description": "a magnificent artifact that once adorned the head of the revered rulers of the kingdom, but it's not complete.",
+        "usage": "When all four pieces are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
+        "can_be_used": false
+      },
+      "NPC": {
+        "name": "Librarian",
+        "dialog": "Player: (Enters the library, tired and wounded) \"Greetings, Librarian. I seek respite and healing.\"  \n\nLibrarian Ghost: \"Welcome, weary seeker of knowledge. For a few gold coins, I shall provide you with the knowledge for mending your wounds and rejuvenating your spirit.\" \n\nPlayer: \"Thank you, Librarian. Here is the gold. I appreciate your assistance.\" "
+      }
     },
     {
       "roomId": 7,
@@ -81,7 +137,18 @@
         "south": null,
         "west": 2,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 3,
+        "name": "Shadow Cloak",
+        "description": "A cloak woven from the shadows of night. When worn, the user is rendered invisible to enemies.",
+        "usage": "Allows the user to avoid one combat initiation.",
+        "can_be_used": true
+      },
+      "NPC": {
+        "name": "Interactive Painting",
+        "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. Release me, and I shall aid you on your journey.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
+      }
     },
     {
       "roomId": 8,
@@ -93,7 +160,14 @@
         "south": 7,
         "west": 5,
         "up": null,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 2,
+        "name": "Elixer of Restoration",
+        "description": "A vial containing a glowing liquid that heals wounds and restores strength. The effects are immediate upon consumption.",
+        "usage": "Restores 100% of missing health. ",
+        "can_be_used": true
+      }
       },
     {
       "roomId": 9,
@@ -105,7 +179,14 @@
         "south": null,
         "west": null,
         "up": null,
-        "down": 5}
+        "down": 5},
+      "items": {
+        "itemID": 5,
+        "name": "Royal Crown Piece",
+        "description": "a magnificent artifact that once adorned the head of the revered rulers of the kingdom, but it's not complete.",
+        "usage": "When all four pieces are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
+        "can_be_used": false
+      }
     },
     {
       "roomId": 10,
@@ -117,7 +198,18 @@
         "south": null,
         "west": null,
         "up": 5,
-        "down": null}
+        "down": null},
+      "items": {
+        "itemID": 4,
+        "name": "Ancient Amulet of Binding",
+        "description": "A shimmering amulet said to posses the power to bind spirits and entities. It glows with a faint ethereal light.",
+        "usage": "Allows the user to release the spirit from the crystal Ball.",
+        "can_be_used": true
+      },
+      "NPC": {
+        "name": "Elder Vampire",
+        "dialog": "Player: (Confronts the menacing Elder Vampire in the final showdown) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine once more, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
+      }
     }
 ]
 
