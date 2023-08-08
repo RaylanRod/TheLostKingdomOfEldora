@@ -6,7 +6,7 @@ public class Character {
     Rooms rooms = new Rooms();
     Room startingRoom = rooms.getRoomById(1);
     private Move move = new Move(rooms, startingRoom);
-    List<Items> inventory = new LinkedList<>();
+//    List<Items> inventory = new LinkedList<>();
 
 
     public Character(String name, int health, Room room) {
@@ -53,15 +53,15 @@ public class Character {
        return currentExits.toString();
     }
 
-    @Override
-    public String toString() {
-        return "******************************************************" +"\n" +
-                name + "\n" +
-                " health: " + health +
-                ", \n your current location: " + startingRoom.getName() +
-                ", \n inventoryL: " + inventory +
-                ", \n you can go: " +  exits() +
-                "\n"+
-                "*****************************************************";
-    }
+//    @Override
+//    public String toString() {
+//        return "******************************************************" +"\n" +
+//                name + "\n" +
+//                " health: " + health +
+//                ", \n your current location: " + startingRoom.getName() +
+//                ", \n inventoryL: " + inventory +
+//                ", \n you can go: " +  exits() +
+//                "\n"+
+//                "*****************************************************";
+//    }
 }

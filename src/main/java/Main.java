@@ -10,7 +10,6 @@ public class Main {
         // Load JSON files
         try {
             Rooms.loadRoomsFromJSON();
-            Items.loadItemsFromJSON();
         } catch (IOException e) {
             System.out.println("Error loading game data: " + e.getMessage());
             return;
