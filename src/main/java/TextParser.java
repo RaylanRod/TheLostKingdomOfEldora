@@ -9,7 +9,7 @@ public class TextParser {
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:look|quit|get|move|talk|help)\\b";
+        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help)\\b";
         String nounRegex = "\\b(?:north|south|east|west|vampire|crystalball|crown|spirit|stairs)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
@@ -19,7 +19,7 @@ public class TextParser {
         Matcher nounMatcher = nounPattern.matcher(input.toLowerCase());
 
         // Verbs that should not have any nouns associated with it
-        List<String> verbsOnly = Arrays.asList("quit", "help");
+        List<String> verbsOnly = Arrays.asList("quit", "help", "talk");
 
         //Create Return Statements:
 
@@ -32,11 +32,15 @@ public class TextParser {
         // Get for input of an invalid Noun
         String badGet = "You didn't enter an item to get.  Please try again";
 
+        // Drop for input of an invalid item
+        String badDrop = "You didn't enter an item to drop.  Please try again";
+
         // Move for input of an invalid Noun
         String badMove = "You didn't enter a location to move to.  Please try again";
 
-        // Talk for input of an invalid NPC
-        String badTalk = "You didn't enter a NPC to talk to.  Please try again";
+//        // Talk for input of an invalid NPC
+//        String badTalk = "You didn't enter a NPC to talk to.  Please try again";
+
 
         // Invalid Command
         String badCommand = "I don't understand, please try again.  Type 'Help' for a list of commands.";
@@ -75,9 +79,12 @@ public class TextParser {
                 case "get":
                     verbsAndNouns.set(0, badGet);
                     break;
-                case "talk":
-                    verbsAndNouns.set(0, badTalk);
+                case "drop":
+                    verbsAndNouns.set(0, badDrop);
                     break;
+//                case "talk":
+//                    verbsAndNouns.set(0, badTalk);
+//                    break;
                 default:
                     break;
             }
