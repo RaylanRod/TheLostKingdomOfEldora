@@ -74,8 +74,10 @@ public class TextParser {
                     break;
                 case "get":
                     verbsAndNouns.set(0, badGet);
+                    break;
                 case "talk":
                     verbsAndNouns.set(0, badTalk);
+                    break;
                 default:
                     break;
             }

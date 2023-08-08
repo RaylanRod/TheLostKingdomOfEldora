@@ -1,10 +1,7 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 
@@ -48,13 +45,6 @@ public class GameMethods {
             return gson.fromJson(reader, clazz);
         }
     }
-
-//    public static void main(String[] args) throws IOException {
-//        Map<Integer, Item> test = new HashMap<>();
-//        test = loadJSONFile("src/main/resources/json/Description.json");
-//        test.forEach((integer, Item) -> System.out.println(Item));
-//
-//    }
 }
 
 //class Tests {
