@@ -12,15 +12,17 @@ public class Move {
     private Rooms rooms;
     private Room currentRoom; // hold the current room
 
-    public Move() {
-        rooms = new Rooms();
-        try {
-            rooms.loadRoomsFromJSON();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        currentRoom= getStartingRoom();
+    public Move(Rooms rooms, Room startingRoom) {
+        this.rooms = rooms;
+        this.currentRoom = startingRoom;
+//        rooms = new Rooms();
+//        try {
+//            rooms.loadRoomsFromJSON();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        currentRoom= getStartingRoom();
     }
 
     private Room getStartingRoom() {
