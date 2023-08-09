@@ -70,6 +70,33 @@ public class GameMethods {
         }
     }
 
+    public static void dropItem(String item){
+        try {
+            List<String> items = Main.player.getInventory();
+            if (items == null || items.isEmpty()) {
+                System.out.println("Your inventory is empty. Nothing to drop.");
+                return;
+            }
+
+            if (!items.contains(item)) {
+                System.out.println("Item not found in your inventory.");
+                return;
+            }
+
+            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().put("name", item);
+            items.remove(item);
+            Main.player.setInventory(items);
+
+            System.out.println("You have dropped the item: " + item);
+        } catch (Exception e) {
+            System.out.println("An error occurred while dropping the item.");
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
+
     public static void drop(String item){
 //        try {
 //            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
