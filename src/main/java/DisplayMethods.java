@@ -1,22 +1,20 @@
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Scanner;
 
 public class DisplayMethods {
 
     public static void printTextJsonFile(String fileName){
-        File theFile = new File(fileName);
-        JsonElement fileElement = null;
-        try {
-            fileElement = JsonParser.parseReader(new FileReader(theFile));
-            JsonObject fileObject = fileElement.getAsJsonObject();
-            String text = fileObject.get("text").getAsString();
-            System.out.println(text);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        try{
+            Map<String, String> textMap = GameMethods.loadJSONTextFile(fileName, new TypeToken<Map<String, String>>() {});
+            System.out.println(textMap.get("text"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

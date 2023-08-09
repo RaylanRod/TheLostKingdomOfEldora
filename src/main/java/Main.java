@@ -1,15 +1,15 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.*;
 import java.io.IOException;
 
 public class Main {
-
+    public static Character player = new Character();
     public static void main(String[] args) {
-        
         // Load JSON files
         try {
-            Rooms.loadRoomsFromJSON();
+          Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
             System.out.println("Error loading game data: " + e.getMessage());
             return;
@@ -17,7 +17,7 @@ public class Main {
 
         //Display Functions to act as a preface to the game starting.
         DisplayMethods.printTextFile("textFiles/Welcome_Screen.txt");
-        DisplayMethods.printTextJsonFile("src/main/resources/json/Description.json");
+        DisplayMethods.printTextJsonFile("json/Description.json");
 
         // Game loop starts here
         boolean isGameOver = false;
@@ -30,9 +30,10 @@ public class Main {
             // Player is starting in room ID, pass it to the playerLocation method
             // GameMethods.playerLocation(1);
 
-            Room startingRoom = Rooms.getRoomById(1);
-            Character player = new Character("Player name", 100, startingRoom);
-            System.out.println(player);
+            //Room startingRoom = Rooms.getRoomById(1);
+            //Character player = new Character("Player name", 100, startingRoom);
+            System.out.println("Character:\n" + player);
+            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -59,8 +60,13 @@ public class Main {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            player.moveDirection(verbsAndNouns.get(1));
-                            System.out.println(player);
+                            // player.moveDirection(verbsAndNouns.get(1));
+                            GameMethods.moveRoom(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            //System.out.println("Items:\n" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "\n");
+                            //System.out.println("NPCs:\n" + Rooms.getRoomById(player.getCurrentRoom()).getNPC());
                             break;
                         case "look":
                             //Execute the Move Function

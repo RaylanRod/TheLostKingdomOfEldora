@@ -44,4 +44,8 @@ public class Room {
     public void setItems(Map<String, Object> items) {
         this.items = items;
     }
+
+    public Map<String, Object> getNPC() {
+        return NPC;
+    }
 }
