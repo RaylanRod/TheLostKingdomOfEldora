@@ -1,18 +1,11 @@
 import java.util.*;
 
 public class Character {
-//    private String name;
-//    private int health = 100;
-//    Rooms rooms = new Rooms();
-//    Room startingRoom = rooms.getRoomById(1);
-//    private Move move = new Move(rooms, startingRoom);
-//    List<Items> inventory = new LinkedList<>();
-
     private String name;
     private int health;
     private int currentRoom;
     private String roomName;
-    private ArrayList<String> inventory;
+    private List<String> inventory;
 
     //CTORs
     public Character() {
@@ -61,11 +54,11 @@ public class Character {
         this.roomName = roomName;
     }
 
-    public ArrayList<String> getInventory() {
+    public List<String> getInventory() {
         return inventory;
     }
 
-    public void setInventory(ArrayList<String> inventory) {
+    public void setInventory(List<String> inventory) {
         this.inventory = inventory;
     }
 
