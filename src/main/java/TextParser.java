@@ -10,7 +10,7 @@ public class TextParser {
 
         // Define regular expressions for verbs and nouns
         String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|crown piece|spirit|stairs|rock)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece|spirit|stairs|rock)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);

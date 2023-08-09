@@ -91,7 +91,11 @@ public class Main {
                             break;
                         case "drop":
                             //Exectue the DROP Function
-                            System.out.println("I'm executing the DROP function");
+                            GameMethods.dropItem(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
                             break;
                         default:
                             break;
