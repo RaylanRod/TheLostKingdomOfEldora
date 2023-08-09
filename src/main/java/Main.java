@@ -1,23 +1,23 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.*;
 import java.io.IOException;
 
 public class Main {
-
+    public static Character player = new Character();
     public static void main(String[] args) {
         // Load JSON files
         try {
-            Rooms.loadRoomsFromJSON();
-            Items.loadItemsFromJSON();
+          Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
             System.out.println("Error loading game data: " + e.getMessage());
             return;
         }
 
         //Display Functions to act as a preface to the game starting.
-        DisplayMethods.printTextFile("src/main/resources/textFiles/Welcome_Screen.txt");
-        DisplayMethods.displayIntro();
+        DisplayMethods.printTextFile("textFiles/Welcome_Screen.txt");
+        DisplayMethods.printTextJsonFile("json/Description.json");
 
         // Game loop starts here
         boolean isGameOver = false;
@@ -28,7 +28,13 @@ public class Main {
             DisplayMethods.clearScreen();
 
             // Player is starting in room ID, pass it to the playerLocation method
-            GameMethods.playerLocation(1);
+            // GameMethods.playerLocation(1);
+
+            //Room startingRoom = Rooms.getRoomById(1);
+            //Character player = new Character("Player name", 100, startingRoom);
+            System.out.println("Character:\n" + player);
+            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -47,6 +53,14 @@ public class Main {
                             // Player did not confirm, continue the game loop
                                 System.out.println("Resuming game...");}
                             break;
+                        case "talk":
+                            //Execute the Talk Function
+                            GameMethods.talk();
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+
+                            break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
@@ -55,37 +69,39 @@ public class Main {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            System.out.println("I'm executing the MOVE function to go: " + verbsAndNouns.get(1));
+                            // player.moveDirection(verbsAndNouns.get(1));
+                            GameMethods.moveRoom(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
+                            //System.out.println("NPCs:\n" + Rooms.getRoomById(player.getCurrentRoom()).getNPC());
                             break;
                         case "look":
-                            //Execute the Move Function
+                            //Execute the Look Function
                             System.out.println("I'm executing the LOOK function to see: " + verbsAndNouns.get(1));
+                            break;
+                        case "get":
+                            //Execute the GetItem Function
+                            GameMethods.getItem(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
+                            break;
+                        case "drop":
+                            //Exectue the DROP Function
+                            GameMethods.dropItem(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
                             break;
                         default:
                             break;
                     }
                 }
             }
-
-//                if (input.equals("quit")) {
-//                    // Player wants to quit, ask for confirmation
-//                    if (GameMethods.confirmQuit(scanner)) {
-//                        // Player confirmed to quit, set isGameOver to true to end the game loop
-//                        isGameOver = true;
-//                    } else {
-//                        // Player did not confirm, continue the game loop
-//                        System.out.println("Resuming game...");
-//                    }
-//                } else {
-//                    // Handle other game actions based on the input
-//                    // For example, process movement, interactions, etc.
-//                    System.out.println("You entered: " + input);
-//                }
-//            }
-//        } else {
-//            // Player chose not to start a new game, exit the program
-//            System.out.println("Thank you for considering The Lost Kingdom of Eldoria!");
-//        }
 
             // Game loop ends here
             System.out.println("Thank you for playing The Lost Kingdom of Eldoria!");

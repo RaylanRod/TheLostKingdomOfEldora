@@ -9,8 +9,8 @@ public class TextParser {
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:look|quit|move|help)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|vampire|crystalball|crown|spirit|stairs)\\b";
+        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece|spirit|stairs|rock)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -18,45 +18,50 @@ public class TextParser {
         Matcher verbMatcher = verbPattern.matcher(input.toLowerCase());
         Matcher nounMatcher = nounPattern.matcher(input.toLowerCase());
 
-        boolean verbFound = false;
-        boolean nounFound = false;
+        // Verbs that should not have any nouns associated with it
+        List<String> verbsOnly = Arrays.asList("quit", "help", "talk");
 
-        //Create Return Statements
+        //Create Return Statements:
 
         // Commands Extractor to String to List
         String stringOfCommands = verbRegex.replace("\\b(?:", "").replace(")\\b", "");
-        //String [] commands = stringOfCommands.split("\\|");
 
-        // Look for invalid Noun
-        String badLook = "The item you entered is not valid.  Please try again";
+        // Look for input of an invalid Noun
+        String badLook = "You didn't enter an item to look at.  Please try again";
 
-        // Move for invalid Noun
-        String badMove = "The location you entered to move to is not valid.  Please try again";
+        // Get for input of an invalid Noun
+        String badGet = "You didn't enter an item to get.  Please try again";
+
+        // Drop for input of an invalid item
+        String badDrop = "You didn't enter an item to drop.  Please try again";
+
+        // Move for input of an invalid Noun
+        String badMove = "You didn't enter a location to move to.  Please try again";
 
         // Invalid Command
         String badCommand = "I don't understand, please try again.  Type 'Help' for a list of commands.";
-
 
         // Extract verb
         while (verbMatcher.find()) {
             String verb = verbMatcher.group();
             verbsAndNouns.add(verb);
         }
+        // If the verb is found then extract noun
         if (verbsAndNouns.size() == 1) {
-            verbFound = true;
+            if (!verbsOnly.contains(verbsAndNouns.get(0))){
+                // Extract noun
+                while (nounMatcher.find()) {
+                    String noun = nounMatcher.group();
+                    verbsAndNouns.add(noun);
+                }
+            }
         }
+        // No valid commander
+        if (verbsAndNouns.size() == 0){
 
-        // Extract noun
-        while (nounMatcher.find()) {
-            String noun = nounMatcher.group();
-            verbsAndNouns.add(noun);
-        }
-        if (verbsAndNouns.size() == 1 && !verbFound) {
-            //nounFound = true;
-            verbsAndNouns.remove(0);
-        }
-
-        if (verbFound && verbsAndNouns.size()==1) {
+            verbsAndNouns.add(badCommand);
+          //Valid command and no nouns
+        } else if (verbsAndNouns.size()==1) {
             switch (verbsAndNouns.get(0)) {
                 case "help":
                     verbsAndNouns.set(0, stringOfCommands);
@@ -67,16 +72,21 @@ public class TextParser {
                 case "move":
                     verbsAndNouns.set(0, badMove);
                     break;
+                case "get":
+                    verbsAndNouns.set(0, badGet);
+                    break;
+                case "drop":
+                    verbsAndNouns.set(0, badDrop);
+                    break;
+//                case "talk":
+//                    verbsAndNouns.set(0, badTalk);
+//                    break;
                 default:
                     break;
             }
         }
-        if (verbsAndNouns.size() == 0){
-            verbsAndNouns.add(badCommand);
-        }
         return verbsAndNouns;
     }
-
 
     public static void main(String[] args) {
         System.out.println("Welcome to Lost Kingdom of Eldoria!");
@@ -84,7 +94,6 @@ public class TextParser {
         Scanner scanner = new Scanner(System.in);
         String command = "";
         List<String> response = new ArrayList<>();
-
 
         while (true) {
             System.out.print("> ");
