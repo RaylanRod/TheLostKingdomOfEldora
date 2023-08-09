@@ -23,6 +23,19 @@ public class GameMethods {
         return input.equals("yes");
     }
 
+    public static void moveRoom(String direction){
+       try {
+           int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
+           Main.player.setCurrentRoom(newRoom);
+           Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+       } catch (Exception e) {
+           System.out.println("You entered an INVALID direction");
+           System.out.print("Press any key to contine...");
+           Scanner scanner = new Scanner(System.in);
+           scanner.nextLine();
+       }
+    }
+
 //    public static void playerLocation(int roomId) {
 //        // Get the Room object from the Rooms class using the provided roomId
 //        Room room = Rooms.getRoomById(roomId);
@@ -45,6 +58,15 @@ public class GameMethods {
             return gson.fromJson(reader, clazz);
         }
     }
+
+    public static <T> T loadJSONTextFile (String path, TypeToken<T> token) throws IOException {
+        //noinspection ConstantConditions
+        try (Reader reader = new InputStreamReader(GameMethods.class.getClassLoader().getResourceAsStream(path))) {
+            Gson gson = new Gson();
+            return gson.fromJson(reader, token);
+        }
+    }
+
 }
 
 //class Tests {

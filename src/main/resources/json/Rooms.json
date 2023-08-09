@@ -2,7 +2,7 @@
     {
       "roomId": 1,
       "name": "The Forgotten Courtyard",
-      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom.\nNow, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\nTo the north you see a grand gateway to enter the once majestic Kingdom.\n To the east you see decaying grass creeping onto a stone pathway leading to something in the distance.\nTo the west you see a beautiful flowered archway flowing into a lush green gardenscape.\n",
+      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom.\nNow, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\nTo the north you see a grand gateway to enter the once majestic Kingdom.\nTo the east you see decaying grass creeping onto a stone pathway leading to something in the distance.\nTo the west you see a beautiful flowered archway flowing into a lush green gardenscape.\n",
       "exits": {
         "north": 2,
         "east": 3,
