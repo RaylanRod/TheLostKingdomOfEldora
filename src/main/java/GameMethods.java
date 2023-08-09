@@ -30,10 +30,57 @@ public class GameMethods {
            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
        } catch (Exception e) {
            System.out.println("You entered an INVALID direction");
-           System.out.print("Press any key to contine...");
+           System.out.print("Press any key to continue...");
            Scanner scanner = new Scanner(System.in);
            scanner.nextLine();
        }
+    }
+
+    public static void talk(){
+        try {
+            DisplayMethods.clearScreen();
+            System.out.println(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("There isn't any NPC to talk to...");
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
+    public static void getItem(String item){
+        try {
+            List<String> items = Main.player.getInventory();
+            if (items == null){
+                items = new ArrayList<>();
+            }
+            String oItem = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get("name").toString();
+            System.out.println("This is OITEM: " + oItem);
+            items.add(0, oItem);
+            Main.player.setInventory(items);
+            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().remove("name");
+        } catch (Exception e) {
+            System.out.println("There isn't an item to take...");
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
+    public static void drop(String item){
+//        try {
+//            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
+//            Main.player.setCurrentRoom(newRoom);
+//            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+//        } catch (Exception e) {
+//            System.out.println("There isn't any item to drop...");
+//            System.out.print("Press any key to continue...");
+//            Scanner scanner = new Scanner(System.in);
+//            scanner.nextLine();
+//        }
     }
 
 //    public static void playerLocation(int roomId) {

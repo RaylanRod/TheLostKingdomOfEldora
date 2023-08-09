@@ -10,7 +10,7 @@ public class TextParser {
 
         // Define regular expressions for verbs and nouns
         String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|crown|spirit|stairs)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|crown piece|spirit|stairs|rock)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -37,10 +37,6 @@ public class TextParser {
 
         // Move for input of an invalid Noun
         String badMove = "You didn't enter a location to move to.  Please try again";
-
-//        // Talk for input of an invalid NPC
-//        String badTalk = "You didn't enter a NPC to talk to.  Please try again";
-
 
         // Invalid Command
         String badCommand = "I don't understand, please try again.  Type 'Help' for a list of commands.";
