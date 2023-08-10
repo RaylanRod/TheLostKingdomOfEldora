@@ -1,6 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import java.nio.file.Files;
 import java.util.*;
 import java.io.IOException;
 
@@ -23,8 +24,10 @@ public class Main {
         boolean isGameOver = false;
         Scanner scanner = new Scanner(System.in);
 
+
         // Ask the player if they want to start a new game
         if (GameMethods.startNewGame(scanner)) {
+//            GameState gameState = new GameState();
             DisplayMethods.clearScreen();
 
             // Player is starting in room ID, pass it to the playerLocation method
@@ -61,6 +64,16 @@ public class Main {
                             System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
 
                             break;
+                        case "save":
+                            System.out.println("enter a file name: ");
+                            String fileName = scanner.nextLine();
+                            String filePath = "src\\main\\resources\\json\\" + fileName + ".json";
+                            try {
+                                GameMethods.saveJSONFile(filePath, player);
+                                System.out.println("game saved");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
