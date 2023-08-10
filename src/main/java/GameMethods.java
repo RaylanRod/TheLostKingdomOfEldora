@@ -3,6 +3,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 public class GameMethods {
@@ -141,10 +143,49 @@ public class GameMethods {
         }
     }
 
+    public static <T> void saveJSONFile(String path, Character data) throws IOException {
+        try {
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(data);
+
+            FileOutputStream file = new FileOutputStream(path);
+            OutputStreamWriter output = new OutputStreamWriter(file);
+
+            output.write(jsonData);
+            output.close();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        try {
+//
+//            FileOutputStream file = new FileOutputStream(new File(path));
+//            ObjectOutputStream output = new ObjectOutputStream(file);
+//
+//            output.writeObject(data);
+//            output.close();
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
 }
 
 //class Tests {
 //    public static void main(String[] args) {
+//        String path = "src\\main\\resources\\json\\fileTest.json";
+//        GameState gameState = new GameState();
+//        try {
+//            GameMethods.saveJSONFile(path, gameState);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
 //        // Load rooms and items from JSON files
 //        try {
 //            Rooms.loadRoomsFromJSON();
@@ -160,4 +201,6 @@ public class GameMethods {
 //        // Test the playerLocation method with the starting room ID
 //        GameMethods.playerLocation(startingRoomId);
 //    }
+
+
 //}
