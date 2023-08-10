@@ -9,6 +9,7 @@ public class Room {
     private Map<String, Object> items;  // Map of items associated with the room
     private Map<String, Object> NPC;    // Map of NPC information associated with the room
 
+
     // Constructor to initialize the room properties
     public Room(int roomId, String name, String description, Map<String, Integer> exits,
                 Map<String, Object> items, Map<String, Object> NPC) {
@@ -48,4 +49,6 @@ public class Room {
     public Map<String, Object> getNPC() {
         return NPC;
     }
+
+
 }

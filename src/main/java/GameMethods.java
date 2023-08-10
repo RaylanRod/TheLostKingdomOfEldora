@@ -37,12 +37,35 @@ public class GameMethods {
     }
 
     public static void talk(){
+
         try {
             DisplayMethods.clearScreen();
             System.out.println(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
-            System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+ //            //if the NPC name is enigma
+            if("Enigma".equalsIgnoreCase(npcName)) {
+//                //get/print a random riddle
+                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
+                int randomIndex = (int) (Math.random() * riddles.size());
+                Map<String, Object> randomRiddle = riddles.get(randomIndex);
+                System.out.println(randomRiddle.get("question"));
+//                //get the user input
+                System.out.println("Type you answer: ");
+                String input = scanner.nextLine().trim().toLowerCase();
+//                //compare the user input to the riddle answer
+//                //if the answer is correct
+                if(input.equals(randomRiddle.get("answer")) ) {
+                    //print you answered correct
+                    System.out.println("correct");
+                }//else
+                else {
+                    System.out.println("wrong answer");
+                }
+            } else {
+            System.out.print("Press any key to continue...");
             scanner.nextLine();
+            }
         } catch (Exception e) {
             System.out.println("There isn't any NPC to talk to...");
             System.out.print("Press any key to continue...");
