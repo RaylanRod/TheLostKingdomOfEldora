@@ -27,7 +27,7 @@ public class Main {
 
         // Ask the player if they want to start a new game
         if (GameMethods.startNewGame(scanner)) {
-//            GameState gameState = new GameState();
+            // GameState gameState = new GameState();
             DisplayMethods.clearScreen();
 
             // Player is starting in room ID, pass it to the playerLocation method
@@ -35,9 +35,8 @@ public class Main {
 
             //Room startingRoom = Rooms.getRoomById(1);
             //Character player = new Character("Player name", 100, startingRoom);
-            System.out.println("Character:\n" + player);
-            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
+            DisplayMethods.printHeader();
+            DisplayMethods.printRoomItems();
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -54,15 +53,14 @@ public class Main {
                                 isGameOver = true;
                             } else {
                             // Player did not confirm, continue the game loop
-                                System.out.println("Resuming game...");}
+                                System.out.println("Resuming game...");
+                            }
                             break;
                         case "talk":
                             //Execute the Talk Function
                             GameMethods.talk();
                             DisplayMethods.clearScreen();
-                            System.out.println("Character:\n" + player);
-                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-
+                            DisplayMethods.printHeader();
                             break;
                         case "save":
                             System.out.println("Enter a file name: ");
@@ -77,12 +75,11 @@ public class Main {
                             break;
                         case "map":
                             DisplayMethods.clearScreen();
-                            DisplayMethods.printTextFile("textFiles/Castle_Map.txt");
-                            DisplayMethods.clearScreen();
+                            DisplayMethods.printTextMap();
 
-                            System.out.println("Character:\n" + player);
-                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
@@ -94,9 +91,8 @@ public class Main {
                             //Execute the Move Function
                             GameMethods.moveRoom(verbsAndNouns.get(1));
                             DisplayMethods.clearScreen();
-                            System.out.println("Character:\n" + player);
-                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         case "look":
                             //Execute the Look Function
@@ -107,16 +103,15 @@ public class Main {
                             //Execute the GetItem Function
                             GameMethods.getItem(verbsAndNouns.get(1));
                             DisplayMethods.clearScreen();
-                            System.out.println("Character:\n" + player);
-                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         case "drop":
                             //Exectue the DROP Function
                             GameMethods.dropItem(verbsAndNouns.get(1));
                             DisplayMethods.clearScreen();
-                            System.out.println("Character:\n" + player);
-                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         default:
                             break;

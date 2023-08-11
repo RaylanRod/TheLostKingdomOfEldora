@@ -157,7 +157,7 @@
         "west": null,
         "up": 9,
         "down": 10},
-      "items": [{}],
+      "items": [],
       "NPC": {
         "name": "Enigma",
         "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind.\nSolve my riddles, and I shall grant you hints to guide your path.\nFail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",

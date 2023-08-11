@@ -67,8 +67,7 @@ public class Character {
         return  "Name: " + name +
                 ", Current Health: " + health +
                 ", Current Room: " + roomName +
-                ", Current Inventory: " + inventory.keySet() +
-                '\n';
+                ", Current Inventory: " + inventory.keySet() + '\n';
     }
 
     //    private String getName() {
