@@ -37,6 +37,7 @@ public class Main {
             //Character player = new Character("Player name", 100, startingRoom);
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
+            Attack.printRoomNPC();//test line for now
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -83,6 +84,8 @@ public class Main {
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             break;
+                        case "attack":
+                            Attack.attack();
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
