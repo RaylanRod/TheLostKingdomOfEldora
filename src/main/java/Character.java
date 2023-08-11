@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Character {
+public class Character extends Colors {
     private String name;
     private int health;
     private int currentRoom;
@@ -64,10 +64,10 @@ public class Character {
 
     @Override
     public String toString() {
-        return  "Name: " + name +
-                ", Current Health: " + health +
-                ", Current Room: " + roomName +
-                ", Current Inventory: " + inventory.keySet() + '\n';
+        return  green + "Name: " + blue + name + green +
+                ", Current Health: " + blue + health + green +
+                ", Current Room: " + blue + roomName + green +
+                ", Current Inventory: " + blue + inventory.keySet() + white + '\n';
     }
 
     //    private String getName() {

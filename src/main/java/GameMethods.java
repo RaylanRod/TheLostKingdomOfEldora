@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 
-public class GameMethods {
+public class GameMethods extends Colors{
 
     public static boolean startNewGame(Scanner scanner) {
         // Prompt the player for confirmation
@@ -42,7 +42,7 @@ public class GameMethods {
 
         try {
             DisplayMethods.clearScreen();
-            System.out.println(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+            System.out.println(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
             Scanner scanner = new Scanner(System.in);
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
  //            //if the NPC name is enigma
@@ -51,9 +51,9 @@ public class GameMethods {
                 List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
-                System.out.println(randomRiddle.get("question"));
+                System.out.println(green + randomRiddle.get("question") + blue);
 //                //get the user input
-                System.out.println("Type you answer: ");
+                System.out.println(green + "Type you answer:> " + white);
                 String input = scanner.nextLine().trim().toLowerCase();
 //                //compare the user input to the riddle answer
 //                //if the answer is correct
@@ -62,14 +62,14 @@ public class GameMethods {
                     System.out.println("correct");
                 }//else
                 else {
-                    System.out.println("wrong answer");
+                    System.out.println(blue + "wrong answer" + white);
                 }
             } else {
             System.out.print("Press any key to continue...");
             scanner.nextLine();
             }
         } catch (Exception e) {
-            System.out.println("There isn't any NPC to talk to...");
+            System.out.println(blue + "There isn't any NPC to talk to..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
