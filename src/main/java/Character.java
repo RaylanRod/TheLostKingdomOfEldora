@@ -5,7 +5,7 @@ public class Character {
     private int health;
     private int currentRoom;
     private String roomName;
-    private List<String> inventory;
+    private Map<String, Object> inventory;
 
     //CTORs
     public Character() {
@@ -13,7 +13,7 @@ public class Character {
         this.health = 100;
         this.currentRoom = 1;
         this.roomName = "The Forgotten Courtyard";
-        this.inventory = null;
+        this.inventory = new HashMap<>();
     }
 
     public Character(String playerName) {
@@ -54,11 +54,11 @@ public class Character {
         this.roomName = roomName;
     }
 
-    public List<String> getInventory() {
+    public Map<String, Object> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<String> inventory) {
+    public void setInventory(Map<String, Object> inventory) {
         this.inventory = inventory;
     }
 
@@ -67,7 +67,7 @@ public class Character {
         return  "Name: " + name +
                 ", Current Health: " + health +
                 ", Current Room: " + roomName +
-                ", Current Inventory: " + inventory +
+                ", Current Inventory: " + inventory.keySet() +
                 '\n';
     }
 

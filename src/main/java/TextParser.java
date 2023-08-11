@@ -10,7 +10,7 @@ public class TextParser {
 
         // Define regular expressions for verbs and nouns
         String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece|spirit|stairs|rock)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -78,9 +78,6 @@ public class TextParser {
                 case "drop":
                     verbsAndNouns.set(0, badDrop);
                     break;
-//                case "talk":
-//                    verbsAndNouns.set(0, badTalk);
-//                    break;
                 default:
                     break;
             }
@@ -88,25 +85,25 @@ public class TextParser {
         return verbsAndNouns;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Lost Kingdom of Eldoria!");
-        System.out.println("Type 'help' for a list of commands.");
-        Scanner scanner = new Scanner(System.in);
-        String command = "";
-        List<String> response = new ArrayList<>();
-
-        while (true) {
-            System.out.print("> ");
-            command = scanner.nextLine();
-            response = extractVerbsAndNouns(command);
-
-            System.out.println(response);
-
-            //Check for game over condition or other exit conditions
-            if (response.get(0).equalsIgnoreCase("quit")) {
-                System.out.println("Exiting the game. Goodbye!");
-                break;
-            }
-        }
-    }
+//    public static void main(String[] args) {
+//        System.out.println("Welcome to Lost Kingdom of Eldoria!");
+//        System.out.println("Type 'help' for a list of commands.");
+//        Scanner scanner = new Scanner(System.in);
+//        String command = "";
+//        List<String> response = new ArrayList<>();
+//
+//        while (true) {
+//            System.out.print("> ");
+//            command = scanner.nextLine();
+//            response = extractVerbsAndNouns(command);
+//
+//            System.out.println(response);
+//
+//            //Check for game over condition or other exit conditions
+//            if (response.get(0).equalsIgnoreCase("quit")) {
+//                System.out.println("Exiting the game. Goodbye!");
+//                break;
+//            }
+//        }
+//    }
 }
