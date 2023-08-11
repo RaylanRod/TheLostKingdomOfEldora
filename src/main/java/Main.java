@@ -37,7 +37,7 @@ public class Main {
             //Character player = new Character("Player name", 100, startingRoom);
             System.out.println("Character:\n" + player);
             System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
+            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -82,13 +82,11 @@ public class Main {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            // player.moveDirection(verbsAndNouns.get(1));
                             GameMethods.moveRoom(verbsAndNouns.get(1));
                             DisplayMethods.clearScreen();
                             System.out.println("Character:\n" + player);
                             System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
-                            //System.out.println("NPCs:\n" + Rooms.getRoomById(player.getCurrentRoom()).getNPC());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
                             break;
                         case "look":
                             //Execute the Look Function
@@ -100,7 +98,6 @@ public class Main {
                             DisplayMethods.clearScreen();
                             System.out.println("Character:\n" + player);
                             System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
                             break;
                         case "drop":
                             //Exectue the DROP Function
@@ -108,7 +105,7 @@ public class Main {
                             DisplayMethods.clearScreen();
                             System.out.println("Character:\n" + player);
                             System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
-                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems().get("name") + "|\n");
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
                             break;
                         default:
                             break;

@@ -76,49 +76,74 @@ public class GameMethods {
         }
     }
 
-    public static void getItem(String item){
-        try {
-            List<String> items = Main.player.getInventory();
-            if (items == null){
-                items = new ArrayList<>();
+    public static void getItem(String itemToGet){
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(curRoomItemsArray != null) {
+            Iterator<Map<String, Object>> iterator = curRoomItemsArray.iterator();
+            while (iterator.hasNext()) {
+                Map<String, Object> item = iterator.next();
+                    if (item.get("name").equals(itemToGet)) {
+                        String itemName = (String) item.get("name");
+                        inventory.put(itemName, item);
+                        iterator.remove();
+                        break;
+                    }
             }
-            String oItem = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get("name").toString();
-            System.out.println("This is OITEM: " + oItem);
-            items.add(0, oItem);
-            Main.player.setInventory(items);
-            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().remove("name");
-        } catch (Exception e) {
+        } else {
             System.out.println("There isn't an item to take...");
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
+        System.out.println("current room array" + curRoomItemsArray);
     }
 
-    public static void dropItem(String item){
-        try {
-            List<String> items = Main.player.getInventory();
-            if (items == null || items.isEmpty()) {
-                System.out.println("Your inventory is empty. Nothing to drop.");
-                return;
-            }
-
-            if (!items.contains(item)) {
-                System.out.println("Item not found in your inventory.");
-                return;
-            }
-
-            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().put("name", item);
-            items.remove(item);
-            Main.player.setInventory(items);
-
-            System.out.println("You have dropped the item: " + item);
-        } catch (Exception e) {
-            System.out.println("An error occurred while dropping the item.");
-            System.out.print("Press any key to continue...");
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+    public static void dropItem(String itemToDrop){
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(inventory == null || inventory.isEmpty()) {
+            System.out.println("Your inventory is empty. Nothing to drop.");
+            return;
         }
+
+        if (!inventory.containsKey(itemToDrop)){
+            System.out.println("Item not found in your inventory.");
+            return;
+        }
+        Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
+        if (droppedItem != null) {
+            curRoomItemsArray.add(droppedItem);
+            System.out.println("you dropped: " + itemToDrop);
+            System.out.println("Dropped items in the room " + curRoomItemsArray);
+        } else {
+            System.out.println("Failed to drop the item.");
+        }
+
+
+//        try {
+//            List<String> items = Main.player.getInventory();
+//            if (items == null || items.isEmpty()) {
+//                System.out.println("Your inventory is empty. Nothing to drop.");
+//                return;
+//            }
+//
+//            if (!items.contains(item)) {
+//                System.out.println("Item not found in your inventory.");
+//                return;
+//            }
+//
+//            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().put("name", item);
+//            items.remove(item);
+//            Main.player.setInventory(items);
+//
+//            System.out.println("You have dropped the item: " + item);
+//        } catch (Exception e) {
+//            System.out.println("An error occurred while dropping the item.");
+//            System.out.print("Press any key to continue...");
+//            Scanner scanner = new Scanner(System.in);
+//            scanner.nextLine();
+//        }
     }
 
 
@@ -182,31 +207,14 @@ public class GameMethods {
             e.printStackTrace();
         }
 
-//        try {
-//
-//            FileOutputStream file = new FileOutputStream(new File(path));
-//            ObjectOutputStream output = new ObjectOutputStream(file);
-//
-//            output.writeObject(data);
-//            output.close();
-//
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
+
 
 }
 
 //class Tests {
 //    public static void main(String[] args) {
-//        String path = "src\\main\\resources\\json\\fileTest.json";
-//        GameState gameState = new GameState();
-//        try {
-//            GameMethods.saveJSONFile(path, gameState);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//    getItem()
 //    }
 //}
 //        // Load rooms and items from JSON files
