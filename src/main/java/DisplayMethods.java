@@ -30,7 +30,7 @@ public class DisplayMethods {
             throw new RuntimeException(e);
         }
 
-        System.out.print("Press Enter to begin your adventure...");
+        System.out.print("Press any key to continue...");
         // Wait for the player to press Enter before continuing
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();

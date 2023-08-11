@@ -65,7 +65,7 @@ public class Main {
 
                             break;
                         case "save":
-                            System.out.println("enter a file name: ");
+                            System.out.println("Enter a file name: ");
                             String fileName = scanner.nextLine();
                             String filePath = "src\\main\\resources\\json\\" + fileName + ".json";
                             try {
@@ -74,6 +74,16 @@ public class Main {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            break;
+                        case "map":
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printTextFile("textFiles/Castle_Map.txt");
+                            DisplayMethods.clearScreen();
+
+                            System.out.println("Character:\n" + player);
+                            System.out.println("Description:\n" + Rooms.getRoomById(player.getCurrentRoom()).getDescription());
+                            System.out.println("Things in the Room: |" + Rooms.getRoomById(player.getCurrentRoom()).getItems() + "|\n");
+                            break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
