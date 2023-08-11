@@ -90,7 +90,8 @@ public class Main {
                             break;
                         case "look":
                             //Execute the Look Function
-                            System.out.println("I'm executing the LOOK function to see: " + verbsAndNouns.get(1));
+                            GameMethods.look(verbsAndNouns.get(1));
+//                            System.out.println("I'm executing the LOOK function to see: " + verbsAndNouns.get(1));
                             break;
                         case "get":
                             //Execute the GetItem Function

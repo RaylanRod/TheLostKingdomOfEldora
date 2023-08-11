@@ -76,6 +76,26 @@ public class GameMethods {
         }
     }
 
+    public static void look(String itemToLookAT){
+            DisplayMethods.clearScreen();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(curRoomItemsArray != null) {
+            for(Map<String, Object> item : curRoomItemsArray){
+                if(item.get("name").equals(itemToLookAT)){
+                    System.out.println(itemToLookAT + " description: " + item.get("description"));
+                    System.out.println(itemToLookAT + " usage: " + item.get("usage"));
+                }
+            }
+        } else {
+
+            System.out.println("There isn't any NPC to talk to...");
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
     public static void getItem(String itemToGet){
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
