@@ -86,10 +86,10 @@ public class Main {
                             DisplayMethods.printRoomItems();
                             break;
                         case "play":
-                              musicPlayer.play();
+                               musicPlayer.play();
                             break;
                         case "stop":
-                              musicPlayer.stop();
+                               musicPlayer.stop();
                             break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
