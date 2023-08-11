@@ -1,13 +1,15 @@
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.nio.file.Files;
 import java.util.*;
 import java.io.IOException;
 
 public class Main {
     public static Character player = new Character();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // Load JSON files
         try {
           Rooms.loadRoomsFromJSON();
@@ -35,6 +37,8 @@ public class Main {
 
             //Room startingRoom = Rooms.getRoomById(1);
             //Character player = new Character("Player name", 100, startingRoom);
+            MusicPlayer musicPlayer = new MusicPlayer("src/main/resources/audioFiles/hauntedCastle.wav");
+            musicPlayer.play();
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
 
@@ -77,15 +81,20 @@ public class Main {
                         case "map":
                             DisplayMethods.clearScreen();
                             DisplayMethods.printTextMap();
-
-
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             break;
+                        case "play":
+                              musicPlayer.play();
+                            break;
+                        case "stop":
+                              musicPlayer.stop();
+                            break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
+
                     }
                 } else {
                     switch (verbsAndNouns.get(0)) {

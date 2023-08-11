@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 
-public class DisplayMethods extends Colors{
+public class DisplayMethods extends Colors {
 
     public static void printTextJsonFile(String fileName){
         try{
@@ -27,7 +27,7 @@ public class DisplayMethods extends Colors{
         if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0){
             System.out.print(green + "Things in the Room: | " + blue);
             for (int i=0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i ) {
-                System.out.print(Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
+                System.out.print(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
             }
             System.out.println("\n");
         } else {
