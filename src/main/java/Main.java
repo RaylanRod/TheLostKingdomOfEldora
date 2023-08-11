@@ -61,6 +61,7 @@ public class Main {
                             GameMethods.talk();
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         case "save":
                             System.out.println("Enter a file name: ");
@@ -76,6 +77,7 @@ public class Main {
                         case "map":
                             DisplayMethods.clearScreen();
                             DisplayMethods.printTextMap();
+
 
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
