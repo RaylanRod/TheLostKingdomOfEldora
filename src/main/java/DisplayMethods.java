@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 
-public class DisplayMethods extends Colors {
+public class DisplayMethods extends Colors{
 
     public static void printTextJsonFile(String fileName){
         try{
@@ -27,11 +27,20 @@ public class DisplayMethods extends Colors {
         if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0){
             System.out.print(green + "Things in the Room: | " + blue);
             for (int i=0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i ) {
-                System.out.print(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
+                System.out.print(Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
             }
             System.out.println("\n");
         } else {
             System.out.println(green + "Things in the Room: |" + blue +" Nothing in the room " + green +"|\n" + white);
+        }
+    }
+
+    public static void printRoomNPC(){
+        Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+        try {
+            System.out.println(green + "Characters in Room: | "+ blue + roomNPC + green+ " |\n" + white);
+        } catch (Exception e) {
+            System.out.println(green +"There are no Characters in this room.\n" + white);
         }
     }
 

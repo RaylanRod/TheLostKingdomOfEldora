@@ -43,6 +43,8 @@ public class Main extends Colors {
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
             System.out.println(purple+"Music is playing. To turn off the music just type 'stop'; to start just type 'play'; adjust volum type 'adjust' and a level from '1' to '10'....."+white);
+            
+            DisplayMethods.printRoomNPC();
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -68,6 +70,7 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "save":
                             System.out.println("Enter a file name: ");
@@ -86,6 +89,7 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "play":
                             musicPlayer.play();
@@ -131,6 +135,7 @@ public class Main extends Colors {
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             break;
+
                         case "adjust":
                             //Execute the Adjust Function
                             double adjustTo = Double.parseDouble(verbsAndNouns.get(1));
@@ -140,6 +145,13 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            break;
+                        
+                        case "attack":
+                            GameMethods.attack();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         default:
                             break;

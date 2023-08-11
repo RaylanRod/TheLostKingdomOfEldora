@@ -8,7 +8,8 @@ public class TextParser extends Colors{
 
         List<String> verbsAndNouns = new ArrayList<>();
 
-        // Define regular expressions for verbs and nouns
+        // Define regular expressions for verbs and noun
+      
         String verbRegex = "\\b(?:adjust|drop|get|help|look|map|move|play|save|stop|talk|quit)\\b";
         String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding|1|2|3|4|5|6|7|8|9|10)\\b";
 
@@ -40,6 +41,9 @@ public class TextParser extends Colors{
 
         // Move for input of an invalid Noun
         String badAdjust = red+"You didn't enter a correct level (1-10) to adjust the volume to.  Please try again"+white;
+
+        // Attack for input of an invalid Noun
+        String badAttack = "You didn't enter a NPC to attack.  Please try again";
 
         // Invalid Command
         String badCommand = red+"I don't understand, please try again.  Type 'Help' for a list of commands."+white;
@@ -82,6 +86,10 @@ public class TextParser extends Colors{
                     break;
                 case "adjust":
                     verbsAndNouns.set(0, badAdjust);
+                    break;
+                case "attack":
+                    verbsAndNouns.set(0, badAttack);
+                    break;
                 default:
                     break;
             }
