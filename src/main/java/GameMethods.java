@@ -160,9 +160,7 @@ public class GameMethods {
 //            System.out.println("You have dropped the item: " + item);
 //        } catch (Exception e) {
 //            System.out.println("An error occurred while dropping the item.");
-//            System.out.print("Press any key to continue...");
-//            Scanner scanner = new Scanner(System.in);
-//            scanner.nextLine();
+
 //        }
     }
 
