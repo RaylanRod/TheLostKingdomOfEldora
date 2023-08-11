@@ -9,8 +9,8 @@ public class TextParser {
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save|map|attack)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding|bardleston)\\b";
+        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save|map|play|stop|attack)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -19,7 +19,7 @@ public class TextParser {
         Matcher nounMatcher = nounPattern.matcher(input.toLowerCase());
 
         // Verbs that should not have any nouns associated with it
-        List<String> verbsOnly = Arrays.asList("quit", "help", "talk", "map");
+        List<String> verbsOnly = Arrays.asList("quit", "help", "talk", "map", "play", "stop");
 
         //Create Return Statements:
 
