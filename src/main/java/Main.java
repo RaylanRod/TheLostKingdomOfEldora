@@ -41,7 +41,7 @@ public class Main {
             musicPlayer.play();
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
-            Attack.printRoomNPC();//test line for now
+            DisplayMethods.printRoomNPC();
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -67,6 +67,7 @@ public class Main {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "save":
                             System.out.println("Enter a file name: ");
@@ -82,11 +83,10 @@ public class Main {
                         case "map":
                             DisplayMethods.clearScreen();
                             DisplayMethods.printTextMap();
-
-
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "play":
                                musicPlayer.play();
@@ -94,8 +94,6 @@ public class Main {
                         case "stop":
                                musicPlayer.stop();
                             break;
-                        case "attack":
-                            Attack.attack();
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
@@ -128,6 +126,12 @@ public class Main {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            break;
+                        case "attack":
+                            GameMethods.attack();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         default:
                             break;

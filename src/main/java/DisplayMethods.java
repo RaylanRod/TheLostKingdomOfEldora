@@ -35,6 +35,15 @@ public class DisplayMethods extends Colors{
         }
     }
 
+    public static void printRoomNPC(){
+        Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+        try {
+            System.out.println(green + "Characters in Room: | "+ blue + roomNPC + green+ " |\n" + white);
+        } catch (Exception e) {
+            System.out.println(green +"There are no Characters in this room.\n" + white);
+        }
+    }
+
     public static void printTextFile(String fileName) {
         // Prints the opening splash screen
         //noinspection ConstantConditions
