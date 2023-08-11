@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.util.*;
 import java.io.IOException;
 
-public class Main {
+public class Main extends Colors {
     public static Character player = new Character();
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // Load JSON files
@@ -37,10 +37,12 @@ public class Main {
 
             //Room startingRoom = Rooms.getRoomById(1);
             //Character player = new Character("Player name", 100, startingRoom);
-            MusicPlayer musicPlayer = new MusicPlayer("src/main/resources/audioFiles/hauntedCastle.wav");
+            MusicPlayer musicPlayer = new MusicPlayer("audioFiles/hauntedCastle.wav");
             musicPlayer.play();
+            musicPlayer.setVolume((float) 7.0/10);
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
+            System.out.println(purple+"Music is playing. To turn off the music just type 'stop'; to start just type 'play'; adjust volum type 'adjust' and a level from '1' to '10'....."+white);
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -57,7 +59,7 @@ public class Main {
                                 isGameOver = true;
                             } else {
                             // Player did not confirm, continue the game loop
-                                System.out.println("Resuming game...");
+                                System.out.println(blue + "Resuming game..." + white);
                             }
                             break;
                         case "talk":
@@ -70,7 +72,7 @@ public class Main {
                         case "save":
                             System.out.println("Enter a file name: ");
                             String fileName = scanner.nextLine();
-                            String filePath = "src\\main\\resources\\json\\" + fileName + ".json";
+                            String filePath = fileName + ".json";
                             try {
                                 GameMethods.saveJSONFile(filePath, player);
                                 System.out.println("game saved");
@@ -86,10 +88,16 @@ public class Main {
                             DisplayMethods.printRoomItems();
                             break;
                         case "play":
-                               musicPlayer.play();
+                            musicPlayer.play();
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         case "stop":
-                               musicPlayer.stop();
+                            musicPlayer.stop();
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
@@ -108,7 +116,6 @@ public class Main {
                         case "look":
                             //Execute the Look Function
                             GameMethods.look(verbsAndNouns.get(1));
-//                            System.out.println("I'm executing the LOOK function to see: " + verbsAndNouns.get(1));
                             break;
                         case "get":
                             //Execute the GetItem Function
@@ -118,8 +125,18 @@ public class Main {
                             DisplayMethods.printRoomItems();
                             break;
                         case "drop":
-                            //Exectue the DROP Function
+                            //Execute the Drop Function
                             GameMethods.dropItem(verbsAndNouns.get(1));
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
+                            break;
+                        case "adjust":
+                            //Execute the Adjust Function
+                            double adjustTo = Double.parseDouble(verbsAndNouns.get(1));
+                            adjustTo = adjustTo/10;
+                            float level = (float)adjustTo;
+                            musicPlayer.setVolume(level);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
@@ -131,6 +148,6 @@ public class Main {
             }
 
             // Game loop ends here
-            System.out.println("Thank you for playing The Lost Kingdom of Eldoria!");
+            System.out.println(blue + "Thank you for playing The Lost Kingdom of Eldoria!" + white);
         }
     }}

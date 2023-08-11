@@ -2,15 +2,15 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TextParser {
+public class TextParser extends Colors{
 
     public static List<String> extractVerbsAndNouns(String input) {
 
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save|map|play|stop)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding)\\b";
+        String verbRegex = "\\b(?:adjust|drop|get|help|look|map|move|play|save|stop|talk|quit)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding|1|2|3|4|5|6|7|8|9|10)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -24,22 +24,25 @@ public class TextParser {
         //Create Return Statements:
 
         // Commands Extractor to String to List
-        String stringOfCommands = verbRegex.replace("\\b(?:", "").replace(")\\b", "");
+        String stringOfCommands = verbRegex.replace("\\b(?:", blue+""+blue).replace(")\\b", blue+""+ white);
 
         // Look for input of an invalid Noun
-        String badLook = "You didn't enter an item to look at.  Please try again";
+        String badLook = red+"You didn't enter an item to look at.  Please try again"+white;
 
         // Get for input of an invalid Noun
-        String badGet = "You didn't enter an item to get.  Please try again";
+        String badGet = red+"You didn't enter an item to get.  Please try again"+white;
 
         // Drop for input of an invalid item
-        String badDrop = "You didn't enter an item to drop.  Please try again";
+        String badDrop = red+"You didn't enter an item to drop.  Please try again"+white;
 
         // Move for input of an invalid Noun
-        String badMove = "You didn't enter a location to move to.  Please try again";
+        String badMove = red+"You didn't enter a location to move to.  Please try again"+white;
+
+        // Move for input of an invalid Noun
+        String badAdjust = red+"You didn't enter a correct level (1-10) to adjust the volume to.  Please try again"+white;
 
         // Invalid Command
-        String badCommand = "I don't understand, please try again.  Type 'Help' for a list of commands.";
+        String badCommand = red+"I don't understand, please try again.  Type 'Help' for a list of commands."+white;
 
         // Extract verb
         while (verbMatcher.find()) {
@@ -77,6 +80,8 @@ public class TextParser {
                 case "drop":
                     verbsAndNouns.set(0, badDrop);
                     break;
+                case "adjust":
+                    verbsAndNouns.set(0, badAdjust);
                 default:
                     break;
             }
