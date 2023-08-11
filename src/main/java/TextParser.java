@@ -9,8 +9,8 @@ public class TextParser {
         List<String> verbsAndNouns = new ArrayList<>();
 
         // Define regular expressions for verbs and nouns
-        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save|map|play|stop)\\b";
-        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding)\\b";
+        String verbRegex = "\\b(?:look|quit|get|move|talk|drop|help|save|map|play|stop|attack)\\b";
+        String nounRegex = "\\b(?:north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding|bardleston)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);
         Pattern nounPattern = Pattern.compile(nounRegex, Pattern.CASE_INSENSITIVE);
@@ -37,6 +37,9 @@ public class TextParser {
 
         // Move for input of an invalid Noun
         String badMove = "You didn't enter a location to move to.  Please try again";
+
+        // Attack for input of an invalid Noun
+        String badAttack = "You didn't enter a NPC to attack.  Please try again";
 
         // Invalid Command
         String badCommand = "I don't understand, please try again.  Type 'Help' for a list of commands.";
@@ -76,6 +79,9 @@ public class TextParser {
                     break;
                 case "drop":
                     verbsAndNouns.set(0, badDrop);
+                    break;
+                case "attack":
+                    verbsAndNouns.set(0, badAttack);
                     break;
                 default:
                     break;

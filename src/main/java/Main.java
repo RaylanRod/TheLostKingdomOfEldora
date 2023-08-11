@@ -41,6 +41,7 @@ public class Main {
             musicPlayer.play();
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
+            DisplayMethods.printRoomNPC();
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -66,6 +67,7 @@ public class Main {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "save":
                             System.out.println("Enter a file name: ");
@@ -84,6 +86,7 @@ public class Main {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "play":
                                musicPlayer.play();
@@ -123,6 +126,12 @@ public class Main {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            break;
+                        case "attack":
+                            GameMethods.attack();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         default:
                             break;
