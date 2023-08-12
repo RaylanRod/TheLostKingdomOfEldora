@@ -14,7 +14,7 @@ public class Main extends Colors {
         try {
           Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
-            System.out.println("Error loading game data: " + e.getMessage());
+            System.out.println(red + "Error loading game data: " + e.getMessage() + white);
             return;
         }
 
@@ -29,22 +29,19 @@ public class Main extends Colors {
 
         // Ask the player if they want to start a new game
         if (GameMethods.startNewGame(scanner)) {
-            // GameState gameState = new GameState();
             DisplayMethods.clearScreen();
 
-            // Player is starting in room ID, pass it to the playerLocation method
-            // GameMethods.playerLocation(1);
-
-            //Room startingRoom = Rooms.getRoomById(1);
-            //Character player = new Character("Player name", 100, startingRoom);
+            //Music section
             MusicPlayer musicPlayer = new MusicPlayer("audioFiles/hauntedCastle.wav");
             musicPlayer.play();
             musicPlayer.setVolume((float) 7.0/10);
+
+            //Display Info
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
-            System.out.println(purple+"Music is playing. To turn off the music just type 'stop'; to start just type 'play'; adjust volum type 'adjust' and a level from '1' to '10'....."+white);
-            
             DisplayMethods.printRoomNPC();
+            System.out.println(purple+"Music is playing. To turn off the music just type 'stop'; to start just type 'play'; adjust volum type 'adjust' and a level from '1' to '10'....."+white);
+
 
             while (!isGameOver) {
                 // Display the prompt to the player and read their input
@@ -73,11 +70,12 @@ public class Main extends Colors {
                             DisplayMethods.printRoomNPC();
                             break;
                         case "save":
-                            System.out.println("Enter a file name: ");
+                            System.out.print(blue + "Enter a file name: > " + white);
                             String fileName = scanner.nextLine();
                             String filePath = fileName + ".json";
                             try {
                                 GameMethods.saveJSONFile(filePath, player);
+                                GameMethods.saveJSONFile(fileName+"-rooms.json", Rooms.getAllRooms());
                                 System.out.println("game saved");
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -96,12 +94,14 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "stop":
                             musicPlayer.stop();
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
@@ -116,6 +116,7 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "look":
                             //Execute the Look Function
@@ -127,6 +128,7 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         case "drop":
                             //Execute the Drop Function
@@ -134,6 +136,7 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
 
                         case "adjust":
@@ -145,12 +148,14 @@ public class Main extends Colors {
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             break;
                         
                         case "attack":
                             GameMethods.attack();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
                             DisplayMethods.printRoomNPC();
                             break;
                         default:

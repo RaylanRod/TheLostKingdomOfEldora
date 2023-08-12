@@ -43,7 +43,7 @@ public class TextParser extends Colors{
         String badAdjust = red+"You didn't enter a correct level (1-10) to adjust the volume to.  Please try again"+white;
 
         // Attack for input of an invalid Noun
-        String badAttack = "You didn't enter a NPC to attack.  Please try again";
+        String badAttack = red+"You didn't enter a NPC to attack.  Please try again"+white;
 
         // Invalid Command
         String badCommand = red+"I don't understand, please try again.  Type 'Help' for a list of commands."+white;

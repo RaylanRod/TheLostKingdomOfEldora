@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import org.ietf.jgss.GSSManager;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
@@ -28,6 +29,17 @@ public class Rooms {
             }
             return null; // If the room is not found, return null
         }
+
+    public static List<Room> getAllRooms() {
+        //return all rooms
+        List<Room> allRooms = new ArrayList<>();
+        for (Room room : rooms) {
+            allRooms.add(room);
+        }
+        return allRooms; // If the room is not found, return null
+    }
+
+
 
 
 //    public static void printRoomInfo(int roomId) {

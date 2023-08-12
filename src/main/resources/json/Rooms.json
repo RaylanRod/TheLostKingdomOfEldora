@@ -2,7 +2,7 @@
     {
       "roomId": 1,
       "name": "The Forgotten Courtyard",
-      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom.\nNow, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\nTo the north you see a grand gateway to enter the once majestic Kingdom.\nTo the east you see decaying grass creeping onto a stone pathway leading to something in the distance.\nTo the west you see a beautiful flowered archway flowing into a lush green gardenscape.\n",
+      "description": "A crumbling courtyard surrounded by grand archways, once a majestic entrance to the kingdom.\nNow, it lies in ruins, overgrown with ivy and guarded by ancient stone statues.\nTo the north you see a grand gateway to enter the once majestic Kingdom.\nTo the east you see decaying grass creeping onto a stone pathway leading to something in the distance.\nTo the west you see a beautiful flowered archway flowing into a lush green gardenscape.",
       "exits": {
         "north": 2,
         "east": 3,
@@ -19,13 +19,13 @@
       }],
       "NPC": {
         "name": "Bardleston",
-        "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here.\nAn ancient prophecy speaks of a hero who will reassemble the Crown of Light.\nAre you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. You can start by seeking the Crystal Ball with a trapped spirit inside.\nIt may hold the key to a new future.\nFind it in the depths of the abandoned tower, guarded by puzzles and spectral foes.\" "
+        "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here.\nAn ancient prophecy speaks of a hero who will reassemble the Crown of Light.\nAre you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. You can start by seeking the Crystal Ball with a trapped spirit inside.\nIt may hold the key to a new future.\nFind it in the depths of the abandoned tower, guarded by puzzles and spectral foes."
       }
       },
     {
       "roomId": 2,
       "name": "The Enchanted Ballroom",
-      "description": "An opulent ballroom frozen in time, adorned with shimmering chandeliers and exquisite décor. \nSoft music plays from an unseen source, and faint footsteps echo.\nBefore you, to the north, you see an embroidered golden doorway encrested with the finest jewels and gems of the land.\nTo the east, you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room adorned with books on every wall, screaming with silence.\nTo the south, you see the courtyard that began your journey.\n",
+      "description": "An opulent ballroom frozen in time, adorned with shimmering chandeliers and exquisite décor. \nSoft music plays from an unseen source, and faint footsteps echo.\nBefore you, to the north, you see an embroidered golden doorway encrested with the finest jewels and gems of the land.\nTo the east, you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room adorned with books on every wall, screaming with silence.\nTo the south, you see the courtyard that began your journey.",
       "exits": {
         "north": 5,
         "east": 7,
@@ -247,7 +247,7 @@
     {
       "roomId": 7,
       "name": "The Haunted Gallery",
-      "description": "A gallery filled with portraits of the past royals, each with haunting eyes that seem to follow your every move.\nWhispers of betrayal and tragedy fill the air.\nTo the north you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the west you see the doorway back to the ballroom.\n",
+      "description": "A gallery filled with portraits of the past royals, each with haunting eyes that seem to follow your every move.\nWhispers of betrayal and tragedy fill the air.\nTo the north you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the west you see the doorway back to the ballroom.",
       "exits": {
         "north": 8,
         "east": null,
@@ -270,7 +270,7 @@
     {
       "roomId": 8,
       "name": "The Starlit Observatory ",
-      "description": "A domed observatory atop the Kingdoms tallest tower, revealing a breathtaking view of the night sky.\nConstellations and celestial bodies adorn the ceiling.\nTo the south you see you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room with a golden throne perfectly centered within.\n",
+      "description": "A domed observatory atop the Kingdoms tallest tower, revealing a breathtaking view of the night sky.\nConstellations and celestial bodies adorn the ceiling.\nTo the south you see you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room with a golden throne perfectly centered within.",
       "exits": {
         "north": null,
         "east": null,
