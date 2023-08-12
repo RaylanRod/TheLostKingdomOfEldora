@@ -31,7 +31,7 @@ public class GameMethods extends Colors{
            Main.player.setCurrentRoom(newRoom);
            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
        } catch (Exception e) {
-           System.out.println("You entered an INVALID direction");
+           System.out.println(red + "You entered an INVALID direction" + red);
            System.out.print("Press any key to continue...");
            Scanner scanner = new Scanner(System.in);
            scanner.nextLine();
@@ -39,7 +39,6 @@ public class GameMethods extends Colors{
     }
 
     public static void talk(){
-
         try {
             DisplayMethods.clearScreen();
             System.out.println(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
@@ -62,7 +61,7 @@ public class GameMethods extends Colors{
                     System.out.println("correct");
                 }//else
                 else {
-                    System.out.println(blue + "wrong answer" + white);
+                    System.out.println(red + "wrong answer" + white);
                 }
             } else {
             System.out.print("Press any key to continue...");
@@ -89,7 +88,7 @@ public class GameMethods extends Colors{
             }
         } else {
 
-            System.out.println("There isn't any NPC to talk to...");
+            System.out.println(red + "There isn't any NPC to talk to..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
@@ -111,7 +110,7 @@ public class GameMethods extends Colors{
                     }
             }
         } else {
-            System.out.println("There isn't an item to take...");
+            System.out.println(red + "There isn't an item to take..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
@@ -123,7 +122,7 @@ public class GameMethods extends Colors{
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(inventory == null || inventory.isEmpty()) {
-            System.out.println("Your inventory is empty. Nothing to drop.");
+            System.out.println(red + "Your inventory is empty. Nothing to drop." + white);
             return;
         }
 
@@ -134,10 +133,10 @@ public class GameMethods extends Colors{
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
-            System.out.println("you dropped: " + itemToDrop);
-            System.out.println("Dropped items in the room " + curRoomItemsArray);
+            System.out.println(blue + "You dropped: " + green + itemToDrop + white);
+            System.out.println(blue + "Dropped items in the room " + green +  curRoomItemsArray + white);
         } else {
-            System.out.println("Failed to drop the item.");
+            System.out.println(red + "Failed to drop the item." + white);
         }
 
 
@@ -209,7 +208,7 @@ public class GameMethods extends Colors{
         }
     }
 
-    public static <T> void saveJSONFile(String path, Character data) throws IOException {
+    public static <T> void saveJSONFile(String path, T data) throws IOException {
         try {
             Gson gson = new Gson();
             String jsonData = gson.toJson(data);
@@ -226,6 +225,16 @@ public class GameMethods extends Colors{
         }
 
     }
+
+    public static void saveRoomsToJSON(Rooms rooms, String path) throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(rooms);
+
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(json);
+        }
+    }
+
     public static void attack(){
         try {
             DisplayMethods.clearScreen();
