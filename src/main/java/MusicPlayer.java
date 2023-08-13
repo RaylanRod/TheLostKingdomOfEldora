@@ -1,30 +1,46 @@
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class MusicPlayer {
-    private Clip clip;
+    private Clip music;
+    private Clip fx;
 
-    public MusicPlayer(String filePath) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+    public MusicPlayer(String type, String filePath) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(filePath)));
-        clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
+
+        switch (type) {
+            case "music":
+                music = AudioSystem.getClip();
+                music.open(audioInputStream);
+                break;
+            case "fx":
+                fx = AudioSystem.getClip();
+                fx.open(audioInputStream);
+                break;
+        }
     }
 
-    public void play() {
-            clip.start();
+    public void play(String item) {
+        System.out.println("NO IN PLAY AND THE item IS: " + item);
+            switch (item) {
+                case "music":
+                    music.start();
+                    break;
+                case "fx":
+                      fx.start();
+                    break;
+            }
         }
 
     public void stop() {
-            clip.stop();
-            clip.setFramePosition(0); // Rewind to the beginning
+            music.stop();
+            music.setFramePosition(0); // Rewind to the beginning
     }
 
     public void setVolume(float volume) {
-        if (clip != null) {
-            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        if (music != null) {
+            FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
             float minVolume = gainControl.getMinimum();
             float maxVolume = gainControl.getMaximum();
             float volumeRange = maxVolume - minVolume;
