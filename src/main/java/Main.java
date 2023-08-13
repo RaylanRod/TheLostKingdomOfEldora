@@ -1,14 +1,12 @@
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.nio.file.Files;
-import java.util.*;
 import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main extends Colors {
     public static Character player = new Character();
+    public static boolean aBooleanFX = true;
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // Load JSON files
         try {
@@ -17,6 +15,7 @@ public class Main extends Colors {
             System.out.println(red + "Error loading game data: " + e.getMessage() + white);
             return;
         }
+
 
         //Display Functions to act as a preface to the game starting.
         DisplayMethods.printTextFile("textFiles/Welcome_Screen.txt");
@@ -31,9 +30,10 @@ public class Main extends Colors {
         if (GameMethods.startNewGame(scanner)) {
             DisplayMethods.clearScreen();
 
-            //Music section
-            MusicPlayer musicPlayer = new MusicPlayer("audioFiles/hauntedCastle.wav");
-            musicPlayer.play();
+            //Music and FX section
+            boolean playFX = true;
+            MusicPlayer musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
+            musicPlayer.play("music");
             musicPlayer.setVolume((float) 7.0/10);
 
             //Display Info
@@ -50,6 +50,7 @@ public class Main extends Colors {
                 List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
 
                 // Process the player's input and handle game actions
+                // This section is for one word actions only or if a noun is required, prints error message
                 if (verbsAndNouns.size() == 1) {
                     switch (verbsAndNouns.get(0)) {
                         case "quit":
@@ -89,20 +90,6 @@ public class Main extends Colors {
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
                             break;
-                        case "play":
-                            musicPlayer.play();
-                            DisplayMethods.clearScreen();
-                            DisplayMethods.printHeader();
-                            DisplayMethods.printRoomItems();
-                            DisplayMethods.printRoomNPC();
-                            break;
-                        case "stop":
-                            musicPlayer.stop();
-                            DisplayMethods.clearScreen();
-                            DisplayMethods.printHeader();
-                            DisplayMethods.printRoomItems();
-                            DisplayMethods.printRoomNPC();
-                            break;
                         default:
                             System.out.println(verbsAndNouns.get(0));
                             break;
@@ -112,7 +99,7 @@ public class Main extends Colors {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            GameMethods.moveRoom(verbsAndNouns.get(1));
+                            GameMethods.moveRoom(verbsAndNouns.get(1), playFX);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
@@ -124,7 +111,7 @@ public class Main extends Colors {
                             break;
                         case "get":
                             //Execute the GetItem Function
-                            GameMethods.getItem(verbsAndNouns.get(1));
+                            GameMethods.getItem(verbsAndNouns.get(1), playFX);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
@@ -132,8 +119,8 @@ public class Main extends Colors {
                             break;
                         case "drop":
                             //Execute the Drop Function
-                            GameMethods.dropItem(verbsAndNouns.get(1));
                             DisplayMethods.clearScreen();
+                            GameMethods.dropItem(verbsAndNouns.get(1), playFX);
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
@@ -144,18 +131,41 @@ public class Main extends Colors {
                             double adjustTo = Double.parseDouble(verbsAndNouns.get(1));
                             adjustTo = adjustTo/10;
                             float level = (float)adjustTo;
-                            musicPlayer.setVolume(level);
+                            //musicPlayer.setVolume(level);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
                             break;
-                        
+
                         case "attack":
-                            GameMethods.attack();
+                            DisplayMethods.clearScreen();
+                            GameMethods.attack(playFX);
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
+                            DisplayMethods.printRoomNPC();
+                            break;
+                        case "play":
+                            if (verbsAndNouns.get(1).equals("music")) {
+                                musicPlayer.play(verbsAndNouns.get(1));
+                            } else {
+                                playFX = true;
+                            }
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
+                            DisplayMethods.printRoomNPC();
+                            break;
+                        case "stop":
+                            if (verbsAndNouns.get(1).equals("music")) {
+                                musicPlayer.stop();
+                            } else {
+                                playFX = false;
+                            }
+                            DisplayMethods.clearScreen();
+                            DisplayMethods.printHeader();
+                            DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
                             break;
                         default:
