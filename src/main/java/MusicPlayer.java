@@ -22,14 +22,13 @@ public class MusicPlayer {
     }
 
     public void play(String item) {
-        System.out.println("NO IN PLAY AND THE item IS: " + item);
-            switch (item) {
-                case "music":
-                    music.start();
-                    break;
-                case "fx":
-                      fx.start();
-                    break;
+        switch (item) {
+            case "music":
+                music.start();
+                break;
+            case "fx":
+                fx.start();
+                break;
             }
         }
 
@@ -38,14 +37,29 @@ public class MusicPlayer {
             music.setFramePosition(0); // Rewind to the beginning
     }
 
-    public void setVolume(float volume) {
-        if (music != null) {
-            FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-            float minVolume = gainControl.getMinimum();
-            float maxVolume = gainControl.getMaximum();
-            float volumeRange = maxVolume - minVolume;
-            float gain = (volume * volumeRange) + minVolume;
-            gainControl.setValue(gain);
+    public void setVolume(String item, float volume) {
+
+        switch (item) {
+            case "music":
+                if (music != null) {
+                    FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+                    float minVolume = gainControl.getMinimum();
+                    float maxVolume = gainControl.getMaximum();
+                    float volumeRange = maxVolume - minVolume;
+                    float gain = (volume * volumeRange) + minVolume;
+                    gainControl.setValue(gain);
+                }
+                break;
+            case "fx":
+                if (fx != null) {
+                    FloatControl gainControl = (FloatControl) fx.getControl(FloatControl.Type.MASTER_GAIN);
+                    float minVolume = gainControl.getMinimum();
+                    float maxVolume = gainControl.getMaximum();
+                    float volumeRange = maxVolume - minVolume;
+                    float gain = (volume * volumeRange) + minVolume;
+                    gainControl.setValue(gain);
+                }
+                break;
         }
     }
 }
