@@ -16,7 +16,6 @@ public class Main extends Colors {
             return;
         }
 
-
         //Display Functions to act as a preface to the game starting.
         DisplayMethods.printTextFile("textFiles/Welcome_Screen.txt");
         DisplayMethods.printTextJsonFile("json/Description.json");
@@ -30,17 +29,19 @@ public class Main extends Colors {
         if (GameMethods.startNewGame(scanner)) {
             DisplayMethods.clearScreen();
 
-            //Music and FX section
+            //Music and FX setup section
             boolean playFX = true;
+            float fxVolumelevel = (float) 9.0/10;
             MusicPlayer musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
             musicPlayer.play("music");
-            musicPlayer.setVolume((float) 7.0/10);
+            musicPlayer.setVolume( "music", (float) 7.0/10);
+
 
             //Display Info
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
             DisplayMethods.printRoomNPC();
-            System.out.println(purple+"Music is playing. To turn off the music just type 'stop'; to start just type 'play'; adjust volum type 'adjust' and a level from '1' to '10'....."+white);
+            System.out.println(purple+"Music/FX is currently playing. To turn off the music or fx just type 'stop music(or fx)'; to start just type 'play music(or fx)'; adjust volume type 'volume music(or fx)'...."+white);
 
 
             while (!isGameOver) {
@@ -99,7 +100,7 @@ public class Main extends Colors {
                     switch (verbsAndNouns.get(0)) {
                         case "move":
                             //Execute the Move Function
-                            GameMethods.moveRoom(verbsAndNouns.get(1), playFX);
+                            GameMethods.moveRoom(verbsAndNouns.get(1), playFX, fxVolumelevel);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
@@ -111,7 +112,7 @@ public class Main extends Colors {
                             break;
                         case "get":
                             //Execute the GetItem Function
-                            GameMethods.getItem(verbsAndNouns.get(1), playFX);
+                            GameMethods.getItem(verbsAndNouns.get(1), playFX, fxVolumelevel);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
@@ -120,27 +121,39 @@ public class Main extends Colors {
                         case "drop":
                             //Execute the Drop Function
                             DisplayMethods.clearScreen();
-                            GameMethods.dropItem(verbsAndNouns.get(1), playFX);
+                            GameMethods.dropItem(verbsAndNouns.get(1), playFX, fxVolumelevel);
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
                             break;
-
-                        case "adjust":
-                            //Execute the Adjust Function
-                            double adjustTo = Double.parseDouble(verbsAndNouns.get(1));
-                            adjustTo = adjustTo/10;
-                            float level = (float)adjustTo;
-                            //musicPlayer.setVolume(level);
+                        case "volume":
+                            //Execute the Volume Function
+                            System.out.print("Enter the volume level from 1.0 to 10.0 > ");
+                            String stringLevel = scanner.nextLine().trim().toLowerCase();
+                            try {
+                                if (Double.parseDouble(stringLevel) < 1.0 || Double.parseDouble(stringLevel) > 10.0) {
+                                    System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                    System.out.print("Press any key to continue...");
+                                    scanner.nextLine();
+                                } else {
+                                    double adjustTo = Double.parseDouble(stringLevel);
+                                    adjustTo = adjustTo / 10;
+                                    fxVolumelevel = (float) adjustTo;
+                                    musicPlayer.setVolume(verbsAndNouns.get(1), fxVolumelevel);
+                                }
+                            } catch (Exception e){
+                                System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                System.out.print("Press any key to continue...");
+                                scanner.nextLine();
+                            }
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
                             break;
-
                         case "attack":
                             DisplayMethods.clearScreen();
-                            GameMethods.attack(playFX);
+                            GameMethods.attack(playFX, fxVolumelevel);
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
