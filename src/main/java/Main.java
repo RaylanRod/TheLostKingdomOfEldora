@@ -185,6 +185,7 @@ public class Main extends Colors {
                             break;
                     }
                 }
+                GameMethods.winGame();
             }
 
             // Game loop ends here

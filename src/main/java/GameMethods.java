@@ -219,4 +219,24 @@ public class GameMethods extends Colors{
             scanner.nextLine();
         }
     }
+
+    public static void winGame() {
+       Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
+        if(room.getRoomId() == 5) {
+            Map<String, Object> inventory = Main.player.getInventory();
+            boolean hasItem1 = inventory.containsKey("royal crown piece left");
+            boolean hasItem2 = inventory.containsKey("royal crown piece right");
+            boolean hasItem3 = inventory.containsKey("royal crown piece middle");
+            boolean hasItem4 = inventory.containsKey("royal crown piece back");
+
+            if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+                System.out.println("Congratulations! You have won the game!");
+            } else {
+                System.out.println("You are in the right room, but you need more items to win.");
+            }
+        } else {
+            System.out.println("You are not in the correct room to win the game.");
+        }
+    }
+
 }
