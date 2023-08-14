@@ -44,6 +44,15 @@ public class DisplayMethods extends Colors{
         }
     }
 
+    public static void printSuccessfulAttack(){
+        try{
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            System.out.println(purple + "You have successfully attacked: | " + blue + roomNPC + purple + " |" + white + "\n");
+        }catch (Exception e) {
+            System.out.println(purple + "There was no character to attack!!!" + white + "\n");
+        }
+    }
+
     public static void printTextFile(String fileName) {
         // Prints the opening splash screen
         //noinspection ConstantConditions
