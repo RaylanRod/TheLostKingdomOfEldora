@@ -18,7 +18,7 @@
         "can_be_used": false
       }],
       "NPC": {
-        "name": "Bardleston",
+        "name": "bardleston",
         "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here.\nAn ancient prophecy speaks of a hero who will reassemble the Crown of Light.\nAre you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. You can start by seeking the Crystal Ball with a trapped spirit inside.\nIt may hold the key to a new future.\nFind it in the depths of the abandoned tower, guarded by puzzles and spectral foes."
       }
       },
@@ -41,7 +41,7 @@
         "can_be_used": false
       }],
       "NPC": {
-        "name": "Crystal Ball with a Trapped Spirit",
+        "name": "crystal ball with a trapped spirit",
         "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \n\nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom.\nOnly a kind and brave soul can release me.\nWill you be that soul?\"  \n\nPlayer: \"I will help you find your freedom, spirit.\"  \n\nSpirit: \"Then you must venture to the depths of the kingdom to find item that bound me.\nIt will reveal the path to my liberation, and once freed, I shall become your steadfast companion.\" "
       }
     },
@@ -83,7 +83,7 @@
         "can_be_used": false
       }],
       "NPC": {
-        "name": "Enigma",
+        "name": "enigma",
         "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind.\nSolve my riddles, and I shall grant you hints to guide your path.\nFail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
 
         "riddle": [
@@ -159,7 +159,7 @@
         "down": 10},
       "items": [],
       "NPC": {
-        "name": "Enigma",
+        "name": "enigma",
         "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind.\nSolve my riddles, and I shall grant you hints to guide your path.\nFail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
         "riddle": [
           {
@@ -240,7 +240,7 @@
         "can_be_used": false
       }],
       "NPC": {
-        "name": "Librarian",
+        "name": "librarian",
         "dialog": "Player: (Enters the library, tired and wounded) \"Greetings, Librarian. I seek respite and healing.\"  \n\nLibrarian Ghost: \"Welcome, weary seeker of knowledge. \nFor a few gold coins, I shall provide you with the knowledge for mending your wounds and rejuvenating your spirit.\" \n\nPlayer: \"Thank you, Librarian. Here is the gold. I appreciate your assistance.\" "
       }
     },
@@ -263,7 +263,7 @@
         "can_be_used": true
       }],
       "NPC": {
-        "name": "Interactive Painting",
+        "name": "interactive painting",
         "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork.\nRelease me, and I shall aid you on your journey.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns.\nReplicate the sequence, and my essence shall be freed.\" "
       }
     },
@@ -324,7 +324,7 @@
         "can_be_used": true
       }],
       "NPC": {
-        "name": "Elder Vampire",
+        "name": "elder vampire",
         "dialog": "Player: (Confronts the menacing Elder Vampire in the final showdown) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal?\nThe Crown of Light will be mine once more, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
       }
     }
