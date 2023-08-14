@@ -152,12 +152,12 @@ public class Main extends Colors {
                             DisplayMethods.printRoomNPC();
                             break;
                         case "attack":
-                            DisplayMethods.clearScreen();
                             GameMethods.attack(playFX, fxVolumelevel);
+                            DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
                             DisplayMethods.printRoomItems();
                             DisplayMethods.printRoomNPC();
-                            DisplayMethods.printRoomNPC();
+                            DisplayMethods.printSuccessfulAttack();
                             break;
                         case "play":
                             if (verbsAndNouns.get(1).equals("music")) {
