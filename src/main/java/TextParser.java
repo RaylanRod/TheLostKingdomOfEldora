@@ -10,7 +10,7 @@ public class TextParser extends Colors{
 
         // Define regular expressions for verbs and noun
       
-        String verbRegex = "\\b(?:adjust|drop|get|help|look|map|move|play|quit|save|stop|talk|volume)\\b";
+        String verbRegex = "\\b(?:adjust|attack|drop|get|help|look|map|move|play|quit|save|stop|talk|volume)\\b";
         String nounRegex = "\\b(?:music|fx|north|south|east|west|up|down|vampire|crystalball|royal crown piece left|spirit|stairs|rock|royal seal|royal crown piece right|royal crown piece middle|shadow cloak|elixir of restoration|royal crown piece back|ancient amulet of binding|1|2|3|4|5|6|7|8|9|10)\\b";
 
         Pattern verbPattern = Pattern.compile(verbRegex, Pattern.CASE_INSENSITIVE);

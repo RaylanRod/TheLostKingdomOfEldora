@@ -28,13 +28,14 @@ public class GameMethods extends Colors{
         return input.equals("yes");
     }
 
-    public static void moveRoom(String direction, boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static void moveRoom(String direction, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        try {
            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
            Main.player.setCurrentRoom(newRoom);
            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
            if (playFX) {
                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
+               fxPlayer.setVolume( "fx", fxVolumeLevel);
                fxPlayer.play("fx");
            }
        } catch (Exception e) {
@@ -102,7 +103,7 @@ public class GameMethods extends Colors{
         }
     }
 
-    public static void getItem(String itemToGet, boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray.size() != 0) {
@@ -118,6 +119,7 @@ public class GameMethods extends Colors{
             }
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/getItem.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
         } else {
@@ -129,7 +131,7 @@ public class GameMethods extends Colors{
         System.out.println("current room array" + curRoomItemsArray);
     }
 
-    public static void dropItem(String itemToDrop, boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(inventory == null || inventory.isEmpty()) {
@@ -144,12 +146,13 @@ public class GameMethods extends Colors{
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
-            System.out.println(blue + "You dropped: " + green + itemToDrop + white);
+            //System.out.println(blue + "You dropped: " + green + itemToDrop + white);
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/dropItem.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
-            System.out.println(blue + "Dropped items in the room " + green +  curRoomItemsArray + white);
+            //System.out.println(blue + "Dropped items in the room " + green +  curRoomItemsArray + white);
         } else {
             System.out.println(red + "Failed to drop the item." + white);
         }
@@ -199,13 +202,14 @@ public class GameMethods extends Colors{
         }
     }
 
-    public static void attack(boolean playFX){
+    public static void attack(boolean playFX, float fxVolumeLevel){
         try {
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
             System.out.println("the target is: " + npcName);
             System.out.println("the player is attacking the target.");
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/attackNPC.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
         } catch (Exception e) {
