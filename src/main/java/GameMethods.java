@@ -232,10 +232,10 @@ public class GameMethods extends Colors{
             if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
                 System.out.println("Congratulations! You have won the game!");
             } else {
-                System.out.println("You are in the right room, but you need more items to win.");
+                System.out.println("You are in the right room to win, but you need more items to win.");
             }
         } else {
-            System.out.println("You are not in the correct room to win the game.");
+            System.out.println("You have all the pieces but you are not in the correct room to win the game.");
         }
     }
 
