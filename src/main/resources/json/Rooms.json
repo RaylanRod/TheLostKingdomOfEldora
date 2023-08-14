@@ -13,8 +13,8 @@
       "items": [{
         "itemID": 6,
         "name": "rock",
-        "description": "A simple rock for testing",
-        "usage": "Tests [grab],[inspect],[drop]",
+        "description": "A simple rock for breaking things",
+        "usage": "none",
         "can_be_used": false
       }],
       "NPC": {

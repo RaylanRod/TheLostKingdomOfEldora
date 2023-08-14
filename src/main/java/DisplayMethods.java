@@ -1,9 +1,8 @@
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -116,7 +115,7 @@ public class DisplayMethods extends Colors{
             }
                 i++;
             }
-            System.out.println("\n" + blue+"X"+green+" - denotes players current position"+white);
+            System.out.println("\n" + blue+"X"+green+" - denotes players current position; player can move north, south, east or west; up/down for stairs"+white);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
