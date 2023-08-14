@@ -6,12 +6,13 @@ public class Room {
     private String name;                // Name of the room
     private String description;         // Description of the room
     private Map<String, Integer> exits; // Map of exits from the room to other room IDs
-    private Map<String, Object> items;  // Map of items associated with the room
+    private List<Map<String, Object>> items;  // Map of items associated with the room
     private Map<String, Object> NPC;    // Map of NPC information associated with the room
+
 
     // Constructor to initialize the room properties
     public Room(int roomId, String name, String description, Map<String, Integer> exits,
-                Map<String, Object> items, Map<String, Object> NPC) {
+                List<Map<String, Object>> items, Map<String, Object> NPC) {
         this.roomId = roomId;
         this.name = name;
         this.description = description;
@@ -37,15 +38,17 @@ public class Room {
         return exits;
     }
 
-    public Map<String, Object> getItems() {
+    public List<Map<String, Object>> getItems() {
         return items;
     }
 
-    public void setItems(Map<String, Object> items) {
+    public void setItems(List<Map<String, Object>> items) {
         this.items = items;
     }
 
     public Map<String, Object> getNPC() {
         return NPC;
     }
+
+
 }

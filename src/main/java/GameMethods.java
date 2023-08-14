@@ -1,11 +1,16 @@
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
-import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 
-public class GameMethods {
+public class GameMethods extends Colors{
 
     public static boolean startNewGame(Scanner scanner) {
         // Prompt the player for confirmation
@@ -23,13 +28,18 @@ public class GameMethods {
         return input.equals("yes");
     }
 
-    public static void moveRoom(String direction){
+    public static void moveRoom(String direction, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        try {
            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
            Main.player.setCurrentRoom(newRoom);
            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+           if (playFX) {
+               MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
+               fxPlayer.setVolume( "fx", fxVolumeLevel);
+               fxPlayer.play("fx");
+           }
        } catch (Exception e) {
-           System.out.println("You entered an INVALID direction");
+           System.out.println(red + "You entered an INVALID direction" + red);
            System.out.print("Press any key to continue...");
            Scanner scanner = new Scanner(System.in);
            scanner.nextLine();
@@ -39,91 +49,115 @@ public class GameMethods {
     public static void talk(){
         try {
             DisplayMethods.clearScreen();
-            System.out.println(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
-            System.out.print("Press any key to continue...");
+            System.out.println(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
             Scanner scanner = new Scanner(System.in);
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+ //            //if the NPC name is enigma
+            if("Enigma".equalsIgnoreCase(npcName)) {
+//                //get/print a random riddle
+                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
+                int randomIndex = (int) (Math.random() * riddles.size());
+                Map<String, Object> randomRiddle = riddles.get(randomIndex);
+                System.out.println(green + randomRiddle.get("question") + blue);
+//                //get the user input
+                System.out.println(green + "Type you answer:> " + white);
+                String input = scanner.nextLine().trim().toLowerCase();
+//                //compare the user input to the riddle answer
+//                //if the answer is correct
+                if(input.equals(randomRiddle.get("answer")) ) {
+                    //print you answered correct
+                    System.out.println("correct");
+                }//else
+                else {
+                    System.out.println(red + "wrong answer" + white);
+                }
+            } else {
+            System.out.print("Press any key to continue...");
             scanner.nextLine();
+            }
         } catch (Exception e) {
-            System.out.println("There isn't any NPC to talk to...");
+            System.out.println(blue + "There isn't any NPC to talk to..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
     }
 
-    public static void getItem(String item){
-        try {
-            List<String> items = Main.player.getInventory();
-            if (items == null){
-                items = new ArrayList<>();
+    public static void look(String itemToLookAT){
+            DisplayMethods.clearScreen();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(curRoomItemsArray != null) {
+            for(Map<String, Object> item : curRoomItemsArray){
+                if(item.get("name").equals(itemToLookAT)){
+                    System.out.println(green + " Description: " + blue + item.get("description") +white);
+                    System.out.println(green + " Usage: " + blue + item.get("usage") + white);
+                }
             }
-            String oItem = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get("name").toString();
-            System.out.println("This is OITEM: " + oItem);
-            items.add(0, oItem);
-            Main.player.setInventory(items);
-            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().remove("name");
-        } catch (Exception e) {
-            System.out.println("There isn't an item to take...");
+        } else {
+
+            System.out.println(red + "There isn't anything to look at..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
     }
 
-    public static void dropItem(String item){
-        try {
-            List<String> items = Main.player.getInventory();
-            if (items == null || items.isEmpty()) {
-                System.out.println("Your inventory is empty. Nothing to drop.");
-                return;
+    public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(curRoomItemsArray.size() != 0) {
+            Iterator<Map<String, Object>> iterator = curRoomItemsArray.iterator();
+            while (iterator.hasNext()) {
+                Map<String, Object> item = iterator.next();
+                    if (item.get("name").equals(itemToGet)) {
+                        String itemName = (String) item.get("name");
+                        inventory.put(itemName, item);
+                        iterator.remove();
+                        break;
+                    }
             }
-
-            if (!items.contains(item)) {
-                System.out.println("Item not found in your inventory.");
-                return;
+            if (playFX) {
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/getItem.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
+                fxPlayer.play("fx");
             }
-
-            Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().put("name", item);
-            items.remove(item);
-            Main.player.setInventory(items);
-
-            System.out.println("You have dropped the item: " + item);
-        } catch (Exception e) {
-            System.out.println("An error occurred while dropping the item.");
+        } else {
+            System.out.println(red + "There isn't an item to take..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
+        System.out.println("current room array" + curRoomItemsArray);
     }
 
+    public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        Map<String, Object> inventory = Main.player.getInventory();
+        if(inventory == null || inventory.isEmpty()) {
+            System.out.println(red + "Your inventory is empty. Nothing to drop." + white);
+            return;
+        }
 
-    public static void drop(String item){
-//        try {
-//            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
-//            Main.player.setCurrentRoom(newRoom);
-//            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
-//        } catch (Exception e) {
-//            System.out.println("There isn't any item to drop...");
-//            System.out.print("Press any key to continue...");
-//            Scanner scanner = new Scanner(System.in);
-//            scanner.nextLine();
-//        }
+        if (!inventory.containsKey(itemToDrop)){
+            System.out.println("Item not found in your inventory.");
+            return;
+        }
+        Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
+        if (droppedItem != null) {
+            curRoomItemsArray.add(droppedItem);
+            //System.out.println(blue + "You dropped: " + green + itemToDrop + white);
+            if (playFX) {
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/dropItem.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
+                fxPlayer.play("fx");
+            }
+            //System.out.println(blue + "Dropped items in the room " + green +  curRoomItemsArray + white);
+        } else {
+            System.out.println(red + "Failed to drop the item." + white);
+        }
+
     }
-
-//    public static void playerLocation(int roomId) {
-//        // Get the Room object from the Rooms class using the provided roomId
-//        Room room = Rooms.getRoomById(roomId);
-//
-//        // Check if the room object is not null, meaning the room with the given ID was found
-//        if (room != null) {
-//            // Display the room name and description to the player
-//            System.out.println("You are in the " + room.getName());
-//            System.out.println(room.getDescription());
-//        } else {
-//            // The room with the provided ID was not found in the game's rooms collection
-//            System.out.println("Invalid room ID. Unable to determine your location.");
-//        }
-//    }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
         //noinspection ConstantConditions
@@ -141,23 +175,71 @@ public class GameMethods {
         }
     }
 
-}
+    public static <T> void saveJSONFile(String path, T data) throws IOException {
+        try {
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(data);
 
-//class Tests {
-//    public static void main(String[] args) {
-//        // Load rooms and items from JSON files
-//        try {
-//            Rooms.loadRoomsFromJSON();
-//            Items.loadItemsFromJSON();
-//        } catch (IOException e) {
-//            System.out.println("Error loading rooms/items from JSON files: " + e.getMessage());
-//            return;
-//        }
-//
-//        // Assuming you have a starting room ID, pass it to the playerLocation method
-//        int startingRoomId = 1;
-//
-//        // Test the playerLocation method with the starting room ID
-//        GameMethods.playerLocation(startingRoomId);
-//    }
-//}
+            FileOutputStream file = new FileOutputStream(path);
+            OutputStreamWriter output = new OutputStreamWriter(file);
+
+            output.write(jsonData);
+            output.close();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void saveRoomsToJSON(Rooms rooms, String path) throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(rooms);
+
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(json);
+        }
+    }
+
+    public static void attack(boolean playFX, float fxVolumeLevel){
+        try {
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            System.out.println("the target is: " + npcName);
+            System.out.println("the player is attacking the target.");
+            if (playFX) {
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/attackNPC.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
+                fxPlayer.play("fx");
+            }
+        } catch (Exception e) {
+            System.out.println("There is not a valid target to attack..." );
+            System.out.print("Press any key to continue...");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
+    public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+       Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
+        Map<String, Object> inventory = Main.player.getInventory();
+        boolean hasItem1 = inventory.containsKey("royal crown piece left");
+        boolean hasItem2 = inventory.containsKey("royal crown piece right");
+        boolean hasItem3 = inventory.containsKey("royal crown piece middle");
+        boolean hasItem4 = inventory.containsKey("royal crown piece back");
+        if(room.getRoomId() == 5) {
+            if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
+                fxPlayer.setVolume( "fx", (float) 8.0/10);
+                fxPlayer.play("fx");
+                DisplayMethods.clearScreen();
+                DisplayMethods.printTextFile("textFiles/Win_Screen.txt");
+            } else {
+                System.out.println(purple + "You are in the right room to win, but you need more items to win." + white);
+            }
+        } else if(hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+            System.out.println(purple + "You have all the pieces but you are not in the correct room to win the game." + white);
+        }
+    }
+
+}

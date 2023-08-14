@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Character {
+public class Character extends Colors {
     private String name;
     private int health;
     private int currentRoom;
     private String roomName;
-    private List<String> inventory;
+    private Map<String, Object> inventory;
 
     //CTORs
     public Character() {
@@ -13,7 +13,7 @@ public class Character {
         this.health = 100;
         this.currentRoom = 1;
         this.roomName = "The Forgotten Courtyard";
-        this.inventory = null;
+        this.inventory = new HashMap<>();
     }
 
     public Character(String playerName) {
@@ -54,21 +54,20 @@ public class Character {
         this.roomName = roomName;
     }
 
-    public List<String> getInventory() {
+    public Map<String, Object> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<String> inventory) {
+    public void setInventory(Map<String, Object> inventory) {
         this.inventory = inventory;
     }
 
     @Override
     public String toString() {
-        return  "Name: " + name +
-                ", Current Health: " + health +
-                ", Current Room: " + roomName +
-                ", Current Inventory: " + inventory +
-                '\n';
+        return  green + "Name: " + blue + name + green +
+                ", Current Health: " + blue + health + green +
+                ", Current Room: " + blue + roomName + green +
+                ", Current Inventory: " + blue + inventory.keySet() + white + '\n';
     }
 
     //    private String getName() {

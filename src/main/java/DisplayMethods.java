@@ -1,20 +1,54 @@
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Scanner;
 
-public class DisplayMethods {
+public class DisplayMethods extends Colors{
 
     public static void printTextJsonFile(String fileName){
         try{
             Map<String, String> textMap = GameMethods.loadJSONTextFile(fileName, new TypeToken<Map<String, String>>() {});
-            System.out.println(textMap.get("text"));
+            System.out.println(green + textMap.get("text") + white);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void printHeader() {
+        System.out.println(green + "Character:\n"+ blue + Main.player);
+        System.out.println(green + "Description:\n" + blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
+    }
+
+    public static void printRoomItems() {
+        if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0){
+            System.out.print(green + "Items in the Room: | " + blue);
+            for (int i=0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i ) {
+                System.out.print(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
+            }
+            System.out.print("\n");
+        } else {
+            System.out.print(green + "Items in the Room: |" + blue +" No items in the room " + green +"|" + white +"\n");
+        }
+    }
+
+    public static void printRoomNPC(){
+        try {
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            System.out.println(green + "Characters in the Room: | "+ blue + roomNPC + green+ " |" + white + "\n");
+        } catch (Exception e) {
+            System.out.print(green + "Characters in the Room: |" + blue +" No characters in the room " + green +"|" + white +"\n");
+        }
+    }
+
+    public static void printSuccessfulAttack(){
+        try{
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            System.out.println(purple + "You have successfully attacked: | " + blue + roomNPC + purple + " |" + white + "\n");
+        }catch (Exception e) {
+            System.out.println(purple + "There was no character to attack!!!" + white + "\n");
         }
     }
 
@@ -24,13 +58,69 @@ public class DisplayMethods {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(fileName)))) {
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                System.out.println(red + line + white);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.print("Press Enter to begin your adventure...");
+        System.out.print("Press any key to continue...");
+        // Wait for the player to press Enter before continuing
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+    public static void printTextMap() {
+
+        String path = "textFiles/Castle_Map.txt";
+        String spaces32 = new String(new char[32]).replace('\0', ' ');
+
+        int inRoom = Main.player.getCurrentRoom();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(path)))) {
+            String line;
+            int i = 1;
+            while ((line = br.readLine()) != null) {
+                switch (i) {
+                    case 9:
+                        if (inRoom == 9)
+                            System.out.println(spaces32 + "##     "+blue+"X"+green+"    ##");
+                        break;
+                    case 18:
+                        if (inRoom == 10)
+                            System.out.println("##         "+blue+"X"+green+"              ##                  ##                          ##");
+                        if (inRoom == 5)
+                            System.out.println("##                        ##         "+blue+"X"+green+"        ##                          ##");
+                        if (inRoom == 8)
+                            System.out.println("##                        ##                  ##            "+blue+"X"+green+"             ##");
+                        break;
+                    case 26:
+                        if (inRoom == 2)
+                            System.out.println("##                    ##             "+blue+"X"+green+"             ##                     ##");
+                        if (inRoom == 6)
+                            System.out.println("##        "+blue+"X"+green+"           ##                           ##                     ##");
+                        if (inRoom == 7)
+                            System.out.println("##                    ##                           ##        "+blue+"X"+green+"            ##");
+                        break;
+                    case 35:
+                        if (inRoom == 4)
+                            System.out.println("##    #   "+blue+"X"+green+"  #                                             #      #       ##");
+                        if (inRoom == 1)
+                            System.out.println("##    #      #                       "+blue+"X"+green+"                     #      #       ##");
+                        if (inRoom == 3)
+                            System.out.println("##    #      #                                             #   "+blue+"X"+green+"  #       ##");
+                        break;
+                    default:
+                        System.out.println(green + line);
+                        break;
+            }
+                i++;
+            }
+            System.out.println("\n" + blue+"X"+green+" - denotes players current position; player can move north, south, east or west; up/down for stairs"+white);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.print(white+"Press any key to continue...");
         // Wait for the player to press Enter before continuing
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
