@@ -90,13 +90,13 @@ public class GameMethods extends Colors{
         if(curRoomItemsArray != null) {
             for(Map<String, Object> item : curRoomItemsArray){
                 if(item.get("name").equals(itemToLookAT)){
-                    System.out.println(itemToLookAT + " description: " + item.get("description"));
-                    System.out.println(itemToLookAT + " usage: " + item.get("usage"));
+                    System.out.println(green + " Description: " + blue + item.get("description") +white);
+                    System.out.println(green + " Usage: " + blue + item.get("usage") + white);
                 }
             }
         } else {
 
-            System.out.println(red + "There isn't any NPC to talk to..." + white);
+            System.out.println(red + "There isn't anything to look at..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
@@ -230,8 +230,9 @@ public class GameMethods extends Colors{
         if(room.getRoomId() == 5) {
             if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
-                fxPlayer.setVolume( "fx", (float) 9.0/10);
+                fxPlayer.setVolume( "fx", (float) 8.0/10);
                 fxPlayer.play("fx");
+                DisplayMethods.clearScreen();
                 DisplayMethods.printTextFile("textFiles/Win_Screen.txt");
             } else {
                 System.out.println(purple + "You are in the right room to win, but you need more items to win." + white);
