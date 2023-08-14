@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main extends Colors {
     public static Character player = new Character();
     public static boolean aBooleanFX = true;
+
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // Load JSON files
         try {
@@ -185,7 +186,7 @@ public class Main extends Colors {
                             break;
                     }
                 }
-                GameMethods.winGame();
+                GameMethods.winGame(playFX);
             }
 
             // Game loop ends here

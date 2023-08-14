@@ -220,7 +220,7 @@ public class GameMethods extends Colors{
         }
     }
 
-    public static void winGame() {
+    public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
         if(room.getRoomId() == 5) {
             Map<String, Object> inventory = Main.player.getInventory();
@@ -230,12 +230,15 @@ public class GameMethods extends Colors{
             boolean hasItem4 = inventory.containsKey("royal crown piece back");
 
             if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
-                System.out.println("Congratulations! You have won the game!");
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
+                fxPlayer.setVolume( "fx", (float) 9.0/10);
+                fxPlayer.play("fx");
+                DisplayMethods.printTextFile("textFiles/Win_Screen.txt");
             } else {
-                System.out.println("You are in the right room to win, but you need more items to win.");
+                System.out.println(purple + "You are in the right room to win, but you need more items to win." + white);
             }
         } else {
-            System.out.println("You have all the pieces but you are not in the correct room to win the game.");
+            System.out.println(purple + "You have all the pieces but you are not in the correct room to win the game." + white);
         }
     }
 
