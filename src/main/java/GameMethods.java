@@ -17,7 +17,14 @@ public class GameMethods extends Colors{
         System.out.print("Would you like to start a new game? (yes/no): ");
         String input = scanner.nextLine().trim().toLowerCase();
         // Check if the player's input is "yes" (case-insensitive)
-        return input.equals("yes");
+//        return input.equals("yes");  //OLD CODE: edits for custom name
+        if (input.equals("yes")) {  //NEW CODE: Custom name starts here
+            System.out.println("Enter your character's name: ");
+            String playerName = scanner.nextLine().trim();
+            Main.player = new Character(playerName);
+            return true;
+        }
+        return false;  //NEW CODE: Custom name ends here
     }
 
     public static boolean confirmQuit(Scanner scanner) {
