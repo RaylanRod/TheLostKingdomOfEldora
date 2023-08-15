@@ -1,5 +1,7 @@
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +11,18 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static boolean aBooleanFX = true;
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+        JFrame frame = new JFrame("Lost Kingdom of Eldoria");
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        frame.add(panel);
+        frame.setVisible(true);
+
         // Load JSON files
         try {
           Rooms.loadRoomsFromJSON();
