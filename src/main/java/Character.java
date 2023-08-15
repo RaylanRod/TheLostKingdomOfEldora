@@ -9,7 +9,8 @@ public class Character extends Colors {
 
     //CTORs
     public Character() {
-        this.name = "Bob";
+//        this.name = "Bob";  //<-- OLD CODE: username always Bob
+        this.name = "";  // NEW CODE: Custom name
         this.health = 100;
         this.currentRoom = 1;
         this.roomName = "The Forgotten Courtyard";
