@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main extends Colors {
+public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static Character player = new Character();
     public static boolean aBooleanFX = true;
 
@@ -61,7 +61,7 @@ public class Main extends Colors {
                                 isGameOver = true;
                             } else {
                             // Player did not confirm, continue the game loop
-                                System.out.println(blue + "Resuming game..." + white);
+                                System.out.println(cyan + "Resuming game..." + white);
                             }
                             break;
                         case "talk":
@@ -73,7 +73,7 @@ public class Main extends Colors {
                             DisplayMethods.printRoomNPC();
                             break;
                         case "save":
-                            System.out.print(blue + "Enter a file name: > " + white);
+                            System.out.print(cyan + "Enter a file name: > " + white);
                             String fileName = scanner.nextLine();
                             String filePath = fileName + ".json";
                             try {
@@ -190,6 +190,6 @@ public class Main extends Colors {
             }
 
             // Game loop ends here
-            System.out.println(blue + "Thank you for playing The Lost Kingdom of Eldoria!" + white);
+            System.out.println(cyan + "Thank you for playing The Lost Kingdom of Eldoria!" + white);
         }
     }}
