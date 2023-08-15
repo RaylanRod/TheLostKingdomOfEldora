@@ -2,6 +2,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +21,10 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
+
+        JButton button = new JButton("Click to start");
+        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Welcome to Eldoria!"));
+        panel.add(button);
 
         frame.add(panel);
         frame.setVisible(true);
