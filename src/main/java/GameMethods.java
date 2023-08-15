@@ -73,14 +73,14 @@ public class GameMethods extends Colors{  // NEW CODE: all cyan was blue
 //                //if the answer is correct
                 if(input.equals(randomRiddle.get("answer")) ) {
                     //print you answered correct
-                    System.out.println("correct");
+                    System.out.println("correct");  //OLD CODE: prints just before
                 }//else
                 else {
                     System.out.println(red + "wrong answer" + white);
                 }
-            } else {
-            System.out.print("Press any key to continue...");
-            scanner.nextLine();
+//            } else {                                           // OLD CODE
+//            System.out.print("Press any key to continue...");  // MADE FUNCTIONAL
+//            scanner.nextLine();                                // BY RELOCATION
             }
         } catch (Exception e) {
             System.out.println(cyan + "There isn't any NPC to talk to..." + white);
@@ -88,6 +88,9 @@ public class GameMethods extends Colors{  // NEW CODE: all cyan was blue
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
+        System.out.println("Press any key to continue...");  // NEW CODE
+        Scanner scanner = new Scanner(System.in);            // MADE FUNCTIONAL
+        scanner.nextLine();                                  // OLD INTENTIONS
     }
 
     public static void look(String itemToLookAT){
