@@ -115,7 +115,7 @@ public class DisplayMethods extends Colors{  //NEW CODE: all cyan previously blu
                 }
                 i++;
             }
-            System.out.println("\n" + cyan+"X"+green+" - denotes players current position; player can move north, south, east or west; up/down for stairs"+white);
+            System.out.println("\n" + cyan+"X"+green+" - denotes players current position; player can go north, south, east or west; up/down for stairs"+white);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -119,8 +119,8 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                     }
                 } else {
                     switch (verbsAndNouns.get(0)) {
-                        case "move":
-                            //Execute the Move Function
+                        case "go":
+                            //Execute the Move Function --> Now 'go' function RMR
                             GameMethods.moveRoom(verbsAndNouns.get(1), playFX, fxVolumelevel);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
