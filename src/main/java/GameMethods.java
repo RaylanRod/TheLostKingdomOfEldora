@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class GameMethods extends Colors{
+public class GameMethods extends Colors{  // NEW CODE: all cyan was blue
 
     public static boolean startNewGame(Scanner scanner) {
         // Prompt the player for confirmation
@@ -56,7 +56,7 @@ public class GameMethods extends Colors{
     public static void talk(){
         try {
             DisplayMethods.clearScreen();
-            System.out.println(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+            System.out.println(cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
             Scanner scanner = new Scanner(System.in);
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
  //            //if the NPC name is enigma
@@ -65,7 +65,7 @@ public class GameMethods extends Colors{
                 List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
-                System.out.println(green + randomRiddle.get("question") + blue);
+                System.out.println(green + randomRiddle.get("question") + cyan);
 //                //get the user input
                 System.out.println(green + "Type you answer:> " + white);
                 String input = scanner.nextLine().trim().toLowerCase();
@@ -83,7 +83,7 @@ public class GameMethods extends Colors{
             scanner.nextLine();
             }
         } catch (Exception e) {
-            System.out.println(blue + "There isn't any NPC to talk to..." + white);
+            System.out.println(cyan + "There isn't any NPC to talk to..." + white);
             System.out.print("Press any key to continue...");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
@@ -97,8 +97,8 @@ public class GameMethods extends Colors{
         if(curRoomItemsArray != null) {
             for(Map<String, Object> item : curRoomItemsArray){
                 if(item.get("name").equals(itemToLookAT)){
-                    System.out.println(green + " Description: " + blue + item.get("description") +white);
-                    System.out.println(green + " Usage: " + blue + item.get("usage") + white);
+                    System.out.println(green + " Description: " + cyan + item.get("description") +white);
+                    System.out.println(green + " Usage: " + cyan + item.get("usage") + white);
                 }
             }
         } else {
@@ -153,13 +153,13 @@ public class GameMethods extends Colors{
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
-            //System.out.println(blue + "You dropped: " + green + itemToDrop + white);
+            //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/dropItem.wav");
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
-            //System.out.println(blue + "Dropped items in the room " + green +  curRoomItemsArray + white);
+            //System.out.println(cyan + "Dropped items in the room " + green +  curRoomItemsArray + white);
         } else {
             System.out.println(red + "Failed to drop the item." + white);
         }

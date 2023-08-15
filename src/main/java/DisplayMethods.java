@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Scanner;
 
-public class DisplayMethods extends Colors{
+public class DisplayMethods extends Colors{  //NEW CODE: all cyan previously blue
 
     public static void printTextJsonFile(String fileName){
         try{
@@ -18,35 +18,35 @@ public class DisplayMethods extends Colors{
     }
 
     public static void printHeader() {
-        System.out.println(green + "Character:\n"+ blue + Main.player);
-        System.out.println(green + "Description:\n" + blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
+        System.out.println(green + "Character:\n"+ cyan + Main.player);
+        System.out.println(green + "Description:\n" + cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
     }
 
     public static void printRoomItems() {
         if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0){
-            System.out.print(green + "Items in the Room: | " + blue);
+            System.out.print(green + "Items in the Room: | " + cyan);
             for (int i=0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i ) {
-                System.out.print(blue + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
+                System.out.print(cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + green + " | " + white);
             }
             System.out.print("\n");
         } else {
-            System.out.print(green + "Items in the Room: |" + blue +" No items in the room " + green +"|" + white +"\n");
+            System.out.print(green + "Items in the Room: |" + cyan +" No items in the room " + green +"|" + white +"\n");
         }
     }
 
     public static void printRoomNPC(){
         try {
             Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-            System.out.println(green + "Characters in the Room: | "+ blue + roomNPC + green+ " |" + white + "\n");
+            System.out.println(green + "Characters in the Room: | "+ cyan + roomNPC + green+ " |" + white + "\n");
         } catch (Exception e) {
-            System.out.print(green + "Characters in the Room: |" + blue +" No characters in the room " + green +"|" + white +"\n");
+            System.out.print(green + "Characters in the Room: |" + cyan +" No characters in the room " + green +"|" + white +"\n");
         }
     }
 
     public static void printSuccessfulAttack(){
         try{
             Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-            System.out.println(purple + "You have successfully attacked: | " + blue + roomNPC + purple + " |" + white + "\n");
+            System.out.println(purple + "You have successfully attacked: | " + cyan + roomNPC + purple + " |" + white + "\n");
         }catch (Exception e) {
             System.out.println(purple + "There was no character to attack!!!" + white + "\n");
         }
@@ -83,39 +83,39 @@ public class DisplayMethods extends Colors{
                 switch (i) {
                     case 9:
                         if (inRoom == 9)
-                            System.out.println(spaces32 + "##     "+blue+"X"+green+"    ##");
+                            System.out.println(spaces32 + "##     "+cyan+"X"+green+"    ##");
                         break;
                     case 18:
                         if (inRoom == 10)
-                            System.out.println("##         "+blue+"X"+green+"              ##                  ##                          ##");
+                            System.out.println("##         "+cyan+"X"+green+"              ##                  ##                          ##");
                         if (inRoom == 5)
-                            System.out.println("##                        ##         "+blue+"X"+green+"        ##                          ##");
+                            System.out.println("##                        ##         "+cyan+"X"+green+"        ##                          ##");
                         if (inRoom == 8)
-                            System.out.println("##                        ##                  ##            "+blue+"X"+green+"             ##");
+                            System.out.println("##                        ##                  ##            "+cyan+"X"+green+"             ##");
                         break;
                     case 26:
                         if (inRoom == 2)
-                            System.out.println("##                    ##             "+blue+"X"+green+"             ##                     ##");
+                            System.out.println("##                    ##             "+cyan+"X"+green+"             ##                     ##");
                         if (inRoom == 6)
-                            System.out.println("##        "+blue+"X"+green+"           ##                           ##                     ##");
+                            System.out.println("##        "+cyan+"X"+green+"           ##                           ##                     ##");
                         if (inRoom == 7)
-                            System.out.println("##                    ##                           ##        "+blue+"X"+green+"            ##");
+                            System.out.println("##                    ##                           ##        "+cyan+"X"+green+"            ##");
                         break;
                     case 35:
                         if (inRoom == 4)
-                            System.out.println("##    #   "+blue+"X"+green+"  #                                             #      #       ##");
+                            System.out.println("##    #   "+cyan+"X"+green+"  #                                             #      #       ##");
                         if (inRoom == 1)
-                            System.out.println("##    #      #                       "+blue+"X"+green+"                     #      #       ##");
+                            System.out.println("##    #      #                       "+cyan+"X"+green+"                     #      #       ##");
                         if (inRoom == 3)
-                            System.out.println("##    #      #                                             #   "+blue+"X"+green+"  #       ##");
+                            System.out.println("##    #      #                                             #   "+cyan+"X"+green+"  #       ##");
                         break;
                     default:
                         System.out.println(green + line);
                         break;
-            }
+                }
                 i++;
             }
-            System.out.println("\n" + blue+"X"+green+" - denotes players current position; player can move north, south, east or west; up/down for stairs"+white);
+            System.out.println("\n" + cyan+"X"+green+" - denotes players current position; player can move north, south, east or west; up/down for stairs"+white);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -25,7 +25,7 @@ public class TextParser extends Colors{
         //Create Return Statements:
 
         // Commands Extractor to String to List
-        String stringOfCommands = verbRegex.replace("\\b(?:", blue+""+blue).replace(")\\b", blue+""+ white);
+        String stringOfCommands = verbRegex.replace("\\b(?:", cyan+""+cyan).replace(")\\b", cyan+""+ white);  //New Code: cyan was previously blue
 
         // Look for input of an invalid Noun
         String badLook = red+"You didn't enter an item to look at.  Please try again"+white;
