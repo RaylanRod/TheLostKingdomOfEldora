@@ -1,8 +1,12 @@
+package com.eldoria.thelostkingdom.gamelogic;
+
+import com.eldoria.thelostkingdom.display.Colors;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TextParser extends Colors{
+public class TextParser extends Colors {
 
     public static List<String> extractVerbsAndNouns(String input) {
 

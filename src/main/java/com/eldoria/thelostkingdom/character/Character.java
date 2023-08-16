@@ -1,3 +1,7 @@
+package com.eldoria.thelostkingdom.character;
+
+import com.eldoria.thelostkingdom.display.Colors;
+
 import java.util.*;
 
 public class Character extends Colors {
