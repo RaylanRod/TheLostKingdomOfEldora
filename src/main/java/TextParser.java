@@ -78,7 +78,7 @@ public class TextParser extends Colors{
                 case "look":
                     verbsAndNouns.set(0, badLook);
                     break;
-                case "go":
+                case "go":  //it was 'move' before
                     verbsAndNouns.set(0, badMove);
                     break;
                 case "get":
