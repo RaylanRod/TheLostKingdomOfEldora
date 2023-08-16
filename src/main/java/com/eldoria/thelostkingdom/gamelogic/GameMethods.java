@@ -1,5 +1,14 @@
+package com.eldoria.thelostkingdom.gamelogic;
+
+import com.eldoria.thelostkingdom.Main;
+import com.eldoria.thelostkingdom.display.Colors;
+import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.music.MusicPlayer;
+import com.eldoria.thelostkingdom.rooms.Room;
+import com.eldoria.thelostkingdom.rooms.Rooms;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.eldoria.thelostkingdom.character.Character;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -10,7 +19,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class GameMethods extends Colors{  // NEW CODE: all cyan was blue
+public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static boolean startNewGame(Scanner scanner) {
         // Prompt the player for confirmation

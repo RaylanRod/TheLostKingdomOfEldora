@@ -1,3 +1,13 @@
+package com.eldoria.thelostkingdom;
+
+import com.eldoria.thelostkingdom.display.Colors;
+import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.gamelogic.GameMethods;
+import com.eldoria.thelostkingdom.gamelogic.TextParser;
+import com.eldoria.thelostkingdom.music.MusicPlayer;
+import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.eldoria.thelostkingdom.character.Character;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -33,7 +43,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
         try {
           Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
-            System.out.println(red + "Error loading game data: " + e.getMessage() + white);
+            System.out.println(Colors.red + "Error loading game data: " + e.getMessage() + Colors.white);
             return;
         }
 
@@ -62,7 +72,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
             DisplayMethods.printRoomNPC();
-            System.out.println(purple+"Music/FX is currently playing. To turn off the music or fx just type 'stop music(or fx)'; to start just type 'play music(or fx)'; adjust volume type 'volume music(or fx)'...."+white);
+            System.out.println(Colors.purple+"Music/FX is currently playing. To turn off the music or fx just type 'stop music(or fx)'; to start just type 'play music(or fx)'; adjust volume type 'volume music(or fx)'...."+ Colors.white);
 
 
             while (!isGameOver) {
@@ -81,7 +91,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                                 isGameOver = true;
                             } else {
                             // Player did not confirm, continue the game loop
-                                System.out.println(cyan + "Resuming game..." + white);
+                                System.out.println(Colors.cyan + "Resuming game..." + Colors.white);
                             }
                             break;
                         case "talk":
@@ -93,7 +103,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                             DisplayMethods.printRoomNPC();
                             break;
                         case "save":
-                            System.out.print(cyan + "Enter a file name: > " + white);
+                            System.out.print(Colors.cyan + "Enter a file name: > " + Colors.white);
                             String fileName = scanner.nextLine();
                             String filePath = fileName + ".json";
                             try {
@@ -153,7 +163,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                             String stringLevel = scanner.nextLine().trim().toLowerCase();
                             try {
                                 if (Double.parseDouble(stringLevel) < 1.0 || Double.parseDouble(stringLevel) > 10.0) {
-                                    System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                    System.out.println(Colors.red + "Invalid input. Please enter a number between 1 and 10." + Colors.white);
                                     System.out.print("Press any key to continue...");
                                     scanner.nextLine();
                                 } else {
@@ -163,7 +173,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                                     musicPlayer.setVolume(verbsAndNouns.get(1), fxVolumelevel);
                                 }
                             } catch (Exception e){
-                                System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                System.out.println(Colors.red + "Invalid input. Please enter a number between 1 and 10." + Colors.white);
                                 System.out.print("Press any key to continue...");
                                 scanner.nextLine();
                             }
@@ -210,6 +220,6 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
             }
 
             // Game loop ends here
-            System.out.println(cyan + "Thank you for playing The Lost Kingdom of Eldoria!" + white);
+            System.out.println(Colors.cyan + "Thank you for playing The Lost Kingdom of Eldoria!" + Colors.white);
         }
     }}

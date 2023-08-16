@@ -1,3 +1,5 @@
+package com.eldoria.thelostkingdom.music;
+
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;

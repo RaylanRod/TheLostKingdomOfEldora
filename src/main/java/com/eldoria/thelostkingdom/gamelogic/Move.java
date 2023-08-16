@@ -1,9 +1,8 @@
-import com.google.gson.Gson;
+package com.eldoria.thelostkingdom.gamelogic;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import com.eldoria.thelostkingdom.rooms.Room;
+import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.google.gson.Gson;
 
 
 public class Move {
