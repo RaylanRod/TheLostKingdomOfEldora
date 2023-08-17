@@ -119,20 +119,6 @@ public class GameWindow extends JFrame{
 
     }
 
-
-    public Container getMainContainer() {
-        return this.getContentPane();
-    }
-    public JPanel getTitlePanel() {
-        return this.titlePanel;
-    }
-    public JPanel getTopPanel() {
-        return this.topPanel;
-    }
-    public JPanel getBottomPanel() {
-        return this.bottomPanel;
-    }
-
     public static void removeTitlePanel(GameWindow gameWindow) {
         Container mainWindow = gameWindow.getMainContainer();
         JPanel titlePanel = gameWindow.getTitlePanel();
@@ -149,4 +135,18 @@ public class GameWindow extends JFrame{
         textArea.append(DisplayMethods.readFromResourceFile(fileName) + "\n"); // Append the new text with a newline
         textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
     }
+
+    public Container getMainContainer() {
+        return this.getContentPane();
+    }
+    public JPanel getTitlePanel() {
+        return this.titlePanel;
+    }
+    public JPanel getTopPanel() {
+        return this.topPanel;
+    }
+    public JPanel getBottomPanel() {
+        return this.bottomPanel;
+    }
+
 }
