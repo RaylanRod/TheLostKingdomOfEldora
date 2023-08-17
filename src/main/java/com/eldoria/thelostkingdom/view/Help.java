@@ -14,7 +14,7 @@ public class Help {
     private JTextArea HelpField;
     private static String path = "/textFiles/Help";
     private static String backGround = "/pictures/castleimgNofogDark.png";
-    private static final Color customTextColor = new Color(255, 255, 255);
+    private static final Color customTextColor = new Color(236, 225, 255);
 
     // Method to create and show the main GUI
     static void createAndShowGUI() {
@@ -65,7 +65,7 @@ public class Help {
         };
         textArea.setEditable(false);
         textArea.setForeground(customTextColor);
-        textArea.setFont(new Font("Impact", Font.PLAIN, 16));
+        textArea.setFont(new Font("Impact", Font.HANGING_BASELINE, 16));
         textArea.setOpaque(false); // Make the text area transparent
 
 
