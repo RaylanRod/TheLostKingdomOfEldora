@@ -1,6 +1,7 @@
 package com.eldoria.thelostkingdom.view;
 
 import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.view.Help;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,7 @@ public class GameWindow extends JFrame{
         bottomPanel = new JPanel(new GridBagLayout());
         bottomPanel.setPreferredSize(new Dimension(800, 200));
         bottomPanel.setBackground(Color.DARK_GRAY);
+        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
 
         mainWindow.add(topPanel, BorderLayout.NORTH);
 
@@ -55,6 +57,22 @@ public class GameWindow extends JFrame{
         constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
         bottomPanel.add(scrollPane, constraints);
+
+        JButton helpButton = new JButton("Help");
+        helpButton.addActionListener(e -> {
+            Help.openHelpDialog();
+        });
+        //bottomPanel = new JPanel(new GridBagLayout());
+        //bottomPanel.setPreferredSize(new Dimension(200, 200));
+       // bottomPanel.setBackground(Color.DARK_GRAY);
+
+        GridBagConstraints helpButtonConstraints = new GridBagConstraints();
+        helpButtonConstraints.gridx = 1;
+        helpButtonConstraints.gridy = 0;
+        helpButtonConstraints.anchor = GridBagConstraints.LINE_END; // Align to the right
+        bottomPanel.add(helpButton, helpButtonConstraints);
+
+
 
         addDialogueText("textFiles/intro.txt");
 
