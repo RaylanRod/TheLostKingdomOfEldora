@@ -7,6 +7,7 @@ import com.eldoria.thelostkingdom.gamelogic.TextParser;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 import com.eldoria.thelostkingdom.rooms.Rooms;
 import com.eldoria.thelostkingdom.character.Character;
+import com.eldoria.thelostkingdom.view.GameWindow;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -24,20 +25,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-        JFrame frame = new JFrame("Lost Kingdom of Eldoria");
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        JButton button = new JButton("Click to start");
-        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Welcome to Eldoria!"));
-        panel.add(button);
-
-        frame.add(panel);
-        frame.setVisible(true);
+        GameWindow gameWindow = new GameWindow();
 
         // Load JSON files
         try {
