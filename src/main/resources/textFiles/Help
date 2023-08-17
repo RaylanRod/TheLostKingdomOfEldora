@@ -1,0 +1,32 @@
+**Game Instructions - Help Feature:**
+
+Welcome to "The Lost Kingdom of Eldoria" Text Adventure Game!
+If you're ever unsure about what to do, you can always rely on the game's help feature.
+Here's a list of available commands and actions you can take:
+
+**One-Word Commands:**
+- **Quit:** Exit the game. Type "quit" to leave the game. You'll be asked to confirm before exiting.
+- **Talk:** Interact with NPCs. Type "talk" followed by an NPC's name to engage in conversation.
+- **Save:** Save your game progress. Type "save" and enter a file name to save your current state.
+- **Map:** View the kingdom's map. Type "map" to see the layout of the realm.
+
+**Two-Word Commands:**
+- **Go:** Move to different locations. Type "go" followed by a direction (north, south, east, west, up, down) to navigate.
+- **Look:** Examine items and locations. Type "look" followed by an item or direction to get more information.
+- **Get:** Collect items. Type "get" followed by an item's name to pick it up.
+- **Drop:** Discard items. Type "drop" followed by an item's name to leave it in the current location.
+- **Volume:** Adjust music or sound effects volume. Type "volume music" or "volume fx" followed by a number between 1 and 10.
+- **Attack:** Engage in combat. Type "attack" followed by an NPC's name to attack them.
+- **Play:** Play music or sound effects. Type "play music" or "play fx" to enjoy in-game sounds.
+- **Stop:** Stop playing music or sound effects. Type "stop music" or "stop fx" to silence the game.
+- **Adjust:** Adjust the overall volume level. Type "adjust volume" followed by a number between 1 and 10.
+
+**Other Helpful Information:**
+- To navigate through the game, type your desired commands in the input prompt.
+- You can interact with items, characters, and the environment to uncover the mysteries of Eldoria.
+- Keep an eye out for clues and hints in descriptions and conversations with NPCs.
+- If you ever need to pause, save your progress and return to it later using the "save" command.
+
+Remember, your journey in Eldoria is filled with challenges and surprises. Explore the kingdom, interact with its inhabitants, and unveil the secrets hidden within its walls. Enjoy your adventure!
+
+Feel free to adapt and expand these instructions to match your game's mechanics and player interactions. This should provide players with a comprehensive guide to the commands and actions available in your text-based adventure game.
