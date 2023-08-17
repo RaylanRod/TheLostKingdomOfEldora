@@ -15,6 +15,9 @@ public class GameWindow extends JFrame{
     private JTextArea textArea;
     private JPanel titlePanel;
     private JTextArea titleTextArea;
+    private JTextField inputField;
+
+
 
     public GameWindow() {
         setTitle("Lost Kingdom of Eldoria");
@@ -68,9 +71,25 @@ public class GameWindow extends JFrame{
         bottomPanel = new JPanel(new GridBagLayout());
         bottomPanel.setPreferredSize(new Dimension(800, 200));
         bottomPanel.setBackground(Color.DARK_GRAY);
-//        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
 
-//        mainWindow.add(topPanel, BorderLayout.NORTH);
+        inputField = new JTextField();
+        inputField.setPreferredSize(new Dimension(300,25));
+
+        // Add JTextField to the bottomPanel using GridBagConstraints
+        GridBagConstraints inputFieldConstraints = new GridBagConstraints();
+        inputFieldConstraints.gridx = 0;
+        inputFieldConstraints.gridy = 1; // Setting it below the text area
+        inputFieldConstraints.weightx = 1.0;
+        inputFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        bottomPanel.add(inputField, inputFieldConstraints);
+
+        inputField.addActionListener(e -> {
+            String input = inputField.getText();
+            // Here you can handle the input text.
+            // For example, appending it to your textArea:
+            textArea.append("User: " + input + "\n");
+            inputField.setText("");  // Clear the input field after processing
+        });
 
         clickToStartButton = new JButton("Click to Start");
         clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "welcome to Eldoria!"));
