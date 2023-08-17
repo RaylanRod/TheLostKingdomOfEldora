@@ -3,10 +3,12 @@ package com.eldoria.thelostkingdom.display;
 import com.eldoria.thelostkingdom.Main;
 import com.eldoria.thelostkingdom.gamelogic.GameMethods;
 import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.eldoria.thelostkingdom.view.GameWindow;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Scanner;
@@ -151,6 +153,27 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String readFromResourceFile(String fileName) {
+
+        String fileContent = "";
+
+        // First, try to access the resource from the classpath (e.g., JAR file)
+        InputStream inputStream = DisplayMethods.class.getResourceAsStream("/" + fileName);
+
+        if (inputStream != null) {
+            // Resource is found (in JAR), process the input stream as needed
+            try {
+                // Read content from the resource
+                byte[] resourceBytes = inputStream.readAllBytes();
+                fileContent = new String(resourceBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return fileContent + "\n";
     }
 
 }
