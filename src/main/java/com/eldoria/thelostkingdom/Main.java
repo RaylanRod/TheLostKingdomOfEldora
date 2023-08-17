@@ -1,19 +1,37 @@
+package com.eldoria.thelostkingdom;
+
+import com.eldoria.thelostkingdom.display.Colors;
+import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.gamelogic.GameMethods;
+import com.eldoria.thelostkingdom.gamelogic.TextParser;
+import com.eldoria.thelostkingdom.music.MusicPlayer;
+import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.eldoria.thelostkingdom.character.Character;
+import com.eldoria.thelostkingdom.view.GameWindow;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main extends Colors {
+public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static Character player = new Character();
     public static boolean aBooleanFX = true;
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+        GameWindow gameWindow = new GameWindow();
+
         // Load JSON files
         try {
           Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
-            System.out.println(red + "Error loading game data: " + e.getMessage() + white);
+            System.out.println(Colors.red + "Error loading game data: " + e.getMessage() + Colors.white);
             return;
         }
 
@@ -42,7 +60,7 @@ public class Main extends Colors {
             DisplayMethods.printHeader();
             DisplayMethods.printRoomItems();
             DisplayMethods.printRoomNPC();
-            System.out.println(purple+"Music/FX is currently playing. To turn off the music or fx just type 'stop music(or fx)'; to start just type 'play music(or fx)'; adjust volume type 'volume music(or fx)'...."+white);
+            System.out.println(Colors.purple+"Music/FX is currently playing. To turn off the music or fx just type 'stop music(or fx)'; to start just type 'play music(or fx)'; adjust volume type 'volume music(or fx)'...."+ Colors.white);
 
 
             while (!isGameOver) {
@@ -61,7 +79,7 @@ public class Main extends Colors {
                                 isGameOver = true;
                             } else {
                             // Player did not confirm, continue the game loop
-                                System.out.println(blue + "Resuming game..." + white);
+                                System.out.println(Colors.cyan + "Resuming game..." + Colors.white);
                             }
                             break;
                         case "talk":
@@ -73,7 +91,7 @@ public class Main extends Colors {
                             DisplayMethods.printRoomNPC();
                             break;
                         case "save":
-                            System.out.print(blue + "Enter a file name: > " + white);
+                            System.out.print(Colors.cyan + "Enter a file name: > " + Colors.white);
                             String fileName = scanner.nextLine();
                             String filePath = fileName + ".json";
                             try {
@@ -99,8 +117,8 @@ public class Main extends Colors {
                     }
                 } else {
                     switch (verbsAndNouns.get(0)) {
-                        case "move":
-                            //Execute the Move Function
+                        case "go": //this case string was 'move' before now is "go"
+                            //Execute the Move Function --> Now 'go' function RMR
                             GameMethods.moveRoom(verbsAndNouns.get(1), playFX, fxVolumelevel);
                             DisplayMethods.clearScreen();
                             DisplayMethods.printHeader();
@@ -133,7 +151,7 @@ public class Main extends Colors {
                             String stringLevel = scanner.nextLine().trim().toLowerCase();
                             try {
                                 if (Double.parseDouble(stringLevel) < 1.0 || Double.parseDouble(stringLevel) > 10.0) {
-                                    System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                    System.out.println(Colors.red + "Invalid input. Please enter a number between 1 and 10." + Colors.white);
                                     System.out.print("Press any key to continue...");
                                     scanner.nextLine();
                                 } else {
@@ -143,7 +161,7 @@ public class Main extends Colors {
                                     musicPlayer.setVolume(verbsAndNouns.get(1), fxVolumelevel);
                                 }
                             } catch (Exception e){
-                                System.out.println(red + "Invalid input. Please enter a number between 1 and 10." + white);
+                                System.out.println(Colors.red + "Invalid input. Please enter a number between 1 and 10." + Colors.white);
                                 System.out.print("Press any key to continue...");
                                 scanner.nextLine();
                             }
@@ -190,6 +208,6 @@ public class Main extends Colors {
             }
 
             // Game loop ends here
-            System.out.println(blue + "Thank you for playing The Lost Kingdom of Eldoria!" + white);
+            System.out.println(Colors.cyan + "Thank you for playing The Lost Kingdom of Eldoria!" + Colors.white);
         }
     }}

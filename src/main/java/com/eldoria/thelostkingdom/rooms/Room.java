@@ -1,3 +1,5 @@
+package com.eldoria.thelostkingdom.rooms;
+
 import java.util.List;
 import java.util.Map;
 

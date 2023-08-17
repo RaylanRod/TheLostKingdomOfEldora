@@ -1,3 +1,7 @@
+package com.eldoria.thelostkingdom.character;
+
+import com.eldoria.thelostkingdom.display.Colors;
+
 import java.util.*;
 
 public class Character extends Colors {
@@ -9,7 +13,8 @@ public class Character extends Colors {
 
     //CTORs
     public Character() {
-        this.name = "Bob";
+//        this.name = "Bob";  //<-- OLD CODE: username always Bob
+        this.name = "";  // NEW CODE: Custom name
         this.health = 100;
         this.currentRoom = 1;
         this.roomName = "The Forgotten Courtyard";
@@ -62,12 +67,12 @@ public class Character extends Colors {
         this.inventory = inventory;
     }
 
-    @Override
+    @Override  //NEW CODE: all cyan previously blue
     public String toString() {
-        return  green + "Name: " + blue + name + green +
-                ", Current Health: " + blue + health + green +
-                ", Current Room: " + blue + roomName + green +
-                ", Current Inventory: " + blue + inventory.keySet() + white + '\n';
+        return  green + "Name: " + cyan + name + green +
+                ", Current Health: " + cyan + health + green +
+                ", Current Room: " + cyan + roomName + green +
+                ", Current Inventory: " + cyan + inventory.keySet() + white + '\n';
     }
 
     //    private String getName() {
