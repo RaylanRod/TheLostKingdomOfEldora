@@ -1,6 +1,7 @@
 package com.eldoria.thelostkingdom.view;
 
 import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.music.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class GameWindow extends JFrame{
     private JPanel titlePanel;
     private JTextArea titleTextArea;
     private JTextField inputField;
+    private MusicPlayer musicPlayer;
 
 
 
@@ -30,36 +32,39 @@ public class GameWindow extends JFrame{
 
         titlePanel = new JPanel(new GridBagLayout());
 
-        titleTextArea = new JTextArea();
-        titleTextArea.setText(DisplayMethods.readFromResourceFile("textFiles/Friendly_Title.txt")); // Replace with your actual path
-        titleTextArea.setFont(new Font("Arial", Font.BOLD, 20));
-        titleTextArea.setWrapStyleWord(true);
-        titleTextArea.setLineWrap(true);
-        titleTextArea.setEditable(false);
-        titleTextArea.setBackground(Color.BLACK);
-        titleTextArea.setForeground(Color.WHITE);
-        JScrollPane titleScrollPane = new JScrollPane(titleTextArea);
-        titleScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        titlePanel.add(titleScrollPane);
+
+        ImageIcon originalImage = new ImageIcon(getClass().getResource("/pictures/EldoriaTitle.png"));
+        Image scaledImage = originalImage.getImage().getScaledInstance(800, 600, Image.SCALE_SMOOTH);
+        ImageIcon titleImage = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(titleImage);
+
+// Optionally, if you want to ensure the image scales within a certain size:
+        int width = 780;  // Adjust based on your desired width
+        int height = 580; // Adjust based on your desired height
+        imageLabel.setPreferredSize(new Dimension(width, height));
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setVerticalAlignment(JLabel.CENTER);
+
+        titlePanel.add(imageLabel);
+
         mainWindow.add(titlePanel, BorderLayout.CENTER);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH; // Make the component expand in both directions
         gbc.weightx = 1.0; // Allocate as much horizontal space as possible to this component
         gbc.weighty = 1.0; // Allocate as much vertical space as possible to this component
-        titlePanel.add(titleScrollPane, gbc);
 
 
 
-        titleTextArea.setFocusable(true);
-        titleTextArea.requestFocusInWindow();
-        titleTextArea.addKeyListener(new KeyAdapter() {
+        titlePanel.setFocusable(true);
+        titlePanel.requestFocusInWindow();
+        titlePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     removeTitlePanel(GameWindow.this);
                     //remove key listener after it has served its purpose
-                    titleTextArea.removeKeyListener(this);
+                    titlePanel.removeKeyListener(this);
                 }
             }
         });
@@ -92,7 +97,7 @@ public class GameWindow extends JFrame{
         });
 
         clickToStartButton = new JButton("Click to Start");
-        clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "welcome to Eldoria!"));
+        clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Welcome to Eldoria!"));
         topPanel.add(clickToStartButton);
 
         textArea = new JTextArea();
@@ -126,6 +131,45 @@ public class GameWindow extends JFrame{
         helpButtonConstraints.anchor = GridBagConstraints.LINE_END; // Align to the right
         bottomPanel.add(helpButton, helpButtonConstraints);
 
+        //adding music player menu
+        try {
+            musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        JButton launchButton = new JButton("Music");
+        GridBagConstraints launchButtonConstraints = new GridBagConstraints();
+        launchButtonConstraints.gridx = 0;  // Same column as the help button
+        launchButtonConstraints.gridy = 1;  // One row below the help button
+        launchButtonConstraints.anchor = GridBagConstraints.LINE_END; // Align to the right
+        bottomPanel.add(launchButton, launchButtonConstraints);
+
+
+        JPopupMenu menu = new JPopupMenu();
+
+        JMenuItem musicOn = new JMenuItem("Turn Music On");
+        musicOn.addActionListener(e -> musicPlayer.play("music"));
+        menu.add(musicOn);
+
+        JMenuItem musicOff = new JMenuItem("Turn Music Off");
+        musicOff.addActionListener(e -> musicPlayer.stop());
+        menu.add(musicOff);
+
+        // Add a slider for music volume
+        JSlider musicVolume = new JSlider(0, 100, 50);  // Initial volume set to 50
+        musicVolume.addChangeListener(e -> musicPlayer.setVolume("music", musicVolume.getValue() / 100f));
+        menu.add(musicVolume);
+
+        // Similarly, add options for FX.
+
+        launchButton.addActionListener(e -> {
+            menu.show(launchButton, 0, launchButton.getHeight());
+        });
+
+        bottomPanel.add(launchButton);
+
+
+
 
 
         addDialogueText("textFiles/intro.txt");
@@ -134,7 +178,7 @@ public class GameWindow extends JFrame{
 
         this.setVisible(true);
 
-        titleTextArea.requestFocusInWindow();
+        titlePanel.requestFocusInWindow();
 
     }
 
