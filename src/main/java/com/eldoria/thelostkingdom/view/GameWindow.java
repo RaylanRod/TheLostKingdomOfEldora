@@ -124,6 +124,7 @@ public class GameWindow extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         bottomPanel.add(scrollPane, constraints);
 
+        //HELP BUTTON:
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener(e -> {
             Help.openHelpDialog();
@@ -137,6 +138,21 @@ public class GameWindow extends JFrame {
         helpButtonConstraints.gridy = 0;
         helpButtonConstraints.anchor = GridBagConstraints.LINE_END; // Align to the right
         bottomPanel.add(helpButton, helpButtonConstraints);
+
+        //MAP BUTTON:
+        JButton mapButton = new JButton("Map");
+        mapButton.addActionListener(e -> {
+            CastleMap.openMapRef();
+        });
+        //bottomPanel = new JPanel(new GridBagLayout());
+        //bottomPanel.setPreferredSize(new Dimension(200, 200));
+        // bottomPanel.setBackground(Color.DARK_GRAY);
+
+        GridBagConstraints mapButtonConstraints = new GridBagConstraints();
+        mapButtonConstraints.gridx = 1;
+        mapButtonConstraints.gridy = 1;
+        mapButtonConstraints.anchor = GridBagConstraints.LINE_END;
+        bottomPanel.add(mapButton, mapButtonConstraints);
 
         //adding music player menu
         try {
