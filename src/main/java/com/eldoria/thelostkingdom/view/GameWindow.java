@@ -1,5 +1,6 @@
 package com.eldoria.thelostkingdom.view;
 
+import com.eldoria.thelostkingdom.character.Character;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 
@@ -7,8 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
-public class GameWindow extends JFrame{
+public class GameWindow extends JFrame {
 
     private JPanel topPanel;
     private JPanel bottomPanel;
@@ -18,7 +20,10 @@ public class GameWindow extends JFrame{
     private JTextArea titleTextArea;
     private JTextField inputField;
     private MusicPlayer musicPlayer;
-
+    private Character inventory = new Character();
+    private Map<String, Object> inventoryItems;
+    private JPanel inventoryPanel;
+    private static GameWindow instance;
 
 
     public GameWindow() {
@@ -55,7 +60,6 @@ public class GameWindow extends JFrame{
         gbc.weighty = 1.0; // Allocate as much vertical space as possible to this component
 
 
-
         titlePanel.setFocusable(true);
         titlePanel.requestFocusInWindow();
         titlePanel.addKeyListener(new KeyAdapter() {
@@ -76,9 +80,12 @@ public class GameWindow extends JFrame{
         bottomPanel = new JPanel(new GridBagLayout());
         bottomPanel.setPreferredSize(new Dimension(800, 200));
         bottomPanel.setBackground(Color.DARK_GRAY);
+        inventoryItems = inventory.getInventory();
+        inventoryPanel = createInventoryPanel(inventoryItems);
+        bottomPanel.add(inventoryPanel, createGridBagConstraints(0, 3, GridBagConstraints.CENTER));
 
         inputField = new JTextField();
-        inputField.setPreferredSize(new Dimension(300,25));
+        inputField.setPreferredSize(new Dimension(300, 25));
 
         // Add JTextField to the bottomPanel using GridBagConstraints
         GridBagConstraints inputFieldConstraints = new GridBagConstraints();
@@ -123,7 +130,7 @@ public class GameWindow extends JFrame{
         });
         //bottomPanel = new JPanel(new GridBagLayout());
         //bottomPanel.setPreferredSize(new Dimension(200, 200));
-       // bottomPanel.setBackground(Color.DARK_GRAY);
+        // bottomPanel.setBackground(Color.DARK_GRAY);
 
         GridBagConstraints helpButtonConstraints = new GridBagConstraints();
         helpButtonConstraints.gridx = 1;
@@ -134,7 +141,7 @@ public class GameWindow extends JFrame{
         //adding music player menu
         try {
             musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         JButton launchButton = new JButton("Sound");
@@ -188,9 +195,6 @@ public class GameWindow extends JFrame{
         bottomPanel.add(launchButton);
 
 
-
-
-
         addDialogueText("textFiles/intro.txt");
 
 //        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
@@ -199,6 +203,34 @@ public class GameWindow extends JFrame{
 
         titlePanel.requestFocusInWindow();
 
+    }
+
+    private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
+        JPanel inventoryPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel inventoryLabel = new JLabel("Inventory:");
+        inventoryPanel.add(inventoryLabel);
+
+        for (String itemName : inventoryItems.keySet()) {
+            JLabel itemLabel = new JLabel(itemName);
+            inventoryPanel.add(itemLabel);
+        }
+        return inventoryPanel;
+    }
+
+    public void updateInventoryPanel() {
+        bottomPanel.remove(inventoryPanel); // Remove the current inventory panel
+        inventoryPanel = createInventoryPanel(inventoryItems); // Create a new inventory panel
+        bottomPanel.add(inventoryPanel, createGridBagConstraints(0, 3, GridBagConstraints.CENTER)); // Add the new panel
+        bottomPanel.revalidate(); // Refresh the bottom panel
+        bottomPanel.repaint();
+    }
+
+    private GridBagConstraints createGridBagConstraints(int x, int y, int fill) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.fill = fill;
+        return gbc;
     }
 
     public static void removeTitlePanel(GameWindow gameWindow) {
@@ -218,15 +250,25 @@ public class GameWindow extends JFrame{
         textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
     }
 
+    public static synchronized GameWindow getInstance() {
+        if (instance == null) {
+            instance = new GameWindow();
+        }
+        return instance;
+    }
+
     public Container getMainContainer() {
         return this.getContentPane();
     }
+
     public JPanel getTitlePanel() {
         return this.titlePanel;
     }
+
     public JPanel getTopPanel() {
         return this.topPanel;
     }
+
     public JPanel getBottomPanel() {
         return this.bottomPanel;
     }

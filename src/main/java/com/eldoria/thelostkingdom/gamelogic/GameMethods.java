@@ -6,6 +6,7 @@ import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 import com.eldoria.thelostkingdom.rooms.Room;
 import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.eldoria.thelostkingdom.view.GameWindow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.eldoria.thelostkingdom.character.Character;
@@ -123,18 +124,20 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        GameWindow updateInv = GameWindow.getInstance();
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray.size() != 0) {
             Iterator<Map<String, Object>> iterator = curRoomItemsArray.iterator();
             while (iterator.hasNext()) {
                 Map<String, Object> item = iterator.next();
-                    if (item.get("name").equals(itemToGet)) {
-                        String itemName = (String) item.get("name");
-                        inventory.put(itemName, item);
-                        iterator.remove();
-                        break;
-                    }
+                if (item.get("name").equals(itemToGet)) {
+                    String itemName = (String) item.get("name");
+                    inventory.put(itemName, item);
+                    updateInv.updateInventoryPanel();
+                    iterator.remove();
+                    break;
+                }
             }
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/getItem.wav");
