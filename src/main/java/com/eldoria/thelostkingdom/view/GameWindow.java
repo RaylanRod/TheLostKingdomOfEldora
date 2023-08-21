@@ -137,7 +137,7 @@ public class GameWindow extends JFrame{
         } catch (Exception e){
             e.printStackTrace();
         }
-        JButton launchButton = new JButton("Music");
+        JButton launchButton = new JButton("Sound");
         GridBagConstraints launchButtonConstraints = new GridBagConstraints();
         launchButtonConstraints.gridx = 0;  // Same column as the help button
         launchButtonConstraints.gridy = 1;  // One row below the help button
@@ -147,18 +147,37 @@ public class GameWindow extends JFrame{
 
         JPopupMenu menu = new JPopupMenu();
 
+        //music on
         JMenuItem musicOn = new JMenuItem("Turn Music On");
         musicOn.addActionListener(e -> musicPlayer.play("music"));
         menu.add(musicOn);
 
+        //music off
         JMenuItem musicOff = new JMenuItem("Turn Music Off");
         musicOff.addActionListener(e -> musicPlayer.stop());
         menu.add(musicOff);
+
+        //sound on
+        JMenuItem fxOn = new JMenuItem("Turn FX On");
+        fxOn.addActionListener(e -> musicPlayer.play("fx"));
+        menu.add(fxOn);
+
+        //sound off
+        JMenuItem fxOff = new JMenuItem("Turn FX Off");
+        fxOff.addActionListener(e -> musicPlayer.stop());
+        menu.add(fxOff);
+
 
         // Add a slider for music volume
         JSlider musicVolume = new JSlider(0, 100, 50);  // Initial volume set to 50
         musicVolume.addChangeListener(e -> musicPlayer.setVolume("music", musicVolume.getValue() / 100f));
         menu.add(musicVolume);
+
+        // Add a slider for sound volume
+        JSlider fxVolume = new JSlider(0, 100, 50); // Initial volume set to 50
+        fxVolume.addChangeListener(e -> musicPlayer.setVolume("fx", fxVolume.getValue() / 100f));
+        menu.add(fxVolume);
+
 
         // Similarly, add options for FX.
 
