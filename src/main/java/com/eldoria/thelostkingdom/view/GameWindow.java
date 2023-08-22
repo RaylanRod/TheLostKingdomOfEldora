@@ -30,7 +30,6 @@ public class GameWindow extends JFrame {
     private static GameWindow instance;
     private JButton submitButton;
 
-
     public GameWindow() {
 
         //MAIN WINDOW:
