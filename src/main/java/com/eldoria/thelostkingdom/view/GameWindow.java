@@ -54,10 +54,6 @@ public class GameWindow extends JFrame {
         imageLabel.setVerticalAlignment(JLabel.CENTER);       //center splash up/down
         titlePanel.add(imageLabel);                           //add splash image to splash panel
         mainWindow.add(titlePanel, BorderLayout.CENTER);      //center splash panel on main window
-        GridBagConstraints gbc = new GridBagConstraints();    //enable below settings
-        gbc.fill = GridBagConstraints.BOTH;                   //make the component expand in both directions
-        gbc.weightx = 1.0;                                    //give as much horizontal space as possible
-        gbc.weighty = 1.0;                                    //give as much vertical space as possible
         titlePanel.setFocusable(true);
         titlePanel.requestFocusInWindow();
         titlePanel.addKeyListener(new KeyAdapter() {          //listener for splash (goes away on 'enter')
@@ -82,7 +78,7 @@ public class GameWindow extends JFrame {
         //INVENTORY:
         inventoryItems = inventory.getInventory();                            //inventory function
         inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-        bottomPanel.add(inventoryPanel, createGridBagConstraints(0, 3, GridBagConstraints.CENTER)); //add to panel
+        bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); //add to panel
 
         //TEXT AREA: (game text output)
         textArea = new JTextArea();                                           //create text area
@@ -95,51 +91,27 @@ public class GameWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);                  //create scroll pane
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED); //vert. bar as needed
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //no L/R bar
-        GridBagConstraints sPconstraints = new GridBagConstraints();         //enable settings
-        sPconstraints.gridx = 0;                                             //align left
-        sPconstraints.gridy = 0;                                             //align top
-        sPconstraints.weightx = 1.0;
-        sPconstraints.weighty = 1.0;
-        sPconstraints.fill = GridBagConstraints.BOTH;
-        topPanel.add(scrollPane, sPconstraints);                             //add scroll panel to top panel
+        topPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
         //INPUT FIELD:
         inputField = new JTextField();                                        //create input
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-        GridBagConstraints inputFieldConstraints = new GridBagConstraints();  //enable settings
-        inputFieldConstraints.gridx = 0;                                      //left aligned, 1st column
-        inputFieldConstraints.gridy = 1;                                      //displays below the text area, 2nd row
-        inputFieldConstraints.weightx = 1.0;
-        inputFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
-        bottomPanel.add(inputField, inputFieldConstraints);                   //add to bottom panel
+        bottomPanel.add(inputField, createGBC(0, 1, 1, 0, GridBagConstraints.HORIZONTAL, 10));                   //add to bottom panel
 
         //SUBMIT BUTTON:
         submitButton = new JButton("Submit");                            //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
-        GridBagConstraints submitButtonConstraints = new GridBagConstraints();//enable settings
-        submitButtonConstraints.gridx = 1;                                    //2nd 'column' (text area '0'= first)
-        submitButtonConstraints.gridy = 0;                                    //1st 'row'
-        submitButtonConstraints.weightx = 1.0;
-        submitButtonConstraints.anchor = GridBagConstraints.LINE_END;         //right align
-        bottomPanel.add(submitButton, submitButtonConstraints);               //add to bottom panel
+        bottomPanel.add(submitButton, createGBC(1, 0, 1, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
 
         //HELP BUTTON:
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
-        GridBagConstraints helpButtonConstraints = new GridBagConstraints(); //enable settings
-        helpButtonConstraints.gridx = 2;                                     //3rd 'column' (0 =first)
-        helpButtonConstraints.gridy = 0;                                     //1st 'row'
-        helpButtonConstraints.anchor = GridBagConstraints.LINE_END;          //right align
-        bottomPanel.add(helpButton, helpButtonConstraints);                  //add to bottom panel
+        bottomPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
 
         //MAP BUTTON:
         JButton mapButton = new JButton("Map");                         //create button
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-        GridBagConstraints mapButtonConstraints = new GridBagConstraints();  //enable settings
-        mapButtonConstraints.gridx = 3;                                      //4th 'column'
-        mapButtonConstraints.gridy = 0;                                      //1st row
-        mapButtonConstraints.anchor = GridBagConstraints.LINE_END;           //right align
-        bottomPanel.add(mapButton, mapButtonConstraints);                    //add to bottom panel
+        bottomPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));                    //add to bottom panel
 
         //MUSIC PLAYER MENU:
         try {
@@ -148,11 +120,7 @@ public class GameWindow extends JFrame {
             e.printStackTrace();
         }
         JButton launchButton = new JButton("Sound");                     //create button
-        GridBagConstraints launchButtonConstraints = new GridBagConstraints();//enable settings
-        launchButtonConstraints.gridx = 4;                                    //5th column
-        launchButtonConstraints.gridy = 0;                                    //first row
-        launchButtonConstraints.anchor = GridBagConstraints.LINE_END;         //right align
-        bottomPanel.add(launchButton, launchButtonConstraints);               //add to bottom panel
+        bottomPanel.add(launchButton, createGBC(4, 0, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
         JPopupMenu menu = new JPopupMenu();                                   //create menu
 
         //MUSIC ON:
@@ -210,16 +178,20 @@ public class GameWindow extends JFrame {
     public void updateInventoryPanel() {
         bottomPanel.remove(inventoryPanel); // Remove the current inventory panel
         inventoryPanel = createInventoryPanel(inventoryItems); // Create a new inventory panel
-        bottomPanel.add(inventoryPanel, createGridBagConstraints(0, 3, GridBagConstraints.CENTER)); // Add the new panel
+        bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); // Add the new panel
         bottomPanel.revalidate(); // Refresh the bottom panel
         bottomPanel.repaint();
     }
 
-    private GridBagConstraints createGridBagConstraints(int x, int y, int fill) {
+    private GridBagConstraints createGBC(
+            int x, int y, int weightx, int weighty, int fill, int anchor) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
+        gbc.weightx = weightx;
+        gbc.weighty = weighty;
         gbc.fill = fill;
+        gbc.anchor = anchor;
         return gbc;
     }
 
