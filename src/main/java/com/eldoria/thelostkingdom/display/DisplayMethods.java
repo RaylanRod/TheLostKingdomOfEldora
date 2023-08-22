@@ -26,28 +26,27 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
     }
 
     public static void printHeader() {
-        System.out.println(Colors.green + "Character:\n" + Colors.cyan + Main.player);
-        System.out.println(Colors.green + "Description:\n" + Colors.cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
+        GameWindow.textArea.append("\nCharacter:\n" + Main.player);
+        GameWindow.textArea.append("\nDescription:\n" + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
     }
 
     public static void printRoomItems() {
         if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0) {
-            System.out.print(Colors.green + "Items in the Room: | " + Colors.cyan);
+            GameWindow.textArea.append("\nItems in the Room: | ");
             for (int i = 0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i) {
-                System.out.print(Colors.cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + Colors.green + " | " + Colors.white);
+                GameWindow.textArea.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + " | \n");
             }
-            System.out.print("\n");
         } else {
-            System.out.print(Colors.green + "Items in the Room: |" + Colors.cyan + " No items in the room " + Colors.green + "|" + Colors.white + "\n");
+            GameWindow.textArea.append("\nItems in the Room: |" + " No items in the room |" + "\n");
         }
     }
 
     public static void printRoomNPC() {
         try {
             Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-            System.out.println(Colors.green + "Characters in the Room: | " + Colors.cyan + roomNPC + Colors.green + " |" + Colors.white + "\n");
+            GameWindow.textArea.append("\nCharacters in the Room: | " + roomNPC  + " |" + "\n");
         } catch (Exception e) {
-            System.out.print(Colors.green + "Characters in the Room: |" + Colors.cyan + " No characters in the room " + Colors.green + "|" + Colors.white + "\n");
+            GameWindow.textArea.append("\nCharacters in the Room: |" + " No characters in the room | \n");
         }
     }
 
