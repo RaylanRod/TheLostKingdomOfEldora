@@ -56,8 +56,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 fxPlayer.play("fx");
             }
         } catch (Exception e) {
-            GameWindow.textArea.append("You entered an INVALID direction");
-            GameWindow.textArea.append("Press any key to continue...");
+            GameWindow.textArea.append("\nYou entered an INVALID direction");
         }
     }
 
@@ -65,7 +64,6 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         StringBuilder response = new StringBuilder();
 
         try {
-
 
             response.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
 
@@ -99,64 +97,20 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         }
     }
 
-//    public static String talk(){
-//        try {
-//            DisplayMethods.clearScreen();
-//            System.out.println(cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
-//            Scanner scanner = new Scanner(System.in);
-//            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-// //            //if the NPC name is enigma
-//            if("Enigma".equalsIgnoreCase(npcName)) {
-////                //get/print a random riddle
-//                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
-//                int randomIndex = (int) (Math.random() * riddles.size());
-//                Map<String, Object> randomRiddle = riddles.get(randomIndex);
-//                System.out.println(green + randomRiddle.get("question") + cyan);
-////                //get the user input
-//                System.out.println(green + "Type you answer:> " + white);
-//                String input = scanner.nextLine().trim().toLowerCase();
-////                //compare the user input to the riddle answer
-////                //if the answer is correct
-//                if(input.equals(randomRiddle.get("answer")) ) {
-//                    //print you answered correct
-//                    System.out.println("correct");  //OLD CODE: prints just before
-//                }//else
-//                else {
-//                    System.out.println(red + "wrong answer" + white);
-//                }
-////            } else {                                           // OLD CODE
-////            System.out.print("Press any key to continue...");  // MADE FUNCTIONAL
-////            scanner.nextLine();                                // BY RELOCATION
-//            }
-//        } catch (Exception e) {
-//            System.out.println(cyan + "There isn't any NPC to talk to..." + white);
-//            System.out.print("Press any key to continue...");
-//            Scanner scanner = new Scanner(System.in);
-//            scanner.nextLine();
-//        }
-//        System.out.println("Press any key to continue...");  // NEW CODE
-//        Scanner scanner = new Scanner(System.in);            // MADE FUNCTIONAL
-//        scanner.nextLine();                                  // OLD INTENTIONS
-//        return null;
-//    }
-
     public static String look(String itemToLookAT){
-        DisplayMethods.clearScreen();
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray != null) {
             for(Map<String, Object> item : curRoomItemsArray){
                 if(item.get("name").equals(itemToLookAT)){
-                    System.out.println(green + " Description: " + cyan + item.get("description") +white);
-                    System.out.println(green + " Usage: " + cyan + item.get("usage") + white);
+                    GameWindow.textArea.append("\nDescription: " + item.get("description"));
+                    GameWindow.textArea.append("\nUsage: " + item.get("usage"));
                 }
             }
         } else {
 
-            System.out.println(red + "There isn't anything to look at..." + white);
-            System.out.print("Press any key to continue...");
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+            GameWindow.textArea.append("There isn't anything to look at...");
+            GameWindow.textArea.append("Press any key to continue...");
         }
         return itemToLookAT;
     }

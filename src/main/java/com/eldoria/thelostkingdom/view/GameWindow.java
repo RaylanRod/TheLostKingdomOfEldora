@@ -44,7 +44,7 @@ public class GameWindow extends JFrame {
 
 
         ImageIcon originalImage = new ImageIcon(getClass().getResource("/pictures/EldoriaTitle.png"));
-        Image scaledImage = originalImage.getImage().getScaledInstance(800, 600, Image.SCALE_SMOOTH);
+        Image scaledImage = originalImage.getImage().getScaledInstance(800, 800, Image.SCALE_SMOOTH);
         ImageIcon titleImage = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(titleImage);
 
@@ -80,6 +80,7 @@ public class GameWindow extends JFrame {
 
         topPanel = new JPanel(new GridBagLayout());
         topPanel.setPreferredSize(new Dimension(800, 400));
+        topPanel.setMaximumSize(new Dimension(800, 400));
         topPanel.setBackground(Color.BLACK);
 
         bottomPanel = new JPanel(new GridBagLayout());
@@ -126,13 +127,14 @@ public class GameWindow extends JFrame {
 //        topPanel.add(clickToStartButton);
 
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(600, 100));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
         textArea.setFont(new Font("Arial", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -331,9 +333,6 @@ public class GameWindow extends JFrame {
                 case "save":
                     textArea.append("\nEnter a file name: > ");
                     break;
-                case "map":
-                    DisplayMethods.printTextMap();  // Assuming this doesn't directly modify the gameOutputArea
-                    break;
                 case "talk":
                     String response = GameMethods.talk();
                     textArea.append("\n" + response);
@@ -372,8 +371,11 @@ public class GameWindow extends JFrame {
                     break;
             }
         }
+        DisplayMethods.printHeader();
+        DisplayMethods.printRoomItems();
+        DisplayMethods.printRoomNPC();
 
-//        textArea.setText("");
+        inputField.setText("");
     }
 
 }
