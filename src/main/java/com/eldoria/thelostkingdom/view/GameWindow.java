@@ -1,141 +1,208 @@
 package com.eldoria.thelostkingdom.view;
 
+import com.eldoria.thelostkingdom.Main;
+import com.eldoria.thelostkingdom.character.Character;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.gamelogic.GameMethods;
+import com.eldoria.thelostkingdom.gamelogic.TextParser;
+import com.eldoria.thelostkingdom.music.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Map;
 
-public class GameWindow extends JFrame{
+public class GameWindow extends JFrame {
 
     private JPanel topPanel;
-    private JPanel bottomPanel;
+    private static JPanel bottomPanel;
     private JButton clickToStartButton;
-    private JTextArea textArea;
+    public static JTextArea textArea;
     private JPanel titlePanel;
     private JTextArea titleTextArea;
     private JTextField inputField;
-
-
+    private MusicPlayer musicPlayer;
+    private Character inventory = new Character();
+    private static Map<String, Object> inventoryItems;
+    private static JPanel inventoryPanel;
+    private static GameWindow instance;
+    private JButton submitButton;
 
     public GameWindow() {
-        setTitle("Lost Kingdom of Eldoria");
-        this.setSize(800, 600);
+
+        //MAIN WINDOW:
+        setTitle("Lost Kingdom of Eldoria");                  //text on top bar
+        this.setSize(800, 600);                  //main window size
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //X ends game (default is hide -but is still running)
+        Container mainWindow = this.getContentPane();         //above 'this.'stuff goes in window
+        mainWindow.setLayout(new GridBagLayout());             //main layout function
 
-        Container mainWindow = this.getContentPane();
-        mainWindow.setLayout(new BorderLayout());
-
-        titlePanel = new JPanel(new GridBagLayout());
-
-        titleTextArea = new JTextArea();
-        titleTextArea.setText(DisplayMethods.readFromResourceFile("textFiles/Friendly_Title.txt")); // Replace with your actual path
-        titleTextArea.setFont(new Font("Arial", Font.BOLD, 20));
-        titleTextArea.setWrapStyleWord(true);
-        titleTextArea.setLineWrap(true);
-        titleTextArea.setEditable(false);
-        titleTextArea.setBackground(Color.BLACK);
-        titleTextArea.setForeground(Color.WHITE);
-        JScrollPane titleScrollPane = new JScrollPane(titleTextArea);
-        titleScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        titlePanel.add(titleScrollPane);
-        mainWindow.add(titlePanel, BorderLayout.CENTER);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH; // Make the component expand in both directions
-        gbc.weightx = 1.0; // Allocate as much horizontal space as possible to this component
-        gbc.weighty = 1.0; // Allocate as much vertical space as possible to this component
-        titlePanel.add(titleScrollPane, gbc);
-
-
-
-        titleTextArea.setFocusable(true);
-        titleTextArea.requestFocusInWindow();
-        titleTextArea.addKeyListener(new KeyAdapter() {
+        //SPLASH:
+        titlePanel = new JPanel(new GridBagLayout());         //make splash panel
+        ImageIcon originalImage = new ImageIcon(getClass().getResource("/pictures/EldoriaTitle.png"));
+        Image scaledImage = originalImage.getImage().getScaledInstance(800, 800, Image.SCALE_SMOOTH);
+        ImageIcon titleImage = new ImageIcon(scaledImage);    // make image scalable
+        JLabel imageLabel = new JLabel(titleImage);
+        int width = 780;
+        int height = 580;
+        imageLabel.setPreferredSize(new Dimension(width, height));
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);     //center splash L/R
+        imageLabel.setVerticalAlignment(JLabel.CENTER);       //center splash up/down
+        titlePanel.add(imageLabel);                           //add splash image to splash panel
+        mainWindow.add(titlePanel, BorderLayout.CENTER);      //center splash panel on main window
+        titlePanel.setFocusable(true);
+        titlePanel.requestFocusInWindow();
+        titlePanel.addKeyListener(new KeyAdapter() {          //listener for splash (goes away on 'enter')
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    removeTitlePanel(GameWindow.this);
-                    //remove key listener after it has served its purpose
-                    titleTextArea.removeKeyListener(this);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {    //when user hits enter
+                    removeTitlePanel(GameWindow.this);  //remove the splash
+                    titlePanel.removeKeyListener(this);    //this listener stops listening after 1x function
                 }
             }
         });
 
-        topPanel = new JPanel(new GridBagLayout());
-        topPanel.setPreferredSize(new Dimension(800, 400));
-        topPanel.setBackground(Color.BLACK);
+        //TOP PANEL:
+        topPanel = new JPanel(new GridBagLayout());                           //create top panel
+        topPanel.setPreferredSize(new Dimension(800, 400));      //start with this size
+        topPanel.setMaximumSize(new Dimension(800, 400));        //size is fixed (bigger window=margins)
+        topPanel.setBackground(Color.BLACK);                                  //default BGC
 
-        bottomPanel = new JPanel(new GridBagLayout());
-        bottomPanel.setPreferredSize(new Dimension(800, 200));
-        bottomPanel.setBackground(Color.DARK_GRAY);
+        //BOTTOM PANEL:
+        bottomPanel = new JPanel(new GridBagLayout());                        //create bottom panel
+        bottomPanel.setPreferredSize(new Dimension(800, 200));   //start with this size
+        bottomPanel.setBackground(Color.DARK_GRAY);                           //default BGC
 
-        inputField = new JTextField();
-        inputField.setPreferredSize(new Dimension(300,25));
+        //INVENTORY:
+        inventoryItems = inventory.getInventory();                            //inventory function
+        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
+        bottomPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.CENTER)); //add to panel
 
-        // Add JTextField to the bottomPanel using GridBagConstraints
-        GridBagConstraints inputFieldConstraints = new GridBagConstraints();
-        inputFieldConstraints.gridx = 0;
-        inputFieldConstraints.gridy = 1; // Setting it below the text area
-        inputFieldConstraints.weightx = 1.0;
-        inputFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
-        bottomPanel.add(inputField, inputFieldConstraints);
-
-        inputField.addActionListener(e -> {
-            String input = inputField.getText();
-            // Here you can handle the input text.
-            // For example, appending it to your textArea:
-            textArea.append("User: " + input + "\n");
-            inputField.setText("");  // Clear the input field after processing
-        });
-
-        clickToStartButton = new JButton("Click to Start");
-        clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "welcome to Eldoria!"));
-        topPanel.add(clickToStartButton);
-
-        textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(600, 100));
-        textArea.setLineWrap(true);
+        //TEXT AREA: (game text output)
+        textArea = new JTextArea();                                           //create text area
+        textArea.setLineWrap(true);                                           //wrap oversized lines
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 14));      //font
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        constraints.fill = GridBagConstraints.BOTH;
-        bottomPanel.add(scrollPane, constraints);
+        //SCROLL PANE:
+        JScrollPane scrollPane = new JScrollPane(textArea);                  //create scroll pane
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED); //vert. bar as needed
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //no L/R bar
+        topPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
-        JButton helpButton = new JButton("Help");
-        helpButton.addActionListener(e -> {
-            Help.openHelpDialog();
+        //INPUT FIELD:
+        inputField = new JTextField();                                        //create input
+        inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
+        bottomPanel.add(inputField, createGBC(2, 1, 0, 0, GridBagConstraints.HORIZONTAL, 10));  //add to bottom panel
+
+        //SUBMIT BUTTON:
+        submitButton = new JButton("Submit");                            //create button
+        submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
+        bottomPanel.add(submitButton, createGBC(1, 0, 1, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
+
+        //HELP BUTTON:
+        JButton helpButton = new JButton("Help");                       //create button
+        helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
+        bottomPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
+
+        //MAP BUTTON:
+        JButton mapButton = new JButton("Map");                         //create button
+        mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
+        bottomPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
+
+        // MINI MAP:
+        JPanel miniMapPane = CastleMap.createImagePanel();
+        GridBagConstraints miniMapGBC = createGBC(
+                0, 0, 1, 1, GridBagConstraints.BOTH, GridBagConstraints.CENTER);
+        miniMapGBC.gridheight = GridBagConstraints.REMAINDER;
+        bottomPanel.add(miniMapPane, miniMapGBC);
+
+        //MUSIC PLAYER MENU:
+        try {
+            musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JButton launchButton = new JButton("Sound");                     //create button
+        bottomPanel.add(launchButton, createGBC(4, 0, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
+        JPopupMenu menu = new JPopupMenu();                                   //create menu
+
+        //MUSIC ON:
+        JMenuItem musicOn = new JMenuItem("Turn Music On");              //on command
+        musicOn.addActionListener(e -> musicPlayer.play("music"));       //function on
+        menu.add(musicOn);                                                    //add to menu
+
+        //MUSIC OFF:
+        JMenuItem musicOff = new JMenuItem("Turn Music Off");            //off command
+        musicOff.addActionListener(e -> musicPlayer.stop());                  //function stop
+        menu.add(musicOff);                                                   //add to menu
+
+        //SOUND FX ON:
+        JMenuItem fxOn = new JMenuItem("Turn FX On");                    //on command
+        fxOn.addActionListener(e -> musicPlayer.play("fx"));             //function on
+        menu.add(fxOn);                                                       //add to menu
+
+        //SOUND FX OFF:
+        JMenuItem fxOff = new JMenuItem("Turn FX Off");                  //off command
+        fxOff.addActionListener(e -> musicPlayer.stop());                     //function off
+        menu.add(fxOff);                                                      //add to menu
+
+        //MUSIC VOLUME SLIDER:
+        JSlider musicVolume = new JSlider(0, 100, 50);       // Initial volume set to 50
+        musicVolume.addChangeListener(e -> musicPlayer.setVolume("music", musicVolume.getValue() / 100f));
+        menu.add(musicVolume);                                               //add to menu
+
+        //SOUND FX VOLUME SLIDER:
+        JSlider fxVolume = new JSlider(0, 100, 50);          // Initial volume set to 50
+        fxVolume.addChangeListener(e -> musicPlayer.setVolume("fx", fxVolume.getValue() / 100f));
+        menu.add(fxVolume);                                                  //add to menu
+
+        //SOUND MENU TIE IN:
+        launchButton.addActionListener(e -> {
+            menu.show(launchButton, 0, launchButton.getHeight());
         });
-        //bottomPanel = new JPanel(new GridBagLayout());
-        //bottomPanel.setPreferredSize(new Dimension(200, 200));
-       // bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(launchButton);                                       //add to bottom panel
 
-        GridBagConstraints helpButtonConstraints = new GridBagConstraints();
-        helpButtonConstraints.gridx = 1;
-        helpButtonConstraints.gridy = 0;
-        helpButtonConstraints.anchor = GridBagConstraints.LINE_END; // Align to the right
-        bottomPanel.add(helpButton, helpButtonConstraints);
-
-
-
-        addDialogueText("textFiles/intro.txt");
-
+        //INITIAL WINDOW TIE IN:
+        addDialogueText("textFiles/intro.txt");                     //create initial text
 //        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
+        this.setVisible(true);                                               //can see the GUI plz
+        titlePanel.requestFocusInWindow();
+    }
 
-        this.setVisible(true);
+    private static JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
+        JPanel inventoryPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel inventoryLabel = new JLabel("Inventory:");
+        inventoryPanel.add(inventoryLabel);
+        for (String itemName : inventoryItems.keySet()) {
+            JLabel itemLabel = new JLabel(itemName);
+            inventoryPanel.add(itemLabel);
+        }
+        return inventoryPanel;
+    }
 
-        titleTextArea.requestFocusInWindow();
+    public static void updateInventoryPanel(Map<String, Object> inventoryItems) {
+        bottomPanel.remove(inventoryPanel); // Remove the current inventory panel
+        inventoryPanel = createInventoryPanel(inventoryItems); // Create a new inventory panel
+        bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); // Add the new panel
+        bottomPanel.revalidate(); // Refresh the bottom panel
+        bottomPanel.repaint();
+    }
 
+    private static GridBagConstraints createGBC(
+            int x, int y, int weightx, int weighty, int fill, int anchor) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.weightx = weightx;
+        gbc.weighty = weighty;
+        gbc.fill = fill;
+        gbc.anchor = anchor;
+        return gbc;
     }
 
     public static void removeTitlePanel(GameWindow gameWindow) {
@@ -155,17 +222,107 @@ public class GameWindow extends JFrame{
         textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
     }
 
+    public static synchronized GameWindow getInstance() {
+        if (instance == null) {
+            instance = new GameWindow();
+        }
+        return instance;
+    }
+
     public Container getMainContainer() {
         return this.getContentPane();
     }
+
     public JPanel getTitlePanel() {
         return this.titlePanel;
     }
+
     public JPanel getTopPanel() {
         return this.topPanel;
     }
+
     public JPanel getBottomPanel() {
         return this.bottomPanel;
     }
 
+    public static void setTextArea(JTextArea textArea) {
+        GameWindow.textArea = textArea;
+    }
+
+    public void setInputField(JTextField inputField) {
+        this.inputField = inputField;
+    }
+
+    public void processUserInput(String input) {
+        List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
+        if (Main.isExpectingRiddleAnswer) {
+            if (input.equals(Main.currentRiddleAnswer)) {
+                textArea.append("\n" + "correct");
+            } else {
+                textArea.append("\n" + "wrong answer");
+            }
+            // Reset expectations and the riddle answer
+            Main.isExpectingRiddleAnswer = false;
+            Main.currentRiddleAnswer = null;
+            return;
+        }
+        if (verbsAndNouns.size() == 1) {
+            switch (verbsAndNouns.get(0)) {
+                case "quit":
+                    textArea.append("\nThank you for playing The Lost Kingdom of Eldoria!");
+                    System.exit(0);
+                    break;
+                case "save":
+                    textArea.append("\nEnter a file name: > ");
+                    break;
+                case "talk":
+                    String response = GameMethods.talk();
+                    textArea.append("\n" + response);
+                    break;
+                default:
+                    textArea.append("\nUnknown command: " + verbsAndNouns.get(0));
+                    break;
+            }
+            return;
+        }
+
+        if (verbsAndNouns.size() == 2) {
+            switch (verbsAndNouns.get(0)) {
+                case "go":
+                    try {
+                        GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
+                        textArea.append("\nMoved to: " + Main.player.getRoomName());
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while moving.");
+                    }
+                    break;
+                case "get":
+                    try {
+                        GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
+                        textArea.append("\nYou took the " + verbsAndNouns.get(1) + "!");
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while trying to take the item.");
+                    }
+                    break;
+                case "drop":
+                    try{
+                        GameMethods.dropItem(verbsAndNouns.get(1), true, 05.f);
+                        textArea.append("\nYou dropped the " + verbsAndNouns.get(1) + "!");
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while trying to drop the item.");
+                    }
+                case "look":
+                    String lookResult = GameMethods.look(verbsAndNouns.get(1));
+                    textArea.append("\n" + lookResult);
+                    break;
+                default:
+                    textArea.append("\nUnknown command: " + verbsAndNouns.get(0));
+                    break;
+            }
+        }
+        DisplayMethods.printHeader();
+        DisplayMethods.printRoomItems();
+        DisplayMethods.printRoomNPC();
+        inputField.setText("");
+    }
 }
