@@ -30,7 +30,6 @@ public class GameWindow extends JFrame {
     private static GameWindow instance;
     private JButton submitButton;
 
-
     public GameWindow() {
 
         //MAIN WINDOW:
@@ -237,6 +236,14 @@ public class GameWindow extends JFrame {
 
     public JPanel getBottomPanel() {
         return this.bottomPanel;
+    }
+
+    public void setTextArea(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+
+    public void setInputField(JTextField inputField) {
+        this.inputField = inputField;
     }
 
     public void processUserInput(String input) {
