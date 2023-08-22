@@ -66,7 +66,9 @@ public class GameWindow extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {    //when user hits enter
                     removeTitlePanel(GameWindow.this);  //remove the splash
                     titlePanel.removeKeyListener(this);    //this listener stops listening after 1x function
-                }}});
+                }
+            }
+        });
 
         //TOP PANEL:
         topPanel = new JPanel(new GridBagLayout());                           //create top panel
@@ -125,7 +127,9 @@ public class GameWindow extends JFrame {
 
         //HELP BUTTON:
         JButton helpButton = new JButton("Help");                       //create button
-        helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
+        helpButton.addActionListener(e -> {
+            Help.openHelpDialog();
+        });         //click listener
         GridBagConstraints helpButtonConstraints = new GridBagConstraints(); //enable settings
         helpButtonConstraints.gridx = 2;                                     //3rd 'column' (0 =first)
         helpButtonConstraints.gridy = 0;                                     //1st 'row'
@@ -134,7 +138,9 @@ public class GameWindow extends JFrame {
 
         //MAP BUTTON:
         JButton mapButton = new JButton("Map");                         //create button
-        mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
+        mapButton.addActionListener(e -> {
+            CastleMap.openMapRef();
+        });         //add listener
         GridBagConstraints mapButtonConstraints = new GridBagConstraints();  //enable settings
         mapButtonConstraints.gridx = 3;                                      //4th 'column'
         mapButtonConstraints.gridy = 0;                                      //1st row
@@ -186,7 +192,9 @@ public class GameWindow extends JFrame {
         menu.add(fxVolume);                                                  //add to menu
 
         //SOUND MENU TIE IN:
-        launchButton.addActionListener(e -> {menu.show(launchButton, 0, launchButton.getHeight());});
+        launchButton.addActionListener(e -> {
+            menu.show(launchButton, 0, launchButton.getHeight());
+        });
         bottomPanel.add(launchButton);                                       //add to bottom panel
 
         //INITIAL WINDOW TIE IN:
@@ -265,8 +273,8 @@ public class GameWindow extends JFrame {
 
     public void processUserInput(String input) {
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
-        if(Main.isExpectingRiddleAnswer) {
-            if(input.equals(Main.currentRiddleAnswer)){
+        if (Main.isExpectingRiddleAnswer) {
+            if (input.equals(Main.currentRiddleAnswer)) {
                 textArea.append("\n" + "correct");
             } else {
                 textArea.append("\n" + "wrong answer");
@@ -314,6 +322,13 @@ public class GameWindow extends JFrame {
                         textArea.append("\nAn error occurred while trying to take the item.");
                     }
                     break;
+                case "drop":
+                    try{
+                        GameMethods.dropItem(verbsAndNouns.get(1), true, 05.f);
+                        textArea.append("\nYou dropped the " + verbsAndNouns.get(1) + "!");
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while trying to drop the item.");
+                    }
                 case "look":
                     String lookResult = GameMethods.look(verbsAndNouns.get(1));
                     textArea.append("\n" + lookResult);
