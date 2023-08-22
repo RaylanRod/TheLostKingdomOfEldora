@@ -46,65 +46,102 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void moveRoom(String direction, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-       try {
-           int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
-           Main.player.setCurrentRoom(newRoom);
-           Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
-           if (playFX) {
-               MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
-               fxPlayer.setVolume( "fx", fxVolumeLevel);
-               fxPlayer.play("fx");
-           }
-       } catch (Exception e) {
-           System.out.println(red + "You entered an INVALID direction" + red);
-           System.out.print("Press any key to continue...");
-           Scanner scanner = new Scanner(System.in);
-           scanner.nextLine();
-       }
+        try {
+            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
+            Main.player.setCurrentRoom(newRoom);
+            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+            if (playFX) {
+                MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
+                fxPlayer.setVolume( "fx", fxVolumeLevel);
+                fxPlayer.play("fx");
+            }
+        } catch (Exception e) {
+            GameWindow.textArea.append("You entered an INVALID direction");
+            GameWindow.textArea.append("Press any key to continue...");
+        }
     }
 
-    public static void talk(){
+    public static String talk() {
+        StringBuilder response = new StringBuilder();
+
         try {
-            DisplayMethods.clearScreen();
-            System.out.println(cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
-            Scanner scanner = new Scanner(System.in);
+
+
+            response.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
- //            //if the NPC name is enigma
-            if("Enigma".equalsIgnoreCase(npcName)) {
-//                //get/print a random riddle
+
+            if ("Enigma".equalsIgnoreCase(npcName)) {
                 List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
-                System.out.println(green + randomRiddle.get("question") + cyan);
-//                //get the user input
-                System.out.println(green + "Type you answer:> " + white);
-                String input = scanner.nextLine().trim().toLowerCase();
-//                //compare the user input to the riddle answer
-//                //if the answer is correct
-                if(input.equals(randomRiddle.get("answer")) ) {
-                    //print you answered correct
-                    System.out.println("correct");  //OLD CODE: prints just before
-                }//else
-                else {
-                    System.out.println(red + "wrong answer" + white);
-                }
-//            } else {                                           // OLD CODE
-//            System.out.print("Press any key to continue...");  // MADE FUNCTIONAL
-//            scanner.nextLine();                                // BY RELOCATION
+                response.append(randomRiddle.get("question"));
+                response.append("\nType your answer:> ");
+
+                // Set the current riddle's answer and the fact that we're expecting an answer:
+                Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
+                Main.isExpectingRiddleAnswer = true;
             }
+
         } catch (Exception e) {
-            System.out.println(cyan + "There isn't any NPC to talk to..." + white);
-            System.out.print("Press any key to continue...");
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+            response.append(cyan + "There isn't any NPC to talk to..." + white);
+            response.append("\nPress any key to continue...");
         }
-        System.out.println("Press any key to continue...");  // NEW CODE
-        Scanner scanner = new Scanner(System.in);            // MADE FUNCTIONAL
-        scanner.nextLine();                                  // OLD INTENTIONS
+
+        return response.toString();
     }
 
-    public static void look(String itemToLookAT){
-            DisplayMethods.clearScreen();
+    public static String checkRiddleAnswer(String userAnswer) {
+        if (userAnswer.equals(Main.currentRiddleAnswer)) {
+            return "correct";
+        } else {
+            return red + "wrong answer" + white;
+        }
+    }
+
+//    public static String talk(){
+//        try {
+//            DisplayMethods.clearScreen();
+//            System.out.println(cyan + Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+//            Scanner scanner = new Scanner(System.in);
+//            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+// //            //if the NPC name is enigma
+//            if("Enigma".equalsIgnoreCase(npcName)) {
+////                //get/print a random riddle
+//                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
+//                int randomIndex = (int) (Math.random() * riddles.size());
+//                Map<String, Object> randomRiddle = riddles.get(randomIndex);
+//                System.out.println(green + randomRiddle.get("question") + cyan);
+////                //get the user input
+//                System.out.println(green + "Type you answer:> " + white);
+//                String input = scanner.nextLine().trim().toLowerCase();
+////                //compare the user input to the riddle answer
+////                //if the answer is correct
+//                if(input.equals(randomRiddle.get("answer")) ) {
+//                    //print you answered correct
+//                    System.out.println("correct");  //OLD CODE: prints just before
+//                }//else
+//                else {
+//                    System.out.println(red + "wrong answer" + white);
+//                }
+////            } else {                                           // OLD CODE
+////            System.out.print("Press any key to continue...");  // MADE FUNCTIONAL
+////            scanner.nextLine();                                // BY RELOCATION
+//            }
+//        } catch (Exception e) {
+//            System.out.println(cyan + "There isn't any NPC to talk to..." + white);
+//            System.out.print("Press any key to continue...");
+//            Scanner scanner = new Scanner(System.in);
+//            scanner.nextLine();
+//        }
+//        System.out.println("Press any key to continue...");  // NEW CODE
+//        Scanner scanner = new Scanner(System.in);            // MADE FUNCTIONAL
+//        scanner.nextLine();                                  // OLD INTENTIONS
+//        return null;
+//    }
+
+    public static String look(String itemToLookAT){
+        DisplayMethods.clearScreen();
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray != null) {
@@ -121,10 +158,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
+        return itemToLookAT;
     }
 
     public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        GameWindow updateInv = GameWindow.getInstance();
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray.size() != 0) {
@@ -134,7 +171,6 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 if (item.get("name").equals(itemToGet)) {
                     String itemName = (String) item.get("name");
                     inventory.put(itemName, item);
-                    updateInv.updateInventoryPanel();
                     iterator.remove();
                     break;
                 }
@@ -243,7 +279,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-       Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
+        Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
         Map<String, Object> inventory = Main.player.getInventory();
         boolean hasItem1 = inventory.containsKey("royal crown piece left");
         boolean hasItem2 = inventory.containsKey("royal crown piece right");

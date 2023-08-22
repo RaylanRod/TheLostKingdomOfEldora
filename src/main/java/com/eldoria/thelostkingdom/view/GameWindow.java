@@ -1,13 +1,17 @@
 package com.eldoria.thelostkingdom.view;
 
+import com.eldoria.thelostkingdom.Main;
 import com.eldoria.thelostkingdom.character.Character;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
+import com.eldoria.thelostkingdom.gamelogic.GameMethods;
+import com.eldoria.thelostkingdom.gamelogic.TextParser;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Map;
 
 public class GameWindow extends JFrame {
@@ -15,7 +19,7 @@ public class GameWindow extends JFrame {
     private JPanel topPanel;
     private JPanel bottomPanel;
     private JButton clickToStartButton;
-    private JTextArea textArea;
+    public static JTextArea textArea;
     private JPanel titlePanel;
     private JTextArea titleTextArea;
     private JTextField inputField;
@@ -24,6 +28,7 @@ public class GameWindow extends JFrame {
     private Map<String, Object> inventoryItems;
     private JPanel inventoryPanel;
     private static GameWindow instance;
+    private JButton submitButton;
 
 
     public GameWindow() {
@@ -85,7 +90,12 @@ public class GameWindow extends JFrame {
         bottomPanel.add(inventoryPanel, createGridBagConstraints(0, 3, GridBagConstraints.CENTER));
 
         inputField = new JTextField();
-        inputField.setPreferredSize(new Dimension(300, 25));
+
+        submitButton = new JButton("Submit");
+        submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));
+
+        inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));
+
 
         // Add JTextField to the bottomPanel using GridBagConstraints
         GridBagConstraints inputFieldConstraints = new GridBagConstraints();
@@ -93,19 +103,27 @@ public class GameWindow extends JFrame {
         inputFieldConstraints.gridy = 1; // Setting it below the text area
         inputFieldConstraints.weightx = 1.0;
         inputFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        GridBagConstraints submitButtonConstraints = new GridBagConstraints();
+        submitButtonConstraints.gridx = 1;
+        submitButtonConstraints.gridy = 1;
+        submitButtonConstraints.weightx = 1.0;
+
+
         bottomPanel.add(inputField, inputFieldConstraints);
+        bottomPanel.add(submitButton, submitButtonConstraints);
 
-        inputField.addActionListener(e -> {
-            String input = inputField.getText();
-            // Here you can handle the input text.
-            // For example, appending it to your textArea:
-            textArea.append("User: " + input + "\n");
-            inputField.setText("");  // Clear the input field after processing
-        });
+//        inputField.addActionListener(e -> {
+//            String input = inputField.getText();
+//            // Here you can handle the input text.
+//            // For example, appending it to your textArea:
+//            textArea.append("User: " + input + "\n");
+//            inputField.setText("");  // Clear the input field after processing
+//        });
 
-        clickToStartButton = new JButton("Click to Start");
-        clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Welcome to Eldoria!"));
-        topPanel.add(clickToStartButton);
+//        clickToStartButton = new JButton("Click to Start");
+//        clickToStartButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Welcome to Eldoria!"));
+//        topPanel.add(clickToStartButton);
 
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(600, 100));
@@ -122,7 +140,7 @@ public class GameWindow extends JFrame {
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
-        bottomPanel.add(scrollPane, constraints);
+        topPanel.add(scrollPane, constraints);
 
         //HELP BUTTON:
         JButton helpButton = new JButton("Help");
@@ -287,6 +305,75 @@ public class GameWindow extends JFrame {
 
     public JPanel getBottomPanel() {
         return this.bottomPanel;
+    }
+
+    public void processUserInput(String input) {
+        List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
+        if(Main.isExpectingRiddleAnswer) {
+            if(input.equals(Main.currentRiddleAnswer)){
+                textArea.append("\n" + "correct");
+            } else {
+                textArea.append("\n" + "wrong answer");
+            }
+
+            // Reset expectations and the riddle answer
+            Main.isExpectingRiddleAnswer = false;
+            Main.currentRiddleAnswer = null;
+            return;
+        }
+
+        if (verbsAndNouns.size() == 1) {
+            switch (verbsAndNouns.get(0)) {
+                case "quit":
+                    textArea.append("\nThank you for playing The Lost Kingdom of Eldoria!");
+                    System.exit(0);
+                    break;
+                case "save":
+                    textArea.append("\nEnter a file name: > ");
+                    break;
+                case "map":
+                    DisplayMethods.printTextMap();  // Assuming this doesn't directly modify the gameOutputArea
+                    break;
+                case "talk":
+                    String response = GameMethods.talk();
+                    textArea.append("\n" + response);
+                    break;
+                default:
+                    textArea.append("\nUnknown command: " + verbsAndNouns.get(0));
+                    break;
+            }
+            return;
+        }
+
+        if (verbsAndNouns.size() == 2) {
+            switch (verbsAndNouns.get(0)) {
+                case "go":
+                    try {
+                        GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
+                        textArea.append("\nMoved to: " + Main.player.getRoomName());
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while moving.");
+                    }
+                    break;
+                case "get":
+                    try {
+                        GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
+                        textArea.append("\nYou took the " + verbsAndNouns.get(1) + "!");
+                    } catch (Exception e) {
+                        textArea.append("\nAn error occurred while trying to take the item.");
+                    }
+                    break;
+                case "look":
+                    String lookResult = GameMethods.look(verbsAndNouns.get(1));
+                    textArea.append("\n" + lookResult);
+                    break;
+                default:
+                    textArea.append("\nUnknown command: " + verbsAndNouns.get(0));
+                    break;
+            }
+        }
+
+//        textArea.setText("");
     }
 
 }
