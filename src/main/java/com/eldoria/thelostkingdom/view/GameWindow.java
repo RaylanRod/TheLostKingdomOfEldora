@@ -17,7 +17,7 @@ import java.util.Map;
 public class GameWindow extends JFrame {
 
     private JPanel topPanel;
-    private JPanel bottomPanel;
+    private static JPanel bottomPanel;
     private JButton clickToStartButton;
     public static JTextArea textArea;
     private JPanel titlePanel;
@@ -25,11 +25,10 @@ public class GameWindow extends JFrame {
     private JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
-    private Map<String, Object> inventoryItems;
-    private JPanel inventoryPanel;
+    private static Map<String, Object> inventoryItems;
+    private static JPanel inventoryPanel;
     private static GameWindow instance;
     private JButton submitButton;
-
 
     public GameWindow() {
 
@@ -175,7 +174,7 @@ public class GameWindow extends JFrame {
         titlePanel.requestFocusInWindow();
     }
 
-    private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
+    private static JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
         JPanel inventoryPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel inventoryLabel = new JLabel("Inventory:");
         inventoryPanel.add(inventoryLabel);
@@ -186,7 +185,7 @@ public class GameWindow extends JFrame {
         return inventoryPanel;
     }
 
-    public void updateInventoryPanel() {
+    public static void updateInventoryPanel(Map<String, Object> inventoryItems) {
         bottomPanel.remove(inventoryPanel); // Remove the current inventory panel
         inventoryPanel = createInventoryPanel(inventoryItems); // Create a new inventory panel
         bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); // Add the new panel
@@ -194,7 +193,7 @@ public class GameWindow extends JFrame {
         bottomPanel.repaint();
     }
 
-    private GridBagConstraints createGBC(
+    private static GridBagConstraints createGBC(
             int x, int y, int weightx, int weighty, int fill, int anchor) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -244,6 +243,14 @@ public class GameWindow extends JFrame {
 
     public JPanel getBottomPanel() {
         return this.bottomPanel;
+    }
+
+    public static void setTextArea(JTextArea textArea) {
+        GameWindow.textArea = textArea;
+    }
+
+    public void setInputField(JTextField inputField) {
+        this.inputField = inputField;
     }
 
     public void processUserInput(String input) {
