@@ -134,6 +134,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
+            GameWindow.updateInventoryPanel(inventory);
         } else {
             System.out.println(red + "There isn't an item to take..." + white);
             System.out.print("Press any key to continue...");
@@ -156,6 +157,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             return;
         }
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
+        GameWindow.updateInventoryPanel(droppedItem);
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
             //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
