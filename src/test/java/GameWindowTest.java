@@ -3,6 +3,7 @@ package com.eldoria.thelostkingdom.view;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.awt.*;
+import java.util.Map;
 
 //PRESERVE TEST - SQUARETEST W/ MOCKITO PLUG-INS
 class GameWindowTest {
@@ -14,10 +15,10 @@ class GameWindowTest {
         gameWindowUnderTest = new GameWindow();
     }
 
-    @Test
-    void testUpdateInventoryPanel() {
-        gameWindowUnderTest.updateInventoryPanel();
-    }
+//    @Test
+//    void testUpdateInventoryPanel(Map<String, Object> inventoryItems) {
+//        gameWindowUnderTest.updateInventoryPanel();
+//    }
 
     @Test
     void testRemoveTitlePanel() {

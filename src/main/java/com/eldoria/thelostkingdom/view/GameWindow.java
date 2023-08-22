@@ -239,6 +239,14 @@ public class GameWindow extends JFrame {
         return this.bottomPanel;
     }
 
+    public static void setTextArea(JTextArea textArea) {
+        GameWindow.textArea = textArea;
+    }
+
+    public void setInputField(JTextField inputField) {
+        this.inputField = inputField;
+    }
+
     public void processUserInput(String input) {
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
