@@ -238,8 +238,8 @@ public class GameWindow extends JFrame {
         return this.bottomPanel;
     }
 
-    public void setTextArea(JTextArea textArea) {
-        this.textArea = textArea;
+    public static void setTextArea(JTextArea textArea) {
+        GameWindow.textArea = textArea;
     }
 
     public void setInputField(JTextField inputField) {
