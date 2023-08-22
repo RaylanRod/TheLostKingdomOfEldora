@@ -22,10 +22,12 @@ import java.util.Scanner;
 public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static Character player = new Character();
     public static boolean aBooleanFX = true;
+    public static String currentRiddleAnswer = null;
+    public static boolean isExpectingRiddleAnswer = false;
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-        GameWindow gameWindow = new GameWindow();
+        SwingUtilities.invokeLater(() -> new GameWindow());
 
         // Load JSON files
         try {
