@@ -1,9 +1,12 @@
 package com.eldoria.thelostkingdom.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Objects;
 
 
@@ -57,4 +60,42 @@ public class CastleMap {
     }
 
 
+    public static JPanel createImagePanel() {
+
+        JPanel imagePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                // Load and scale the image
+                BufferedImage image = loadImage("/pictures/CastleMap.png");
+                if (image != null) {
+                    int maxWidth = getWidth();
+                    int maxHeight = getHeight();
+
+                    int imageWidth = image.getWidth();
+                    int imageHeight = image.getHeight();
+
+                    // Calculate scaling factors while maintaining aspect ratio
+                    double scale = Math.min((double) maxWidth / imageWidth, (double) maxHeight / imageHeight);
+                    int scaledWidth = (int) (imageWidth * scale);
+                    int scaledHeight = (int) (imageHeight * scale);
+
+                    // Draw the scaled image
+                    g.drawImage(image, (maxWidth - scaledWidth) / 2, (maxHeight - scaledHeight) / 2, scaledWidth, scaledHeight, null);
+                }
+            }
+        };
+
+        return imagePanel;
+    }
+
+    private static BufferedImage loadImage(String filePath) {
+        try {
+            return ImageIO.read(CastleMap.class.getResource(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
