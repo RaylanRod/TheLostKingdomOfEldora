@@ -39,7 +39,7 @@ public class GameWindow extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //X ends game (default is hide -but is still running)
         Container mainWindow = this.getContentPane();         //above 'this.'stuff goes in window
-        mainWindow.setLayout(new BorderLayout());             //main layout function
+        mainWindow.setLayout(new GridBagLayout());             //main layout function
 
         //SPLASH:
         titlePanel = new JPanel(new GridBagLayout());         //make splash panel
@@ -80,7 +80,7 @@ public class GameWindow extends JFrame {
         //INVENTORY:
         inventoryItems = inventory.getInventory();                            //inventory function
         inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-        bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); //add to panel
+        bottomPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.CENTER)); //add to panel
 
         //TEXT AREA: (game text output)
         textArea = new JTextArea();                                           //create text area
@@ -98,7 +98,7 @@ public class GameWindow extends JFrame {
         //INPUT FIELD:
         inputField = new JTextField();                                        //create input
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-        bottomPanel.add(inputField, createGBC(0, 1, 1, 0, GridBagConstraints.HORIZONTAL, 10));                   //add to bottom panel
+        bottomPanel.add(inputField, createGBC(2, 1, 0, 0, GridBagConstraints.HORIZONTAL, 10));  //add to bottom panel
 
         //SUBMIT BUTTON:
         submitButton = new JButton("Submit");                            //create button
@@ -113,7 +113,14 @@ public class GameWindow extends JFrame {
         //MAP BUTTON:
         JButton mapButton = new JButton("Map");                         //create button
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-        bottomPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));                    //add to bottom panel
+        bottomPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
+
+        // MINI MAP:
+        JPanel miniMapPane = CastleMap.createImagePanel();
+        GridBagConstraints miniMapGBC = createGBC(
+                0, 0, 1, 1, GridBagConstraints.BOTH, GridBagConstraints.CENTER);
+        miniMapGBC.gridheight = GridBagConstraints.REMAINDER;
+        bottomPanel.add(miniMapPane, miniMapGBC);
 
         //MUSIC PLAYER MENU:
         try {
