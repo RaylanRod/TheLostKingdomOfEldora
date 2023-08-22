@@ -69,10 +69,10 @@ public class Character extends Colors {
 
     @Override  //NEW CODE: all cyan previously blue
     public String toString() {
-        return  green + "Name: " + cyan + name + green +
-                ", Current Health: " + cyan + health + green +
-                ", Current Room: " + cyan + roomName + green +
-                ", Current Inventory: " + cyan + inventory.keySet() + white + '\n';
+        return  green + "Name: " +  name  +
+                ", Current Health: "  + health  +
+                ", Current Room: " + roomName  +
+                ", Current Inventory: " + inventory.keySet() + '\n';
     }
 
     //    private String getName() {
