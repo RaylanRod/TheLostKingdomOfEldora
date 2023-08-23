@@ -78,6 +78,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
+                Main.currentRiddleHint = randomRiddle.get("hint").toString();
                 Main.isExpectingRiddleAnswer = true;
             }
 
