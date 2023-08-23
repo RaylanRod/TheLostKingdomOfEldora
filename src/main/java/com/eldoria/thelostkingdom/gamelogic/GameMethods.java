@@ -82,7 +82,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             }
 
         } catch (Exception e) {
-            response.append(cyan + "There isn't any NPC to talk to..." + white);
+            response.append("There isn't any NPC to talk to...");
             response.append("\nPress any key to continue...");
         }
 
@@ -93,7 +93,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         if (userAnswer.equals(Main.currentRiddleAnswer)) {
             return "correct";
         } else {
-            return red + "wrong answer" + white;
+            return "wrong answer";
         }
     }
 
@@ -148,7 +148,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(inventory == null || inventory.isEmpty()) {
-            System.out.println(red + "Your inventory is empty. Nothing to drop." + white);
+            System.out.println("Your inventory is empty. Nothing to drop.");
             return;
         }
 
@@ -168,7 +168,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             }
             //System.out.println(cyan + "Dropped items in the room " + green +  curRoomItemsArray + white);
         } else {
-            System.out.println(red + "Failed to drop the item." + white);
+            System.out.println("Failed to drop the item.");
         }
 
     }
