@@ -258,7 +258,7 @@ public class GameWindow extends JFrame {
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
-                textArea.append("\n" + "correct");
+                textArea.append("correct\n" + Main.currentRiddleHint);
             } else {
                 textArea.append("\n" + "wrong answer");
             }
