@@ -4,6 +4,7 @@ import com.eldoria.thelostkingdom.Main;
 import com.eldoria.thelostkingdom.character.Character;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.gamelogic.GameMethods;
+import com.eldoria.thelostkingdom.gamelogic.ItemBox;
 import com.eldoria.thelostkingdom.gamelogic.TextParser;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 
@@ -228,7 +229,7 @@ public class GameWindow extends JFrame {
         return inventoryPanel;
     }
 
-    public static void updateInventoryPanel(Map<String, Object> inventoryItems) {
+    public static void updateInventoryPanel(List<ItemBox> inventoryItems) {
         // Clear existing items in the inventory content panel
         inventoryContentPanel.removeAll();
 
@@ -241,12 +242,21 @@ public class GameWindow extends JFrame {
 
             // Check if the slot should display an item from the updated inventory
             if (slot < inventoryItems.size()) {
-                String itemName = inventoryItems.keySet().toArray(new String[0])[slot];
-                JLabel itemLabel = new JLabel(itemName);
-                itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                itemLabel.setVerticalAlignment(SwingConstants.CENTER);
-                itemLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                slotPanel.add(itemLabel, BorderLayout.CENTER);
+                ItemBox item = inventoryItems.get(slot);
+                String itemName = item.getItemName();
+                String itemImage = item.getItemImage();
+
+                // Check if itemImage is not null before creating ImageIcon
+                if (itemImage != null) {
+                    Image scaledItemImage = new ImageIcon(GameWindow.class.getResource(itemImage))
+                            .getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                    ImageIcon itemIcon = new ImageIcon(scaledItemImage);
+                    JLabel itemLabel = new JLabel(itemIcon);
+                    itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    itemLabel.setVerticalAlignment(SwingConstants.CENTER);
+                    slotPanel.add(itemLabel, BorderLayout.CENTER);
+                }
+
             }
 
             inventoryContentPanel.add(slotPanel);
