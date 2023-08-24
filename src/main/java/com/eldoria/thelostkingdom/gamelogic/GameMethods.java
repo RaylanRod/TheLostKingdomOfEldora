@@ -74,7 +74,6 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
                 response.append(randomRiddle.get("question"));
-                response.append("\nType your answer:> ");
 
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
@@ -92,7 +91,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static String checkRiddleAnswer(String userAnswer) {
         if (userAnswer.equals(Main.currentRiddleAnswer)) {
-            return "correct";
+            return "\ncorrect";
         } else {
             return "wrong answer";
         }
