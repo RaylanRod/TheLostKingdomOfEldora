@@ -15,7 +15,8 @@
       "name": "rock",
       "description": "A simple rock for breaking things",
       "usage": "none",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Rock.jpg"
     }],
     "NPC": {
       "name": "bardleston",

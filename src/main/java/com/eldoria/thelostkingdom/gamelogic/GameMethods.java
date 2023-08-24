@@ -14,10 +14,7 @@ import com.eldoria.thelostkingdom.character.Character;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
@@ -118,13 +115,15 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
+        String imageUrl;
         if(curRoomItemsArray.size() != 0) {
             Iterator<Map<String, Object>> iterator = curRoomItemsArray.iterator();
             while (iterator.hasNext()) {
                 Map<String, Object> item = iterator.next();
                 if (item.get("name").equals(itemToGet)) {
                     String itemName = (String) item.get("name");
-                    inventory.put(itemName, item);
+                    imageUrl = (String) item.get("image");
+                    inventory.put(itemName, imageUrl);
                     iterator.remove();
                     break;
                 }
@@ -134,7 +133,14 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
-            GameWindow.updateInventoryPanel(inventory);
+            List<ItemBox> inventoryItemList = new ArrayList<>();
+            for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                String itemName = entry.getKey();
+                String itemImage = (String) entry.getValue(); // Assuming the value is a String representing the item image
+                ItemBox itemBox = new ItemBox(itemName, itemImage);
+                inventoryItemList.add(itemBox);
+            }
+            GameWindow.updateInventoryPanel(inventoryItemList);
         } else {
             System.out.println(red + "There isn't an item to take..." + white);
             System.out.print("Press any key to continue...");
@@ -159,7 +165,14 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         }
 
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
-        GameWindow.updateInventoryPanel(inventory); // Update inventory panel with updated inventory map
+        List<ItemBox> inventoryItemList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+            String itemName = entry.getKey();
+            String itemImage = (String) entry.getValue(); // Assuming the value is a String representing the item image
+            ItemBox itemBox = new ItemBox(itemName, itemImage);
+            inventoryItemList.add(itemBox);
+        }
+        GameWindow.updateInventoryPanel(inventoryItemList); // Update inventory panel with updated inventory map
 
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
