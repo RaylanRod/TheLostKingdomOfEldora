@@ -24,7 +24,7 @@ public class GameWindow extends JFrame {
     public static JTextArea textArea;
     private JPanel titlePanel;
     private JTextArea titleTextArea;
-    private JTextField inputField;
+    private static JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
     private static Map<String, Object> inventoryItems;
@@ -341,8 +341,10 @@ public class GameWindow extends JFrame {
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
                 textArea.append("correct\n" + Main.currentRiddleHint);
+                inputField.setText("");
             } else {
                 textArea.append("\n" + "wrong answer");
+                inputField.setText("");
             }
             // Reset expectations and the riddle answer
             Main.isExpectingRiddleAnswer = false;
@@ -356,11 +358,13 @@ public class GameWindow extends JFrame {
                     System.exit(0);
                     break;
                 case "save":
-                    textArea.append("\nEnter a file name: > ");
+                    textArea.append("\nEnter a file name: ");
+                    inputField.setText("");
                     break;
                 case "talk":
                     String response = GameMethods.talk();
                     textArea.append("\n" + response);
+                    inputField.setText("");
                     break;
                 default:
                     textArea.append("\nUnknown command: " + verbsAndNouns.get(0));
