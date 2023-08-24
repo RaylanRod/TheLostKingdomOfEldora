@@ -75,8 +75,8 @@ public class GameWindow extends JFrame {
 
         //TOP PANEL:
         topPanel = new JPanel(new GridBagLayout());                           //create top panel
-//        topPanel.setPreferredSize(new Dimension(800, 400));      //start with this size
-//        topPanel.setMaximumSize(new Dimension(800, 400));        //size is fixed (bigger window=margins)
+        topPanel.setPreferredSize(new Dimension(800, 400));      //start with this size
+        topPanel.setMaximumSize(new Dimension(800, 400));        //size is fixed (bigger window=margins)
         topPanel.setBackground(Color.BLACK);                                  //default BGC
 
         //BOTTOM PANEL:
@@ -88,7 +88,7 @@ public class GameWindow extends JFrame {
         //INVENTORY:
         inventoryItems = inventory.getInventory();                            //inventory function
         inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-//        bottomRightPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
+        bottomRightPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
 
         //TEXT AREA: (game text output)
         textArea = new JTextArea();                                           //create text area
@@ -101,17 +101,17 @@ public class GameWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);                  //create scroll pane
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED); //vert. bar as needed
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //no L/R bar
-//        bottomCenterPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
+        bottomCenterPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
         // MINI MAP:
         JPanel miniMapPane = CastleMap.createImagePanel();
-//        bottomLeftPanel.add(miniMapPane, createGBC(0,0,1,1,GridBagConstraints.BOTH,10));
+        bottomLeftPanel.add(miniMapPane, createGBC(0,0,1,1,GridBagConstraints.BOTH,10));
 
         //INPUT FIELD:
         inputField = new JTextField();                                        //create input
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-//        bottomRightPanel.add(inputField,
-//                createGBC(1, 1, 1, 0, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_END));  //add to bottom panel
+        bottomRightPanel.add(inputField,
+                createGBC(1, 1, 1, 0, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_END));  //add to bottom panel
 
         // Create inventory window and content panel
         inventoryFrame = new JFrame("Inventory");
@@ -133,17 +133,17 @@ public class GameWindow extends JFrame {
         //SUBMIT BUTTON:
         submitButton = new JButton("Submit");                            //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
-//        bottomRightPanel.add(submitButton, createGBC(2, 1, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
+        bottomRightPanel.add(submitButton, createGBC(2, 1, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
 
         //HELP BUTTON:
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
-//        bottomRightPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
+        bottomRightPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
 
         //MAP BUTTON:
         JButton mapButton = new JButton("Map");                         //create button
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-//        bottomRightPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
+        bottomRightPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
 
         //MUSIC PLAYER MENU:
         try {
@@ -189,14 +189,16 @@ public class GameWindow extends JFrame {
         launchButton.addActionListener(e -> {
             menu.show(launchButton, 0, launchButton.getHeight());
         });
-//        bottomRightPanel.add(launchButton);                                       //add to bottom panel
+        bottomRightPanel.add(launchButton);                                       //add to bottom panel
+
+        bottomRightPanel.add(addDirectionPanel());
 
         bottomPanel.add(bottomLeftPanel, createGBC(0,0,1,1,GridBagConstraints.BOTH, 10));
         bottomPanel.add(bottomCenterPanel, createGBC(1,0,2,1,GridBagConstraints.BOTH, 10));
         bottomPanel.add(bottomRightPanel, createGBC(2,0,1,1,GridBagConstraints.BOTH, 10));
         //INITIAL WINDOW TIE IN:
         addDialogueText("textFiles/intro.txt");                     //create initial text
-//        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
+        mainWindow.add(bottomPanel, createGBC(0,1,1,1,0,10));
         this.setVisible(true);                                               //can see the GUI plz
         titlePanel.requestFocusInWindow();
     }
@@ -415,5 +417,49 @@ public class GameWindow extends JFrame {
         DisplayMethods.printRoomItems();
         DisplayMethods.printRoomNPC();
         inputField.setText("");
+    }
+
+    private JPanel addDirectionPanel() {
+        JPanel directionPanel = new JPanel();
+
+        // Create direction buttons
+        JButton upButton = new JButton("Up");
+        JButton downButton = new JButton("Down");
+        JButton leftButton = new JButton("Left");
+        JButton rightButton = new JButton("Right");
+
+        // Add action listeners to the buttons
+        upButton.addActionListener(new MoveActionListener("go north"));
+        downButton.addActionListener(new MoveActionListener("go south"));
+        leftButton.addActionListener(new MoveActionListener("go west"));
+        rightButton.addActionListener(new MoveActionListener("go east"));
+
+        // Add buttons to the control panel
+        directionPanel.add(new JLabel(""));
+        directionPanel.add(upButton);
+        directionPanel.add(new JLabel(""));
+        directionPanel.add(leftButton);
+        directionPanel.add(new JLabel(""));
+        directionPanel.add(rightButton);
+        directionPanel.add(new JLabel(""));
+        directionPanel.add(downButton);
+        directionPanel.add(new JLabel(""));
+
+        return directionPanel;
+    }
+
+    class MoveActionListener implements ActionListener {
+        private String direction;
+
+        public MoveActionListener(String direction) {
+            this.direction = direction;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            SwingUtilities.invokeLater(() -> {
+                processUserInput(direction);
+            });
+        }
     }
 }
