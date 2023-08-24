@@ -18,6 +18,9 @@ public class GameWindow extends JFrame {
 
     private JPanel topPanel;
     private static JPanel bottomPanel;
+    private static JPanel bottomLeftPanel;
+    private static JPanel bottomCenterPanel;
+    private static JPanel bottomRightPanel;
     private JButton clickToStartButton;
     public static JTextArea textArea;
     private JPanel titlePanel;
@@ -73,13 +76,14 @@ public class GameWindow extends JFrame {
 
         //BOTTOM PANEL:
         bottomPanel = new JPanel(new GridBagLayout());                        //create bottom panel
-//        bottomPanel.setPreferredSize(new Dimension(800, 200));   //start with this size
-        bottomPanel.setBackground(Color.DARK_GRAY);                           //default BGC
+        bottomLeftPanel = new JPanel(new GridBagLayout()); bottomLeftPanel.setBackground(Color.red);
+        bottomCenterPanel = new JPanel(new GridBagLayout()); bottomCenterPanel.setBackground(Color.yellow);
+        bottomRightPanel = new JPanel(new GridBagLayout()); bottomRightPanel.setBackground(Color.green);
 
         //INVENTORY:
         inventoryItems = inventory.getInventory();                            //inventory function
         inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-        bottomPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
+//        bottomRightPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
 
         //TEXT AREA: (game text output)
         textArea = new JTextArea();                                           //create text area
@@ -92,35 +96,32 @@ public class GameWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);                  //create scroll pane
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED); //vert. bar as needed
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //no L/R bar
-        topPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
+//        bottomCenterPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
         // MINI MAP:
         JPanel miniMapPane = CastleMap.createImagePanel();
-        GridBagConstraints miniMapGBC = createGBC(
-                0, 0, 1, 1, GridBagConstraints.BOTH, GridBagConstraints.WEST);
-//        miniMapGBC.gridheight = GridBagConstraints.REMAINDER;
-        bottomPanel.add(miniMapPane, miniMapGBC);
+//        bottomLeftPanel.add(miniMapPane, createGBC(0,0,1,1,GridBagConstraints.BOTH,10));
 
         //INPUT FIELD:
         inputField = new JTextField();                                        //create input
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-        bottomPanel.add(inputField,
-                createGBC(1, 1, 1, 0, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_END));  //add to bottom panel
+//        bottomRightPanel.add(inputField,
+//                createGBC(1, 1, 1, 0, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_END));  //add to bottom panel
 
         //SUBMIT BUTTON:
         submitButton = new JButton("Submit");                            //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
-        bottomPanel.add(submitButton, createGBC(2, 1, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
+//        bottomRightPanel.add(submitButton, createGBC(2, 1, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
 
         //HELP BUTTON:
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
-        bottomPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
+//        bottomRightPanel.add(helpButton, createGBC(2, 0, 0, 0, 0, GridBagConstraints.LINE_END));                  //add to bottom panel
 
         //MAP BUTTON:
         JButton mapButton = new JButton("Map");                         //create button
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-        bottomPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
+//        bottomRightPanel.add(mapButton, createGBC(3, 0, 0, 0, 0, GridBagConstraints.LINE_END));  //add to bottom panel
 
         //MUSIC PLAYER MENU:
         try {
@@ -129,7 +130,7 @@ public class GameWindow extends JFrame {
             e.printStackTrace();
         }
         JButton launchButton = new JButton("Sound");                     //create button
-        bottomPanel.add(launchButton, createGBC(4, 0, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
+        bottomRightPanel.add(launchButton, createGBC(4, 0, 0, 0, 0, GridBagConstraints.LINE_END));               //add to bottom panel
         JPopupMenu menu = new JPopupMenu();                                   //create menu
 
         //MUSIC ON:
@@ -166,8 +167,11 @@ public class GameWindow extends JFrame {
         launchButton.addActionListener(e -> {
             menu.show(launchButton, 0, launchButton.getHeight());
         });
-        bottomPanel.add(launchButton);                                       //add to bottom panel
+//        bottomRightPanel.add(launchButton);                                       //add to bottom panel
 
+        bottomPanel.add(bottomLeftPanel, createGBC(0,0,1,1,GridBagConstraints.BOTH, 10));
+        bottomPanel.add(bottomCenterPanel, createGBC(1,0,2,1,GridBagConstraints.BOTH, 10));
+        bottomPanel.add(bottomRightPanel, createGBC(2,0,1,1,GridBagConstraints.BOTH, 10));
         //INITIAL WINDOW TIE IN:
         addDialogueText("textFiles/intro.txt");                     //create initial text
 //        mainWindow.add(bottomPanel, BorderLayout.SOUTH);
