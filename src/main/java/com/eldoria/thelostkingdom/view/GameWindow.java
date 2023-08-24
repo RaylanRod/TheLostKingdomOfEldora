@@ -9,6 +9,8 @@ import com.eldoria.thelostkingdom.music.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -32,6 +34,9 @@ public class GameWindow extends JFrame {
     private static JPanel inventoryPanel;
     private static GameWindow instance;
     private JButton submitButton;
+    private static JFrame inventoryFrame; // Reference to the inventory window
+    private static JPanel inventoryContentPanel; // Panel inside the inventory window
+    private static int clicker = 0;
 
     public GameWindow() {
 
@@ -108,6 +113,23 @@ public class GameWindow extends JFrame {
 //        bottomRightPanel.add(inputField,
 //                createGBC(1, 1, 1, 0, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_END));  //add to bottom panel
 
+        // Create inventory window and content panel
+        inventoryFrame = new JFrame("Inventory");
+        inventoryFrame.setSize(400, 400);
+        inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
+        inventoryFrame.add(inventoryContentPanel);
+
+        // INVENTORY BUTTON:
+        JButton inventoryButton = new JButton("Inventory");
+        inventoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showInventoryWindow(); // Call method to open inventory window
+                clicker++;
+            }
+        });
+        bottomPanel.add(inventoryButton, createGBC(3, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.LINE_END));
+
         //SUBMIT BUTTON:
         submitButton = new JButton("Submit");                            //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
@@ -179,23 +201,83 @@ public class GameWindow extends JFrame {
         titlePanel.requestFocusInWindow();
     }
 
-    private static JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
-        JPanel inventoryPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel inventoryLabel = new JLabel("Inventory:");
-        inventoryPanel.add(inventoryLabel);
-        for (String itemName : inventoryItems.keySet()) {
-            JLabel itemLabel = new JLabel(itemName);
-            inventoryPanel.add(itemLabel);
+    private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
+        JPanel inventoryPanel = new JPanel(new GridLayout(4, 4, 5, 5));
+        inventoryPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        int totalSlots = 4 * 4;
+
+        for (int slot = 0; slot < totalSlots; slot++) {
+            JPanel slotPanel = new JPanel(new BorderLayout());
+            slotPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+
+            if (slot < inventoryItems.size()) {
+                String itemName = inventoryItems.keySet().toArray(new String[0])[slot];
+                JLabel itemLabel = new JLabel(itemName);
+                itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                itemLabel.setVerticalAlignment(SwingConstants.CENTER);
+                itemLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                slotPanel.add(itemLabel, BorderLayout.CENTER);
+            }
+
+            inventoryPanel.add(slotPanel);
         }
+
         return inventoryPanel;
     }
 
     public static void updateInventoryPanel(Map<String, Object> inventoryItems) {
-        bottomPanel.remove(inventoryPanel); // Remove the current inventory panel
-        inventoryPanel = createInventoryPanel(inventoryItems); // Create a new inventory panel
-        bottomPanel.add(inventoryPanel, createGBC(0, 3, 0, 0, 0, GridBagConstraints.CENTER)); // Add the new panel
-        bottomPanel.revalidate(); // Refresh the bottom panel
-        bottomPanel.repaint();
+        // Clear existing items in the inventory content panel
+        inventoryContentPanel.removeAll();
+
+        int totalSlots = 4 * 4; // Total number of slots in the grid
+
+        // Populate inventory slots based on updated inventory items
+        for (int slot = 0; slot < totalSlots; slot++) {
+            JPanel slotPanel = new JPanel(new BorderLayout());
+            slotPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+
+            // Check if the slot should display an item from the updated inventory
+            if (slot < inventoryItems.size()) {
+                String itemName = inventoryItems.keySet().toArray(new String[0])[slot];
+                JLabel itemLabel = new JLabel(itemName);
+                itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                itemLabel.setVerticalAlignment(SwingConstants.CENTER);
+                itemLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                slotPanel.add(itemLabel, BorderLayout.CENTER);
+            }
+
+            inventoryContentPanel.add(slotPanel);
+        }
+
+        inventoryContentPanel.revalidate(); // Refresh the inventory content panel
+        inventoryContentPanel.repaint();
+    }
+
+    private void showInventoryWindow() {
+        if (inventoryItems.isEmpty() && clicker < 1) {
+            // Inventory is empty, show empty slot grid
+            for (int slot = 0; slot < 16; slot++) {
+                JPanel slotPanel = new JPanel(new BorderLayout());
+                slotPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+                inventoryContentPanel.add(slotPanel);
+            }
+        } else {
+            // Inventory has items, populate inventory slots
+            for (int slot = 0; slot < inventoryItems.size(); slot++) {
+                String itemName = inventoryItems.keySet().toArray(new String[0])[slot];
+                JPanel slotPanel = new JPanel(new BorderLayout());
+                slotPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+                JLabel itemLabel = new JLabel(itemName);
+                itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                itemLabel.setVerticalAlignment(SwingConstants.CENTER);
+                itemLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                slotPanel.add(itemLabel, BorderLayout.CENTER);
+                inventoryContentPanel.add(slotPanel);
+            }
+        }
+
+        inventoryFrame.setVisible(true);
     }
 
     private static GridBagConstraints createGBC(
@@ -262,7 +344,7 @@ public class GameWindow extends JFrame {
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
-                textArea.append("\n" + "correct");
+                textArea.append("correct\n" + Main.currentRiddleHint);
             } else {
                 textArea.append("\n" + "wrong answer");
             }

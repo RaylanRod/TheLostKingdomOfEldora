@@ -78,6 +78,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
+                Main.currentRiddleHint = randomRiddle.get("hint").toString();
                 Main.isExpectingRiddleAnswer = true;
             }
 
@@ -147,17 +148,20 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
-        if(inventory == null || inventory.isEmpty()) {
+
+        if (inventory == null || inventory.isEmpty()) {
             System.out.println("Your inventory is empty. Nothing to drop.");
             return;
         }
 
-        if (!inventory.containsKey(itemToDrop)){
+        if (!inventory.containsKey(itemToDrop)) {
             System.out.println("Item not found in your inventory.");
             return;
         }
+
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
-        GameWindow.updateInventoryPanel(droppedItem);
+        GameWindow.updateInventoryPanel(inventory); // Update inventory panel with updated inventory map
+
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
             //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
