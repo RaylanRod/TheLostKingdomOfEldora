@@ -29,6 +29,7 @@ public class Character extends Colors {
     }
     //Functional methods to allow the player to participate in glorious combat -jp
     public int attack() {
+        //If the player has the sword, then their attacks are AT LEAST as strong as the vampire's
         if (inventory.containsKey("silver sword")) {
             return 15 + new Random().nextInt(36);  // random number between 15 and 50
         } else {
