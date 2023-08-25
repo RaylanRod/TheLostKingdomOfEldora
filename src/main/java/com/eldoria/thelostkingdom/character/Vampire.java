@@ -14,6 +14,7 @@ public class Vampire extends Character {
     }
 
     // If the vampire has special attack methods, override the attack() method:
+    //This is IF we get to that point
    @Override
     public int attack() {
         // You can add specific logic for the vampire here.
