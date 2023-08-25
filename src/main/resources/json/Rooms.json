@@ -240,7 +240,7 @@
   },
   {
     "roomId": 8,
-    "name": "The Starlit Observatory ",
+    "name": "The Starlit Observatory",
     "description": "A domed observatory atop the Kingdoms tallest tower, revealing a breathtaking view of the night sky.\nConstellations and celestial bodies adorn the ceiling.\nTo the south you see you see a dark eerie hallway with dark painting covering the walls.\nTo the west, you see a room with a golden throne perfectly centered within.",
     "exits": {
       "north": null,

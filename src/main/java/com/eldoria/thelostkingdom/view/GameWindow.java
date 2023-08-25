@@ -7,6 +7,9 @@ import com.eldoria.thelostkingdom.gamelogic.GameMethods;
 import com.eldoria.thelostkingdom.gamelogic.ItemBox;
 import com.eldoria.thelostkingdom.gamelogic.TextParser;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
+import com.eldoria.thelostkingdom.rooms.Rooms;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -15,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +30,9 @@ public class GameWindow extends JFrame {
     private static JPanel bottomLeftPanel;
     private static JPanel bottomCenterPanel;
     private static JPanel bottomRightPanel;
-    private JButton clickToStartButton;
     public static JTextArea textArea;
     private JPanel titlePanel;
+    JPanel miniMapPane;
     private JTextArea titleTextArea;
     private static JTextField inputField;
     private MusicPlayer musicPlayer;
@@ -47,7 +52,7 @@ public class GameWindow extends JFrame {
         this.setSize(800, 600);                  //main window size
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //X ends game (default is hide -but is still running)
-        Container mainWindow = this.getContentPane();         //above 'this.'stuff goes in window
+        Container mainWindow = this;         //above 'this.'stuff goes in window
         mainWindow.setLayout(new GridBagLayout());             //main layout function
 
         //SPLASH:
@@ -76,10 +81,13 @@ public class GameWindow extends JFrame {
         });
 
         //TOP PANEL:
-        topPanel = new JPanel(new GridBagLayout());                           //create top panel
+        topPanel = new JPanel(new GridLayout(1,1));                           //create top panel
         topPanel.setPreferredSize(new Dimension(800, 400));      //start with this size
         topPanel.setMaximumSize(new Dimension(800, 400));        //size is fixed (bigger window=margins)
-        topPanel.setBackground(Color.BLACK);                                  //default BGC
+        topPanel.setBackground(Color.BLACK);
+
+        JPanel picPane = Helper.createImagePanel("/pictures/rooms/courtyard.png");
+        topPanel.add(picPane);
 
         //BOTTOM PANEL:
         bottomPanel = new JPanel(new GridBagLayout());                        //create bottom panel
@@ -106,7 +114,7 @@ public class GameWindow extends JFrame {
         bottomCenterPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
         // MINI MAP:
-        JPanel miniMapPane = CastleMap.createImagePanel();
+        miniMapPane = Helper.createImagePanel("/pictures/CastleMap.png");
         bottomLeftPanel.add(miniMapPane, createGBC(0,0,1,1,GridBagConstraints.BOTH,10));
 
         //INPUT FIELD:
@@ -198,9 +206,9 @@ public class GameWindow extends JFrame {
         bottomPanel.add(bottomLeftPanel, createGBC(0,0,1,1,GridBagConstraints.BOTH, 10));
         bottomPanel.add(bottomCenterPanel, createGBC(1,0,2,1,GridBagConstraints.BOTH, 10));
         bottomPanel.add(bottomRightPanel, createGBC(2,0,1,1,GridBagConstraints.BOTH, 10));
+
         //INITIAL WINDOW TIE IN:
         addDialogueText("textFiles/intro.txt");                     //create initial text
-        mainWindow.add(bottomPanel, createGBC(0,1,1,1,0,10));
         this.setVisible(true);                                               //can see the GUI plz
         titlePanel.requestFocusInWindow();
     }
@@ -395,9 +403,18 @@ public class GameWindow extends JFrame {
                 case "go":
                     try {
                         GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
+
+                        HashMap<String, String> roomPics = GameMethods.loadJSONFile("json/room-pics.json", HashMap.class);
+                        String currentRoomPicPath = roomPics.get(Integer.toString(Main.player.getCurrentRoomId()));
+                        topPanel.revalidate();
+                        topPanel.removeAll();
+                        topPanel.repaint();
+                        JPanel picPane = Helper.createImagePanel(currentRoomPicPath);
+                        topPanel.add(picPane);    // update current room picture
+
                         textArea.append("\nMoved to: " + Main.player.getRoomName());
                     } catch (Exception e) {
-                        textArea.append("\nAn error occurred while moving.");
+                        e.printStackTrace();
                     }
                     break;
                 case "get":
@@ -457,6 +474,21 @@ public class GameWindow extends JFrame {
         directionPanel.add(downButton);
         directionPanel.add(transPanes[4]);
 
+        class MoveActionListener implements ActionListener {
+            private String direction;
+
+            public MoveActionListener(String direction) {
+                this.direction = direction;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    processUserInput(direction);
+                });
+            }
+        }
+
         // Add action listeners to the buttons
         upButton.addActionListener(new MoveActionListener("go north"));
         downButton.addActionListener(new MoveActionListener("go south"));
@@ -464,20 +496,5 @@ public class GameWindow extends JFrame {
         rightButton.addActionListener(new MoveActionListener("go east"));
 
         return directionPanel;
-    }
-
-    class MoveActionListener implements ActionListener {
-        private String direction;
-
-        public MoveActionListener(String direction) {
-            this.direction = direction;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            SwingUtilities.invokeLater(() -> {
-                processUserInput(direction);
-            });
-        }
     }
 }

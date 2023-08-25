@@ -44,9 +44,9 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static void moveRoom(String direction, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         try {
-            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
-            Main.player.setCurrentRoom(newRoom);
-            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoomId()).getExits().get(direction);
+            Main.player.setCurrentRoomId(newRoom);
+            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoomId()).getName());
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
@@ -62,12 +62,12 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
         try {
 
-            response.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
+            response.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("dialog") + "\n");
 
-            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
 
             if ("Enigma".equalsIgnoreCase(npcName)) {
-                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
+                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
                 response.append(randomRiddle.get("question"));
@@ -95,7 +95,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static String look(String itemToLookAT){
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray != null) {
             for(Map<String, Object> item : curRoomItemsArray){
@@ -113,7 +113,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         String imageUrl;
         if(curRoomItemsArray.size() != 0) {
@@ -151,7 +151,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
 
         if (inventory == null || inventory.isEmpty()) {
@@ -234,7 +234,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static void attack(boolean playFX, float fxVolumeLevel){
         try {
-            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             System.out.println("the target is: " + npcName);
             System.out.println("the player is attacking the target.");
             if (playFX) {
@@ -251,7 +251,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
+        Room room = Rooms.getRoomById(Main.player.getCurrentRoomId());
         Map<String, Object> inventory = Main.player.getInventory();
         boolean hasItem1 = inventory.containsKey("royal crown piece left");
         boolean hasItem2 = inventory.containsKey("royal crown piece right");
