@@ -27,14 +27,14 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printHeader() {
         GameWindow.textArea.append("\nCharacter:\n" + Main.player);
-        GameWindow.textArea.append("\nDescription:\n" + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
+        GameWindow.textArea.append("\nDescription:\n" + Rooms.getRoomById(Main.player.getCurrentRoomId()).getDescription() + "\n");
     }
 
     public static void printRoomItems() {
-        if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0) {
+        if (Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().size() > 0) {
             GameWindow.textArea.append("\nItems in the Room: | ");
-            for (int i = 0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i) {
-                GameWindow.textArea.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + " | \n");
+            for (int i = 0; i < Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().size(); ++i) {
+                GameWindow.textArea.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().get(i).get("name") + " | \n");
             }
         } else {
             GameWindow.textArea.append("\nItems in the Room: |" + " No items in the room |" + "\n");
@@ -43,7 +43,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printRoomNPC() {
         try {
-            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             GameWindow.textArea.append("\nCharacters in the Room: | " + roomNPC  + " |" + "\n");
         } catch (Exception e) {
             GameWindow.textArea.append("\nCharacters in the Room: |" + " No characters in the room | \n");
@@ -52,7 +52,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printSuccessfulAttack() {
         try {
-            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             System.out.println("You have successfully attacked: | " + roomNPC + " |" + "\n");
         } catch (Exception e) {
             System.out.println("There was no character to attack!!!"+ "\n");
@@ -82,7 +82,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
         String path = "textFiles/Castle_Map.txt";
         String spaces32 = new String(new char[32]).replace('\0', ' ');
 
-        int inRoom = Main.player.getCurrentRoom();
+        int inRoom = Main.player.getCurrentRoomId();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(path)))) {
             String line;
             int i = 1;

@@ -7,7 +7,7 @@ import java.util.*;
 public class Character extends Colors {
     private String name;
     private int health;
-    private int currentRoom;
+    private int currentRoomId;
     private String roomName;
     private Map<String, Object> inventory;
 
@@ -16,7 +16,7 @@ public class Character extends Colors {
 //        this.name = "Bob";  //<-- OLD CODE: username always Bob
         this.name = "";  // NEW CODE: Custom name
         this.health = 100;
-        this.currentRoom = 1;
+        this.currentRoomId = 1;
         this.roomName = "The Forgotten Courtyard";
         this.inventory = new HashMap<>();
     }
@@ -43,12 +43,12 @@ public class Character extends Colors {
         this.health = health;
     }
 
-    public int getCurrentRoom() {
-        return currentRoom;
+    public int getCurrentRoomId() {
+        return currentRoomId;
     }
 
-    public void setCurrentRoom(int currentRoom) {
-        this.currentRoom = currentRoom;
+    public void setCurrentRoomId(int currentRoomId) {
+        this.currentRoomId = currentRoomId;
     }
 
     public String getRoomName() {
