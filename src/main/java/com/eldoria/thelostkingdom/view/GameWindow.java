@@ -9,6 +9,7 @@ import com.eldoria.thelostkingdom.gamelogic.TextParser;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -430,30 +431,37 @@ public class GameWindow extends JFrame {
     }
 
     private JPanel addDirectionPanel() {
-        JPanel directionPanel = new JPanel();
 
-        // Create direction buttons
-        JButton upButton = new JButton("Up");
-        JButton downButton = new JButton("Down");
-        JButton leftButton = new JButton("Left");
-        JButton rightButton = new JButton("Right");
+        JPanel directionPanel = new JPanel(new GridLayout(3, 3));
+        directionPanel.setOpaque(false);
+
+        JButton upButton = new BasicArrowButton(BasicArrowButton.NORTH);
+        JButton downButton = new BasicArrowButton(BasicArrowButton.SOUTH);
+        JButton leftButton = new BasicArrowButton(BasicArrowButton.WEST);
+        JButton rightButton = new BasicArrowButton(BasicArrowButton.EAST);
+
+        JPanel[] transPanes = new JPanel[5];
+        for (int i = 0; i < 5; i++) {
+            JPanel p = new JPanel();
+            p.setOpaque(false);
+            transPanes[i] = p;
+        }
+
+        directionPanel.add(transPanes[0]);
+        directionPanel.add(upButton);
+        directionPanel.add(transPanes[1]);
+        directionPanel.add(leftButton);
+        directionPanel.add(transPanes[2]);
+        directionPanel.add(rightButton);
+        directionPanel.add(transPanes[3]);
+        directionPanel.add(downButton);
+        directionPanel.add(transPanes[4]);
 
         // Add action listeners to the buttons
         upButton.addActionListener(new MoveActionListener("go north"));
         downButton.addActionListener(new MoveActionListener("go south"));
         leftButton.addActionListener(new MoveActionListener("go west"));
         rightButton.addActionListener(new MoveActionListener("go east"));
-
-        // Add buttons to the control panel
-        directionPanel.add(new JLabel(""));
-        directionPanel.add(upButton);
-        directionPanel.add(new JLabel(""));
-        directionPanel.add(leftButton);
-        directionPanel.add(new JLabel(""));
-        directionPanel.add(rightButton);
-        directionPanel.add(new JLabel(""));
-        directionPanel.add(downButton);
-        directionPanel.add(new JLabel(""));
 
         return directionPanel;
     }
