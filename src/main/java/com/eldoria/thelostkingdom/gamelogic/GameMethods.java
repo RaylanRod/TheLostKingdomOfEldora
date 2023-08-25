@@ -1,6 +1,7 @@
 package com.eldoria.thelostkingdom.gamelogic;
 
 import com.eldoria.thelostkingdom.Main;
+import com.eldoria.thelostkingdom.character.Vampire;
 import com.eldoria.thelostkingdom.display.Colors;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
@@ -59,23 +60,36 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static String talk() {
         StringBuilder response = new StringBuilder();
-
         try {
-
             response.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("dialog") + "\n");
-
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
-
             if ("Enigma".equalsIgnoreCase(npcName)) {
                 List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
                 response.append(randomRiddle.get("question"));
-
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
                 Main.currentRiddleHint = randomRiddle.get("hint").toString();
                 Main.isExpectingRiddleAnswer = true;
+            }
+            if ("interactive painting".equalsIgnoreCase(npcName)) {
+                // Add sword to player's inventory
+                Map<String, Object> inventory = Main.player.getInventory();
+                inventory.put("sword", "path_to_sword_image");  // need the actual path to the sword image
+
+                // Update game window inventory
+                List<ItemBox> inventoryItemList = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                    String itemName = entry.getKey();
+                    String itemImage = (String) entry.getValue();
+                    ItemBox itemBox = new ItemBox(itemName, itemImage);
+                    inventoryItemList.add(itemBox);
+                }
+                GameWindow.updateInventoryPanel(inventoryItemList);
+
+                // Notify the player
+                response.append("You received a sword from the interactive painting!\n");
             }
 
         } catch (Exception e) {
@@ -188,6 +202,34 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         }
 
     }
+    public static void handleCombat(String input) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        switch (input.toLowerCase()) {
+            case "attack":
+                int playerDamage = Main.player.attack();
+                Vampire.vampireHealth -= playerDamage;
+                GameWindow.textArea.append("You dealt " + playerDamage + " damage to the vampire!\n");
+
+                if (Vampire.vampireHealth <= 0) {
+                    GameWindow.textArea.append("You defeated the vampire!\n");
+                    GameMethods.getItem("ancient amulet of binding", true, 05f);  //need the inventory method here
+                    return;
+                }
+
+                int vampireDamage = Vampire.BASE_ATTACK;
+                Main.player.takeDamage(vampireDamage);
+                GameWindow.textArea.append("Vampire dealt " + vampireDamage + " damage to you!\n");
+
+                if (!Main.player.isAlive()) {
+                    GameWindow.textArea.append("You were defeated by the vampire!\n");
+                    System.exit(0);
+                }
+                break;
+            // You can add more commands here
+            default:
+                GameWindow.textArea.append("Unknown command: " + input + "\n");
+                break;
+        }
+    }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
         //noinspection ConstantConditions
@@ -253,12 +295,13 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         Room room = Rooms.getRoomById(Main.player.getCurrentRoomId());
         Map<String, Object> inventory = Main.player.getInventory();
-        boolean hasItem1 = inventory.containsKey("royal crown piece left");
-        boolean hasItem2 = inventory.containsKey("royal crown piece right");
-        boolean hasItem3 = inventory.containsKey("royal crown piece middle");
-        boolean hasItem4 = inventory.containsKey("royal crown piece back");
+        boolean hasItem1 = inventory.containsKey("diamond");
+        boolean hasItem2 = inventory.containsKey("emerald");
+        boolean hasItem3 = inventory.containsKey("amethyst");
+        boolean hasItem4 = inventory.containsKey("ruby");
+        boolean hasItem5 = inventory.containsKey("crown");
         if(room.getRoomId() == 5) {
-            if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+            if (hasItem1 && hasItem2 && hasItem3 && hasItem4 && hasItem5) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
                 fxPlayer.setVolume( "fx", (float) 8.0/10);
                 fxPlayer.play("fx");
@@ -267,7 +310,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             } else {
                 System.out.println(purple + "You are in the right room to win, but you need more items to win." + white);
             }
-        } else if(hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+        } else if(hasItem1 && hasItem2 && hasItem3 && hasItem4 && hasItem5) {
             System.out.println(purple + "You have all the pieces but you are not in the correct room to win the game." + white);
         }
     }
