@@ -406,13 +406,10 @@ public class GameWindow extends JFrame {
                 case "attack":
                     try {
                         GameMethods.handleCombat(verbsAndNouns.get(0));
-                    } catch (UnsupportedAudioFileException e) {
-                        e.printStackTrace();
-                    } catch (LineUnavailableException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                         e.printStackTrace();
                     }
+                    inputField.setText("");
                     break;
                 case "go":
                     try {

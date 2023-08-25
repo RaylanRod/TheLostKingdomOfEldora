@@ -241,7 +241,7 @@
     }],
     "NPC": {
       "name": "interactive painting",
-      "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. I cannot be freed until the crown adorned with all of the missing gems has been returned to the throne of the king. But the vampire in the catacombs holds the missing ruby. Release me, and I shall grant you a weapon that may defeat the vampire.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
+      "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. I cannot be freed until the crown adorned with all of the missing gems has been returned to the throne of the king. But the vampire in the catacombs holds the missing ruby. I shall grant you a weapon that may defeat the vampire.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
     }
   },
   {

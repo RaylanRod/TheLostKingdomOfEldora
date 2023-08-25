@@ -60,23 +60,36 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static String talk() {
         StringBuilder response = new StringBuilder();
-
         try {
-
             response.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("dialog") + "\n");
-
             String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
-
             if ("Enigma".equalsIgnoreCase(npcName)) {
                 List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
                 response.append(randomRiddle.get("question"));
-
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
                 Main.currentRiddleHint = randomRiddle.get("hint").toString();
                 Main.isExpectingRiddleAnswer = true;
+            }
+            if ("interactive painting".equalsIgnoreCase(npcName)) {
+                // Add sword to player's inventory
+                Map<String, Object> inventory = Main.player.getInventory();
+                inventory.put("sword", "path_to_sword_image");  // need the actual path to the sword image
+
+                // Update game window inventory
+                List<ItemBox> inventoryItemList = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                    String itemName = entry.getKey();
+                    String itemImage = (String) entry.getValue();
+                    ItemBox itemBox = new ItemBox(itemName, itemImage);
+                    inventoryItemList.add(itemBox);
+                }
+                GameWindow.updateInventoryPanel(inventoryItemList);
+
+                // Notify the player
+                response.append("You received a sword from the interactive painting!\n");
             }
 
         } catch (Exception e) {
