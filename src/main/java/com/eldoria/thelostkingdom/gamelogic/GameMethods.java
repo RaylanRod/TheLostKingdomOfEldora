@@ -1,6 +1,7 @@
 package com.eldoria.thelostkingdom.gamelogic;
 
 import com.eldoria.thelostkingdom.Main;
+import com.eldoria.thelostkingdom.character.Vampire;
 import com.eldoria.thelostkingdom.display.Colors;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
@@ -187,6 +188,34 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             System.out.println("Failed to drop the item.");
         }
 
+    }
+    public static void handleCombat(String input) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        switch (input.toLowerCase()) {
+            case "attack":
+                int playerDamage = Main.player.attack();
+                Vampire.vampireHealth -= playerDamage;
+                GameWindow.textArea.append("You dealt " + playerDamage + " damage to the vampire!\n");
+
+                if (Vampire.vampireHealth <= 0) {
+                    GameWindow.textArea.append("You defeated the vampire!\n");
+                    GameMethods.getItem("ancient amulet of binding", true, 05f);  //need the inventory method here
+                    return;
+                }
+
+                int vampireDamage = Vampire.BASE_ATTACK;
+                Main.player.takeDamage(vampireDamage);
+                GameWindow.textArea.append("Vampire dealt " + vampireDamage + " damage to you!\n");
+
+                if (!Main.player.isAlive()) {
+                    GameWindow.textArea.append("You were defeated by the vampire!\n");
+                    System.exit(0);
+                }
+                break;
+            // You can add more commands here
+            default:
+                GameWindow.textArea.append("Unknown command: " + input + "\n");
+                break;
+        }
     }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {

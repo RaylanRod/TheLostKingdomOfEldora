@@ -11,6 +11,8 @@ import com.eldoria.thelostkingdom.rooms.Rooms;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
@@ -18,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -400,6 +403,17 @@ public class GameWindow extends JFrame {
 
         if (verbsAndNouns.size() == 2) {
             switch (verbsAndNouns.get(0)) {
+                case "attack":
+                    try {
+                        GameMethods.handleCombat(verbsAndNouns.get(0));
+                    } catch (UnsupportedAudioFileException e) {
+                        e.printStackTrace();
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "go":
                     try {
                         GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
