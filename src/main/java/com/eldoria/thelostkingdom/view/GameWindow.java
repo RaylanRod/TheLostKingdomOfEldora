@@ -91,7 +91,7 @@ public class GameWindow extends JFrame {
 
         //BOTTOM PANEL:
         bottomPanel = new JPanel(new GridBagLayout());                        //create bottom panel
-        bottomLeftPanel = new JPanel(new GridBagLayout()); bottomLeftPanel.setBackground(Color.red);
+        bottomLeftPanel = new JPanel(); bottomLeftPanel.setBackground(Color.red);
         bottomCenterPanel = new JPanel(new GridBagLayout()); bottomCenterPanel.setBackground(Color.yellow);
         bottomRightPanel = new JPanel(new GridBagLayout()); bottomRightPanel.setBackground(Color.green);
 
@@ -114,8 +114,15 @@ public class GameWindow extends JFrame {
         bottomCenterPanel.add(scrollPane, createGBC(0, 0, 1, 1, GridBagConstraints.BOTH, 10));                             //add scroll panel to top panel
 
         // MINI MAP:
+        bottomLeftPanel.setLayout(new OverlayLayout(bottomLeftPanel));
         miniMapPane = Helper.createImagePanel("/pictures/CastleMap.png");
-        bottomLeftPanel.add(miniMapPane, createGBC(0,0,1,1,GridBagConstraints.BOTH,10));
+        miniMapPane.setOpaque(false);
+
+        JLabel locationLabel = new JLabel("X");
+        locationLabel.setForeground(Color.yellow);
+
+        bottomLeftPanel.add(locationLabel);
+        bottomLeftPanel.add(miniMapPane);
 
         //INPUT FIELD:
         inputField = new JTextField();                                        //create input
@@ -406,8 +413,8 @@ public class GameWindow extends JFrame {
 
                         HashMap<String, String> roomPics = GameMethods.loadJSONFile("json/room-pics.json", HashMap.class);
                         String currentRoomPicPath = roomPics.get(Integer.toString(Main.player.getCurrentRoomId()));
-                        topPanel.revalidate();
                         topPanel.removeAll();
+                        topPanel.revalidate();
                         topPanel.repaint();
                         JPanel picPane = Helper.createImagePanel(currentRoomPicPath);
                         topPanel.add(picPane);    // update current room picture
