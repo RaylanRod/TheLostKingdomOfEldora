@@ -25,6 +25,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static String currentRiddleAnswer = null;
     public static String currentRiddleHint = null;
     public static boolean isExpectingRiddleAnswer = false;
+    public static boolean hasTalkedToPainting = false;
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
