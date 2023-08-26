@@ -1,7 +1,7 @@
 [
   {
     "name": "Bardleston",
-    "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here. An ancient prophecy speaks of a hero who will reassemble the Crown of Light. Are you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. You can start by seeking the Crystal Ball with a trapped spirit inside. It may hold the key to a new future. Find it in the depths of the abandoned tower, guarded by puzzles and spectral foes.\" "
+    "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here. An ancient prophecy speaks of a hero who will reassemble the Crown of Light. Are you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. There are many places you can start. You may start by seeking the Crystal Ball with a trapped spirit inside, making a wish at the well or consulting the soul trapped in a frame. But I would advise starting in the living gardens to the west. Be aware that the pieces of the crown are guarded by puzzles and spectral foes.\" "
   },
   {
     "name": "Enigma",
@@ -9,18 +9,22 @@
   },
   {
     "name": "Librarian",
-    "dialog": "Player: (Enters the library, tired and wounded) \"Greetings, Librarian. I seek respite and healing.\"  \n\nLibrarian Ghost: \"Welcome, weary seeker of knowledge. For a few gold coins, I shall provide you with the knowledge for mending your wounds and rejuvenating your spirit.\" \n\nPlayer: \"Thank you, Librarian. Here is the gold. I appreciate your assistance.\" "
+    "dialog": "Player: (Enters the library) \"Greetings, Librarian. I seek knowledge of hte whereabouts of the lost pieces to the crown of the king. Will you aid my noble quest?\"  \n\nLibrarian Ghost: \"Welcome, weary seeker of knowledge. It is said only the true hero of our kingdom may possess the scattered gems of the kings crown. If you show me you have the Emerald that was lost in the living gardens, I will give you the missing amethyst.\" \n\nPlayer: \"Thank you, kind Librarian. I appreciate your assistance.\" "
   },
   {
     "name": "Elder Vampire",
-    "dialog": "Player: (Confronts the menacing Elder Vampire in the final showdown) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine once more, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
+    "dialog": "Player: (Confronts the menacing Elder Vampire) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
   },
   {
     "name": "Interactive Painting",
     "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. Release me, and I shall aid you on your journey.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
   },
   {
+    "name": "Cursed Well",
+    "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \n\nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \n\nPlayer: \"I shall do all within my power to lift this curse.\"  \n\nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" "
+  },
+  {
     "name": "Crystal Ball with a Trapped Spirit",
-    "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \n\nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom. Only a kind and brave soul can release me. Will you be that soul?\"  \n\nPlayer: \"I will help you find your freedom, spirit.\"  \n\nSpirit: \"Then you must venture to the [room] and find item that bound me. It will reveal the path to my liberation, and once freed, I shall become your steadfast companion.\" "
+    "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \n\nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom. Only a kind and brave soul can release me. Are you that soul?\"  \n\nPlayer: \"I will help you find your freedom, spirit.\"  \n\nSpirit: \"Then you must bring me the amulet that bound me. It will reveal the path to my liberation, and once freed, I shall bestow upon you a missing crown jewel to aid your quest.\" "
   }
 ]

@@ -1,6 +1,7 @@
 package com.eldoria.thelostkingdom.gamelogic;
 
 import com.eldoria.thelostkingdom.Main;
+import com.eldoria.thelostkingdom.character.Vampire;
 import com.eldoria.thelostkingdom.display.Colors;
 import com.eldoria.thelostkingdom.display.DisplayMethods;
 import com.eldoria.thelostkingdom.music.MusicPlayer;
@@ -14,10 +15,7 @@ import com.eldoria.thelostkingdom.character.Character;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
@@ -47,9 +45,9 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static void moveRoom(String direction, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         try {
-            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoom()).getExits().get(direction);
-            Main.player.setCurrentRoom(newRoom);
-            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoom()).getName());
+            int newRoom = Rooms.getRoomById(Main.player.getCurrentRoomId()).getExits().get(direction);
+            Main.player.setCurrentRoomId(newRoom);
+            Main.player.setRoomName(Rooms.getRoomById(Main.player.getCurrentRoomId()).getName());
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/moveRoom.wav");
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
@@ -62,27 +60,41 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static String talk() {
         StringBuilder response = new StringBuilder();
-
         try {
-
-            response.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("dialog") + "\n");
-
-            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-
+            response.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("dialog") + "\n");
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             if ("Enigma".equalsIgnoreCase(npcName)) {
-                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("riddle");
+                List<Map<String, Object>> riddles = (List<Map<String, Object>>) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("riddle");
                 int randomIndex = (int) (Math.random() * riddles.size());
                 Map<String, Object> randomRiddle = riddles.get(randomIndex);
                 response.append(randomRiddle.get("question"));
-                response.append("\nType your answer:> ");
-
                 // Set the current riddle's answer and the fact that we're expecting an answer:
                 Main.currentRiddleAnswer = randomRiddle.get("answer").toString().toLowerCase();
+                Main.currentRiddleHint = randomRiddle.get("hint").toString();
                 Main.isExpectingRiddleAnswer = true;
+            }
+            if ("interactive painting".equalsIgnoreCase(npcName)) {
+                Main.hasTalkedToPainting = true;
+                // Add sword to player's inventory
+                Map<String, Object> inventory = Main.player.getInventory();
+                inventory.put("sword", "path_to_sword_image");  // need the actual path to the sword image
+
+                // Update game window inventory
+                List<ItemBox> inventoryItemList = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                    String itemName = entry.getKey();
+                    String itemImage = (String) entry.getValue();
+                    ItemBox itemBox = new ItemBox(itemName, itemImage);
+                    inventoryItemList.add(itemBox);
+                }
+                GameWindow.updateInventoryPanel(inventoryItemList);
+
+                // Notify the player
+                response.append("You received a sword from the interactive painting!\n");
             }
 
         } catch (Exception e) {
-            response.append(cyan + "There isn't any NPC to talk to..." + white);
+            response.append("There isn't any NPC to talk to...");
             response.append("\nPress any key to continue...");
         }
 
@@ -91,14 +103,14 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static String checkRiddleAnswer(String userAnswer) {
         if (userAnswer.equals(Main.currentRiddleAnswer)) {
-            return "correct";
+            return "\ncorrect";
         } else {
-            return red + "wrong answer" + white;
+            return "wrong answer";
         }
     }
 
     public static String look(String itemToLookAT){
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
         if(curRoomItemsArray != null) {
             for(Map<String, Object> item : curRoomItemsArray){
@@ -116,15 +128,21 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void getItem(String itemToGet, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
+        String imageUrl;
         if(curRoomItemsArray.size() != 0) {
             Iterator<Map<String, Object>> iterator = curRoomItemsArray.iterator();
             while (iterator.hasNext()) {
                 Map<String, Object> item = iterator.next();
                 if (item.get("name").equals(itemToGet)) {
+                    if("sword".equalsIgnoreCase(itemToGet) && !Main.hasTalkedToPainting){
+                        GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
+                        return;
+                    }
                     String itemName = (String) item.get("name");
-                    inventory.put(itemName, item);
+                    imageUrl = (String) item.get("image");
+                    inventory.put(itemName, imageUrl);
                     iterator.remove();
                     break;
                 }
@@ -134,7 +152,14 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 fxPlayer.setVolume( "fx", fxVolumeLevel);
                 fxPlayer.play("fx");
             }
-            GameWindow.updateInventoryPanel(inventory);
+            List<ItemBox> inventoryItemList = new ArrayList<>();
+            for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                String itemName = entry.getKey();
+                String itemImage = (String) entry.getValue(); // Assuming the value is a String representing the item image
+                ItemBox itemBox = new ItemBox(itemName, itemImage);
+                inventoryItemList.add(itemBox);
+            }
+            GameWindow.updateInventoryPanel(inventoryItemList);
         } else {
             System.out.println(red + "There isn't an item to take..." + white);
             System.out.print("Press any key to continue...");
@@ -145,19 +170,29 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoom()).getItems();
+        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
         Map<String, Object> inventory = Main.player.getInventory();
-        if(inventory == null || inventory.isEmpty()) {
-            System.out.println(red + "Your inventory is empty. Nothing to drop." + white);
+
+        if (inventory == null || inventory.isEmpty()) {
+            System.out.println("Your inventory is empty. Nothing to drop.");
             return;
         }
 
-        if (!inventory.containsKey(itemToDrop)){
+        if (!inventory.containsKey(itemToDrop)) {
             System.out.println("Item not found in your inventory.");
             return;
         }
+
         Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
-        GameWindow.updateInventoryPanel(droppedItem);
+        List<ItemBox> inventoryItemList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+            String itemName = entry.getKey();
+            String itemImage = (String) entry.getValue(); // Assuming the value is a String representing the item image
+            ItemBox itemBox = new ItemBox(itemName, itemImage);
+            inventoryItemList.add(itemBox);
+        }
+        GameWindow.updateInventoryPanel(inventoryItemList); // Update inventory panel with updated inventory map
+
         if (droppedItem != null) {
             curRoomItemsArray.add(droppedItem);
             //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
@@ -168,9 +203,37 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             }
             //System.out.println(cyan + "Dropped items in the room " + green +  curRoomItemsArray + white);
         } else {
-            System.out.println(red + "Failed to drop the item." + white);
+            System.out.println("Failed to drop the item.");
         }
 
+    }
+    public static void handleCombat(String input) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        switch (input.toLowerCase()) {
+            case "attack":
+                int playerDamage = Main.player.attack();
+                Vampire.vampireHealth -= playerDamage;
+                GameWindow.textArea.append("You dealt " + playerDamage + " damage to the vampire!\n");
+
+                if (Vampire.vampireHealth <= 0) {
+                    GameWindow.textArea.append("You defeated the vampire!\n");
+                    GameMethods.getItem("ancient amulet of binding", true, 05f);  //need the inventory method here
+                    return;
+                }
+
+                int vampireDamage = Vampire.BASE_ATTACK;
+                Main.player.takeDamage(vampireDamage);
+                GameWindow.textArea.append("Vampire dealt " + vampireDamage + " damage to you!\n");
+
+                if (!Main.player.isAlive()) {
+                    GameWindow.textArea.append("You were defeated by the vampire!\n");
+                    System.exit(0);
+                }
+                break;
+            // You can add more commands here
+            default:
+                GameWindow.textArea.append("Unknown command: " + input + "\n");
+                break;
+        }
     }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
@@ -218,7 +281,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
     public static void attack(boolean playFX, float fxVolumeLevel){
         try {
-            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            String npcName = (String) Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             System.out.println("the target is: " + npcName);
             System.out.println("the player is attacking the target.");
             if (playFX) {
@@ -235,14 +298,15 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void winGame(boolean playFX) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        Room room = Rooms.getRoomById(Main.player.getCurrentRoom());
+        Room room = Rooms.getRoomById(Main.player.getCurrentRoomId());
         Map<String, Object> inventory = Main.player.getInventory();
-        boolean hasItem1 = inventory.containsKey("royal crown piece left");
-        boolean hasItem2 = inventory.containsKey("royal crown piece right");
-        boolean hasItem3 = inventory.containsKey("royal crown piece middle");
-        boolean hasItem4 = inventory.containsKey("royal crown piece back");
+        boolean hasItem1 = inventory.containsKey("diamond");
+        boolean hasItem2 = inventory.containsKey("emerald");
+        boolean hasItem3 = inventory.containsKey("amethyst");
+        boolean hasItem4 = inventory.containsKey("ruby");
+        boolean hasItem5 = inventory.containsKey("crown");
         if(room.getRoomId() == 5) {
-            if (hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+            if (hasItem1 && hasItem2 && hasItem3 && hasItem4 && hasItem5) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
                 fxPlayer.setVolume( "fx", (float) 8.0/10);
                 fxPlayer.play("fx");
@@ -251,7 +315,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             } else {
                 System.out.println(purple + "You are in the right room to win, but you need more items to win." + white);
             }
-        } else if(hasItem1 && hasItem2 && hasItem3 && hasItem4) {
+        } else if(hasItem1 && hasItem2 && hasItem3 && hasItem4 && hasItem5) {
             System.out.println(purple + "You have all the pieces but you are not in the correct room to win the game." + white);
         }
     }

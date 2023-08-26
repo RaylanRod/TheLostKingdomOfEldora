@@ -19,7 +19,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
         try {
             Map<String, String> textMap = GameMethods.loadJSONTextFile(fileName, new TypeToken<Map<String, String>>() {
             });
-            System.out.println(Colors.green + textMap.get("text") + Colors.white);
+            System.out.println(textMap.get("text"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -27,14 +27,14 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printHeader() {
         GameWindow.textArea.append("\nCharacter:\n" + Main.player);
-        GameWindow.textArea.append("\nDescription:\n" + Rooms.getRoomById(Main.player.getCurrentRoom()).getDescription() + "\n");
+        GameWindow.textArea.append("\nDescription:\n" + Rooms.getRoomById(Main.player.getCurrentRoomId()).getDescription() + "\n");
     }
 
     public static void printRoomItems() {
-        if (Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size() > 0) {
+        if (Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().size() > 0) {
             GameWindow.textArea.append("\nItems in the Room: | ");
-            for (int i = 0; i < Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().size(); ++i) {
-                GameWindow.textArea.append(Rooms.getRoomById(Main.player.getCurrentRoom()).getItems().get(i).get("name") + " | \n");
+            for (int i = 0; i < Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().size(); ++i) {
+                GameWindow.textArea.append(Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems().get(i).get("name") + " | \n");
             }
         } else {
             GameWindow.textArea.append("\nItems in the Room: |" + " No items in the room |" + "\n");
@@ -43,7 +43,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printRoomNPC() {
         try {
-            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
             GameWindow.textArea.append("\nCharacters in the Room: | " + roomNPC  + " |" + "\n");
         } catch (Exception e) {
             GameWindow.textArea.append("\nCharacters in the Room: |" + " No characters in the room | \n");
@@ -52,10 +52,10 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
 
     public static void printSuccessfulAttack() {
         try {
-            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoom()).getNPC().get("name");
-            System.out.println(Colors.purple + "You have successfully attacked: | " + Colors.cyan + roomNPC + Colors.purple + " |" + Colors.white + "\n");
+            Object roomNPC = Rooms.getRoomById(Main.player.getCurrentRoomId()).getNPC().get("name");
+            System.out.println("You have successfully attacked: | " + roomNPC + " |" + "\n");
         } catch (Exception e) {
-            System.out.println(Colors.purple + "There was no character to attack!!!" + Colors.white + "\n");
+            System.out.println("There was no character to attack!!!"+ "\n");
         }
     }
 
@@ -65,7 +65,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
         try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(fileName)))) {
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(Colors.red + line + Colors.white);
+                System.out.println(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -82,7 +82,7 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
         String path = "textFiles/Castle_Map.txt";
         String spaces32 = new String(new char[32]).replace('\0', ' ');
 
-        int inRoom = Main.player.getCurrentRoom();
+        int inRoom = Main.player.getCurrentRoomId();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(DisplayMethods.class.getClassLoader().getResourceAsStream(path)))) {
             String line;
             int i = 1;
@@ -110,24 +110,24 @@ public class DisplayMethods extends Colors {  //NEW CODE: all cyan previously bl
                         break;
                     case 35:
                         if (inRoom == 4)
-                            System.out.println("##    #   " + Colors.cyan + "X" + Colors.green + "  #                                             #      #       ##");
+                            System.out.println("##    #   " + "X" + "  #                                             #      #       ##");
                         if (inRoom == 1)
-                            System.out.println("##    #      #                       " + Colors.cyan + "X" + Colors.green + "                     #      #       ##");
+                            System.out.println("##    #      #                       " + "X" + "                     #      #       ##");
                         if (inRoom == 3)
-                            System.out.println("##    #      #                                             #   " + Colors.cyan + "X" + Colors.green + "  #       ##");
+                            System.out.println("##    #      #                                             #   " + "X" + "  #       ##");
                         break;
                     default:
-                        System.out.println(Colors.green + line);
+                        System.out.println(line);
                         break;
                 }
                 i++;
             }
-            System.out.println("\n" + Colors.cyan + "X" + Colors.green + " - denotes players current position; player can go north, south, east or west; up/down for stairs" + Colors.white);
+            System.out.println("\n" + "X" + " - denotes players current position; player can go north, south, east or west; up/down for stairs");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.print(Colors.white + "Press any key to continue...");
+        System.out.print("Press any key to continue...");
         // Wait for the player to press Enter before continuing
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();

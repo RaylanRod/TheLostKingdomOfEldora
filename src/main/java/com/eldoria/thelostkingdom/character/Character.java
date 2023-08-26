@@ -7,7 +7,8 @@ import java.util.*;
 public class Character extends Colors {
     private String name;
     private int health;
-    private int currentRoom;
+    private int currentRoomId;
+    private int attackDamage;
     private String roomName;
     private Map<String, Object> inventory;
 
@@ -16,7 +17,8 @@ public class Character extends Colors {
 //        this.name = "Bob";  //<-- OLD CODE: username always Bob
         this.name = "";  // NEW CODE: Custom name
         this.health = 100;
-        this.currentRoom = 1;
+        this.attackDamage = 10;
+        this.currentRoomId = 1;
         this.roomName = "The Forgotten Courtyard";
         this.inventory = new HashMap<>();
     }
@@ -24,6 +26,28 @@ public class Character extends Colors {
     public Character(String playerName) {
         this();
         setName(playerName);
+    }
+    //Functional methods to allow the player to participate in glorious combat -jp
+    public int attack() {
+        //If the player has the sword, then their attacks are AT LEAST as strong as the vampire's
+        if (inventory.containsKey("sword")) {
+            return 15 + new Random().nextInt(36);  // random number between 15 and 50
+        } else {
+            return attackDamage;
+        }
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health < 0) health = 0;
+    }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
+
+    public boolean hasItem(String itemName){
+        return inventory.containsKey(itemName);
     }
 
     //Getters and Setters
@@ -43,12 +67,12 @@ public class Character extends Colors {
         this.health = health;
     }
 
-    public int getCurrentRoom() {
-        return currentRoom;
+    public int getCurrentRoomId() {
+        return currentRoomId;
     }
 
-    public void setCurrentRoom(int currentRoom) {
-        this.currentRoom = currentRoom;
+    public void setCurrentRoomId(int currentRoomId) {
+        this.currentRoomId = currentRoomId;
     }
 
     public String getRoomName() {
@@ -66,10 +90,13 @@ public class Character extends Colors {
     public void setInventory(Map<String, Object> inventory) {
         this.inventory = inventory;
     }
+    public void setAttackDamage(int attackDamage){
+        this.attackDamage = attackDamage;
+    }
 
     @Override  //NEW CODE: all cyan previously blue
     public String toString() {
-        return  green + "Name: " +  name  +
+        return  "Name: " +  name  +
                 ", Current Health: "  + health  +
                 ", Current Room: " + roomName  +
                 ", Current Inventory: " + inventory.keySet() + '\n';

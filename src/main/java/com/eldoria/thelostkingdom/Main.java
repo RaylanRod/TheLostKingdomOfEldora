@@ -23,7 +23,9 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
     public static Character player = new Character();
     public static boolean aBooleanFX = true;
     public static String currentRiddleAnswer = null;
+    public static String currentRiddleHint = null;
     public static boolean isExpectingRiddleAnswer = false;
+    public static boolean hasTalkedToPainting = false;
 
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
@@ -31,7 +33,7 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
 
         // Load JSON files
         try {
-          Rooms.loadRoomsFromJSON();
+            Rooms.loadRoomsFromJSON();
         } catch (IOException e) {
             System.out.println(Colors.red + "Error loading game data: " + e.getMessage() + Colors.white);
             return;
@@ -77,10 +79,10 @@ public class Main extends Colors {  // NEW CODE: all cyan was blue
                     switch (verbsAndNouns.get(0)) {
                         case "quit":
                             if (GameMethods.confirmQuit(scanner)) {
-                             // Player confirmed to quit, set isGameOver to true to end the game loop
+                                // Player confirmed to quit, set isGameOver to true to end the game loop
                                 isGameOver = true;
                             } else {
-                            // Player did not confirm, continue the game loop
+                                // Player did not confirm, continue the game loop
                                 System.out.println(Colors.cyan + "Resuming game..." + Colors.white);
                             }
                             break;
