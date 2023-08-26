@@ -431,7 +431,11 @@ public class GameWindow extends JFrame {
                 case "get":
                     try {
                         GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
-                        textArea.append("\nYou took the " + verbsAndNouns.get(1) + "!");
+                        if(verbsAndNouns.get(1) == "sword"){
+                            textArea.append("\nYou need to talk to the painting to get this item.");
+                        }else {
+                            textArea.append("\nYou attempt to take the " + verbsAndNouns.get(1) + "!");
+                        }
                     } catch (Exception e) {
                         textArea.append("\nAn error occurred while trying to take the item.");
                     }
