@@ -33,7 +33,6 @@ public class GameWindow extends JFrame {
     public static JTextArea textArea;
     private JFrame titleFrame;
     JPanel miniMapPane;
-    private JTextArea titleTextArea;
     private static JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
@@ -49,7 +48,7 @@ public class GameWindow extends JFrame {
 
         //MAIN WINDOW:
         setTitle("Lost Kingdom of Eldoria");                  //text on top bar
-        this.setSize(800, 600);                  //main window size
+        this.setSize(820, 650);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //X ends game (default is hide -but is still running)
         mainWindow.setLayout(null);             //main layout function
@@ -85,14 +84,15 @@ public class GameWindow extends JFrame {
 
         //_________________________________TOP-PANEL_______________________________
 
-        topPanel = new JPanel();                           //create top panel
+        topPanel = new JPanel(new BorderLayout());                           //create top panel
         topPanel.setBounds(0, 0, 800, 400);
         topPanel.setBackground(Helper.randomColor());
+        mainWindow.add(topPanel);
 
         picPane = Helper.createImagePanel("/pictures/rooms/courtyard.png");
-        picPane.setBounds(100, 0, 600, 400);
+//        picPane.setBounds(100, 0, 600, 400);
         picPane.setOpaque(false);
-        mainWindow.add(picPane);
+        topPanel.add(picPane, BorderLayout.CENTER);
 
         JPanel directionPane = addDirectionPanel();
         directionPane.setBounds(750, 350, 50, 50);
@@ -457,12 +457,12 @@ public class GameWindow extends JFrame {
                         HashMap<String, String> roomPics = GameMethods.loadJSONFile("json/room-pics.json", HashMap.class);
                         String currentRoomPicPath = roomPics.get(Integer.toString(Main.player.getCurrentRoomId()));
 
+                        topPanel.revalidate();
+                        topPanel.remove(picPane);
 
                         picPane = Helper.createImagePanel(currentRoomPicPath);
-                        picPane.setBounds(100, 0, 600, 400);
                         picPane.setOpaque(false);
-                        mainWindow.add(picPane);
-                        mainWindow.revalidate();
+                        topPanel.add(picPane, BorderLayout.CENTER);
                         mainWindow.repaint();
 
                         textArea.setText("");
@@ -474,7 +474,11 @@ public class GameWindow extends JFrame {
                 case "get":
                     try {
                         GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
-                        textArea.append("\nYou took the " + verbsAndNouns.get(1) + "!");
+                        if(verbsAndNouns.get(1) == "sword"){
+                            textArea.append("\nYou need to talk to the painting to get this item.");
+                        }else {
+                            textArea.append("\nYou attempt to take the " + verbsAndNouns.get(1) + "!");
+                        }
                     } catch (Exception e) {
                         textArea.append("\nAn error occurred while trying to take the item.");
                     }

@@ -74,6 +74,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 Main.isExpectingRiddleAnswer = true;
             }
             if ("interactive painting".equalsIgnoreCase(npcName)) {
+                Main.hasTalkedToPainting = true;
                 // Add sword to player's inventory
                 Map<String, Object> inventory = Main.player.getInventory();
                 inventory.put("sword", "path_to_sword_image");  // need the actual path to the sword image
@@ -135,6 +136,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             while (iterator.hasNext()) {
                 Map<String, Object> item = iterator.next();
                 if (item.get("name").equals(itemToGet)) {
+                    if("sword".equalsIgnoreCase(itemToGet) && !Main.hasTalkedToPainting){
+                        GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
+                        return;
+                    }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");
                     inventory.put(itemName, imageUrl);
