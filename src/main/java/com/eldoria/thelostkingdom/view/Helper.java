@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class Helper {
 
@@ -67,5 +68,10 @@ public class Helper {
         }
 
         return fileContent + "\n";
+    }
+
+    public static Color randomColor() {
+        Random rand = new Random();
+        return new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
     }
 }
