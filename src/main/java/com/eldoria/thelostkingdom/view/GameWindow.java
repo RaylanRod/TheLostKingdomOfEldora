@@ -100,8 +100,8 @@ public class GameWindow extends JFrame {
 
         //INVENTORY:
         inventoryItems = inventory.getInventory();                            //inventory function
-        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-        bottomRightPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
+//        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
+//        bottomRightPanel.add(inventoryPanel, createGBC(2, 3, 0, 0, 0, GridBagConstraints.LINE_END)); //add to panel
 
         //TEXT AREA: (game text output)
         textArea = new JTextArea();                                           //create text area
