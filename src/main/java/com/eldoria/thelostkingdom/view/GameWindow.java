@@ -103,9 +103,6 @@ public class GameWindow extends JFrame {
         mainWindow.add(directionPane);
 
         //---------------------------BOTTOM-LEFT-PANEL------------------------------
-//        bottomLeftPanel = new JLayeredPane();
-//        bottomLeftPanel.setBackground(Helper.randomColor());
-//        bottomLeftPanel.setBounds(0, 400, 200, 200);
 
         // MINI MAP:
         miniMapPane = Helper.createImagePanel("/pictures/castle-map.png");
@@ -132,7 +129,7 @@ public class GameWindow extends JFrame {
 
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.setFont(buttonFont);
-        helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help");});         //click listener
+        helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help", "/pictures/castleimgNofogDark.png");});         //click listener
         bcNorthPane.add(helpButton);                  //add to bottom panel
 
         //--------------------MAP-BUTTON---------------------
@@ -389,7 +386,7 @@ public class GameWindow extends JFrame {
     public void processUserInput(String input) {
         Rectangle bottom = new Rectangle(0, textArea.getHeight(), 1, 1);
         textArea.scrollRectToVisible(bottom);
-//        textArea.setCaretPosition(textArea.getDocument().getLength());
+
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
@@ -491,6 +488,7 @@ public class GameWindow extends JFrame {
                     break;
             }
         }
+        textArea.setCaretPosition(0);
         inputField.setText("");
     }
 
@@ -578,13 +576,9 @@ public class GameWindow extends JFrame {
 
     public static void celebrate() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if (winConditionsMet() == true) {
-            textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
-            GameWindow.textArea.selectAll();
-            GameWindow.textArea.replaceSelection("");
-            GameWindow.textArea.append("CONGRATULATIONS!!");  //link future text file here
-            //todo: -make some touchy text about how great everything is bc your efforts....
-            // -maybe even a princess from another castle comes to marry you lol.
-            // -add some type of graphic after i get the text deal situated.. replace topPanel?
+
+            Help.openHelpDialog("/textFiles/congratulations.txt", "/pictures/castleimgNofogDark.png");
+
             MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
             fxPlayer.setVolume("fx", (float) 8.0 / 10);
             fxPlayer.play("fx");

@@ -4,18 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 
 public class Help {
-    private JPanel panelMain;
-    private JTextArea HelpField;
-    private static String backGround = "/pictures/castleimgNofogDark.png";
     private static final Color customTextColor = new Color(236, 225, 255);
+    public static JDialog helpDialog;
 
-    static void openHelpDialog(String path) {
+    static JDialog openHelpDialog(String path, String backGround) {
         // Create a new JDialog for the help content
         JDialog helpDialog = new JDialog();
         helpDialog.setTitle("Help");
@@ -104,12 +104,22 @@ public class Help {
             }
         });
 
+        helpDialog.addKeyListener(new KeyAdapter() {          //listener for splash (goes away on 'enter')
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {    //when user hits enter
+                    helpDialog.removeKeyListener(this);    //this listener stops listening after 1x function
+                    helpDialog.dispose();
+                }
+            }
+        });
+
         // Center the dialog on the screen
         helpDialog.setLocationRelativeTo(null);
 
         // Make the dialog visible
         helpDialog.setVisible(true);
+
+        return helpDialog;
     }
-
-
 }
