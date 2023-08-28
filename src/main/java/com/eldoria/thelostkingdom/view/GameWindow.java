@@ -439,24 +439,23 @@ public class GameWindow extends JFrame {
                 case "go":
                     try {
                         GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
-
                         HashMap<String, String> roomPics = GameMethods.loadJSONFile("json/room-pics.json", HashMap.class);
                         String currentRoomPicPath = roomPics.get(Integer.toString(Main.player.getCurrentRoomId()));
-
                         topPanel.revalidate();
                         topPanel.remove(picPane);
-
                         picPane = Helper.createImagePanel(currentRoomPicPath);
                         picPane.setOpaque(false);
                         topPanel.add(picPane, BorderLayout.CENTER);
-
                         mainWindow.remove(locationLabel);
                         mainWindow.remove(miniMapPane);
                         mainWindow.repaint();
                         setMiniMapLocation();
-
                         textArea.setText("");
                         textArea.append("Moved to: " + Main.player.getRoomName());
+                        infoPrint();
+                        if (winConditionsMet()) {
+                            celebrate();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -466,6 +465,9 @@ public class GameWindow extends JFrame {
                         GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
                         if(verbsAndNouns.get(1) == "sword"){
                             textArea.append("\nYou need to talk to the painting to get this item.");
+                        } infoPrint();
+                        if (winConditionsMet()) {
+                            celebrate();
                         }else {
                             textArea.append("\nYou attempt to take the " + verbsAndNouns.get(1) + "!");
                         }
@@ -489,10 +491,6 @@ public class GameWindow extends JFrame {
                     break;
             }
         }
-        DisplayMethods.printHeader();
-        DisplayMethods.printRoomItems();
-        DisplayMethods.printRoomNPC();
-        textArea.setCaretPosition(0);
         inputField.setText("");
     }
 
@@ -557,5 +555,39 @@ public class GameWindow extends JFrame {
 
         mainWindow.add(locationLabel);
         mainWindow.add(miniMapPane);
+    }
+
+    private static void infoPrint() {
+        DisplayMethods.printHeader();
+        DisplayMethods.printRoomItems();
+        DisplayMethods.printRoomNPC();
+        inputField.setText("");
+    }
+
+    public static boolean winConditionsMet() {
+        if (Main.player.getCurrentRoomId() == 5 && Main.player.getInventory().containsKey("crown") &&
+                Main.player.getInventory().containsKey("ruby") &&
+                Main.player.getInventory().containsKey("emerald") &&
+                Main.player.getInventory().containsKey("diamond") &&
+                Main.player.getInventory().containsKey("topaz")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void celebrate() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        if (winConditionsMet() == true) {
+            textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
+            GameWindow.textArea.selectAll();
+            GameWindow.textArea.replaceSelection("");
+            GameWindow.textArea.append("CONGRATULATIONS!!");  //link future text file here
+            //todo: -make some touchy text about how great everything is bc your efforts....
+            // -maybe even a princess from another castle comes to marry you lol.
+            // -add some type of graphic after i get the text deal situated.. replace topPanel?
+            MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
+            fxPlayer.setVolume("fx", (float) 8.0 / 10);
+            fxPlayer.play("fx");
+        }
     }
 }
