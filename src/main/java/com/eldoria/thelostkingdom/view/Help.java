@@ -12,34 +12,10 @@ import java.io.InputStreamReader;
 public class Help {
     private JPanel panelMain;
     private JTextArea HelpField;
-    private static String path = "/textFiles/Help";
     private static String backGround = "/pictures/castleimgNofogDark.png";
     private static final Color customTextColor = new Color(236, 225, 255);
 
-    // Method to create and show the main GUI
-    static void createAndShowGUI() {
-        // Create a main JFrame
-        JFrame frame = new JFrame("Help");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Create a button to open the help dialog
-        JButton helpButton = new JButton("Open Help");
-        // Add an ActionListener to the button to open the help dialog
-        helpButton.addActionListener(e -> {
-            openHelpDialog();
-        });
-
-        // Add the button to the main frame
-        frame.add(helpButton);
-        // Size the frame to fit its components
-        frame.pack();
-        // Center the frame on the screen
-        frame.setLocationRelativeTo(null);
-        // Make the frame visible
-        frame.setVisible(true);
-    }
-
-    static void openHelpDialog() {
+    static void openHelpDialog(String path) {
         // Create a new JDialog for the help content
         JDialog helpDialog = new JDialog();
         helpDialog.setTitle("Help");

@@ -131,7 +131,7 @@ public class GameWindow extends JFrame {
 
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.setFont(buttonFont);
-        helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
+        helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help");});         //click listener
         bcNorthPane.add(helpButton);                  //add to bottom panel
 
         //--------------------MAP-BUTTON---------------------
@@ -258,6 +258,8 @@ public class GameWindow extends JFrame {
         textArea.append(DisplayMethods.readFromResourceFile("textFiles/intro.txt") + "\n"); // Append the new text with a newline
         this.setVisible(false);                                               //can see the GUI plz
         titleFrame.requestFocusInWindow();
+
+//        Help.openHelpDialog("/textFiles/intro.txt");
     }
 
     private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
