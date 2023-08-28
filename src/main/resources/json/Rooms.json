@@ -138,12 +138,10 @@
     "name": "The Throne Room",
     "description": "The grand throne room, now deserted and draped in faded banners of the kingdom.\nThe empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nBehind the throne you find a concealed door, with stairs leading up and down. There is something shiny on the ground.",
     "exits": {
-      "north": null,
+      "north": 9,
       "east": 8,
       "south": 2,
-      "west": null,
-      "up": 9,
-      "down": 10},
+      "west": 10},
     "items": [{
       "itemID": 5,
       "name": "ruby",
@@ -270,10 +268,10 @@
     "exits": {
       "north": null,
       "east": null,
-      "south": null,
+      "south": 5,
       "west": null,
       "up": null,
-      "down": 5},
+      "down": null},
     "items": [{
       "itemID": 5,
       "name": "crown",
@@ -288,11 +286,9 @@
     "description": "A labyrinth of dark, winding catacombs, lit only by flickering torches.\nIt houses cryptic symbols and hidden traps, guarding the secrets of the past kings.\nYou see the ladder that you climbed down to enter this dark wretched place.",
     "exits": {
       "north": null,
-      "east": null,
+      "east": 5,
       "south": null,
-      "west": null,
-      "up": 5,
-      "down": null},
+      "west": null},
     "items": [{
       "itemID": 4,
       "name": "amulet",
