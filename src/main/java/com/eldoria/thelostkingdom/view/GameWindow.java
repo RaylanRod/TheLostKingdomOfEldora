@@ -26,13 +26,14 @@ public class GameWindow extends JFrame {
 
     private final Container mainWindow = this;
     private JPanel topPanel;
-    private static JPanel bottomLeftPanel;
+    private static JLayeredPane bottomLeftPanel;
     private static JPanel bottomCenterPanel;
     private static JPanel bottomRightPanel;
     private static JPanel picPane;
     public static JTextArea textArea;
     private JFrame titleFrame;
     JPanel miniMapPane;
+    JLabel locationLabel;
     private static JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
@@ -43,6 +44,8 @@ public class GameWindow extends JFrame {
     private static JFrame inventoryFrame; // Reference to the inventory window
     private static JPanel inventoryContentPanel; // Panel inside the inventory window
     private static int clicker = 0;
+    private static final int[][] miniMapLocation = new int[][]{{100,575}, {100,525}, {165,575},
+            {35,575}, {95, 480}, {30, 520}, {165, 520}, {160, 480}, {100, 435}, {35, 480}};
 
     public GameWindow() {
 
@@ -90,7 +93,6 @@ public class GameWindow extends JFrame {
         mainWindow.add(topPanel);
 
         picPane = Helper.createImagePanel("/pictures/rooms/courtyard.png");
-//        picPane.setBounds(100, 0, 600, 400);
         picPane.setOpaque(false);
         topPanel.add(picPane, BorderLayout.CENTER);
 
@@ -100,23 +102,18 @@ public class GameWindow extends JFrame {
         mainWindow.add(directionPane);
 
         //---------------------------BOTTOM-LEFT-PANEL------------------------------
-        bottomLeftPanel = new JPanel();
-        bottomLeftPanel.setLayout(new OverlayLayout(bottomLeftPanel));
-        bottomLeftPanel.setBackground(Helper.randomColor());
-        bottomLeftPanel.setBounds(0, 400, 200, 200);
+//        bottomLeftPanel = new JLayeredPane();
+//        bottomLeftPanel.setBackground(Helper.randomColor());
+//        bottomLeftPanel.setBounds(0, 400, 200, 200);
 
         // MINI MAP:
-        bottomLeftPanel.setLayout(new OverlayLayout(bottomLeftPanel));
-        miniMapPane = Helper.createImagePanel("/pictures/CastleMap.png");
-        miniMapPane.setOpaque(false);
+        miniMapPane = Helper.createImagePanel("/pictures/castle-map.png");
+        miniMapPane.setOpaque(true);
+        miniMapPane.setBounds(0, 400, 200, 200);
 
-        JLabel locationLabel = new JLabel("X");
-        locationLabel.setForeground(Color.yellow);
+        setMiniMapLocation();
 
-        bottomLeftPanel.add(locationLabel);
-        bottomLeftPanel.add(miniMapPane);
-
-        mainWindow.add(bottomLeftPanel);
+        mainWindow.add(miniMapPane);
 
         //______________________________BOTTOM-CENTER-PANEL______________________________
 
@@ -134,7 +131,7 @@ public class GameWindow extends JFrame {
 
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.setFont(buttonFont);
-        helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
+        helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help");});         //click listener
         bcNorthPane.add(helpButton);                  //add to bottom panel
 
         //--------------------MAP-BUTTON---------------------
@@ -254,15 +251,15 @@ public class GameWindow extends JFrame {
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
         brSPane.add(submitButton);               //add to bottom panel
 
-
-
-//        bottomRightPanel.add(addDirectionPanel());
         //_________________________________________________________________________________________
 
         //INITIAL WINDOW TIE IN:
-        addDialogueText("textFiles/intro.txt");                     //create initial text
+//        addDialogueText("textFiles/intro.txt");                     //create initial text
+        textArea.append(DisplayMethods.readFromResourceFile("textFiles/intro.txt") + "\n"); // Append the new text with a newline
         this.setVisible(false);                                               //can see the GUI plz
         titleFrame.requestFocusInWindow();
+
+//        Help.openHelpDialog("/textFiles/intro.txt");
     }
 
     private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
@@ -463,7 +460,11 @@ public class GameWindow extends JFrame {
                         picPane = Helper.createImagePanel(currentRoomPicPath);
                         picPane.setOpaque(false);
                         topPanel.add(picPane, BorderLayout.CENTER);
+
+                        mainWindow.remove(locationLabel);
+                        mainWindow.remove(miniMapPane);
                         mainWindow.repaint();
+                        setMiniMapLocation();
 
                         textArea.setText("");
                         textArea.append("\nMoved to: " + Main.player.getRoomName());
@@ -554,5 +555,17 @@ public class GameWindow extends JFrame {
         rightButton.addActionListener(new MoveActionListener("go east"));
 
         return directionPanel;
+    }
+
+    private void setMiniMapLocation() {
+
+        locationLabel = new JLabel("X");
+        int roomIndex = Main.player.getCurrentRoomId() - 1;
+        locationLabel.setBounds(miniMapLocation[roomIndex][0], miniMapLocation[roomIndex][1], 10, 10);
+        locationLabel.setForeground(Color.red);
+        locationLabel.setOpaque(false);
+
+        mainWindow.add(locationLabel);
+        mainWindow.add(miniMapPane);
     }
 }
