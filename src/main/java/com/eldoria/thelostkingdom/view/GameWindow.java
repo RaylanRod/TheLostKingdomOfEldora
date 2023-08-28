@@ -25,6 +25,7 @@ import java.util.Map;
 public class GameWindow extends JFrame {
 
     private final Container mainWindow = this;
+    private final JScrollPane scrollPane;
     private JPanel topPanel;
     private static JLayeredPane bottomLeftPanel;
     private static JPanel bottomCenterPanel;
@@ -214,7 +215,7 @@ public class GameWindow extends JFrame {
         textArea.setFont(new Font("Arial", Font.ITALIC, 14));
 
         //SCROLL PANE:
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(200, 425, 400, 175);
         mainWindow.add(scrollPane);
 
@@ -252,11 +253,8 @@ public class GameWindow extends JFrame {
         brSPane.add(submitButton);               //add to bottom panel
 
         //_________________________________________________________________________________________
-
-        //INITIAL WINDOW TIE IN:
-//        addDialogueText("textFiles/intro.txt");                     //create initial text
-        textArea.append(DisplayMethods.readFromResourceFile("textFiles/intro.txt") + "\n"); // Append the new text with a newline
-        this.setVisible(false);                                               //can see the GUI plz
+        processUserInput("go south");
+        this.setVisible(false);
         titleFrame.requestFocusInWindow();
 
 //        Help.openHelpDialog("/textFiles/intro.txt");
@@ -364,17 +362,9 @@ public class GameWindow extends JFrame {
 
     public static void removeTitlePanel(GameWindow gameWindow) {
         Container mainWindow = gameWindow.getMainContainer();
-        JFrame titlePanel = gameWindow.titleFrame;
-
         mainWindow.add(gameWindow.getTopPanel());
-
         mainWindow.validate();
         mainWindow.repaint();
-    }
-
-    public void addDialogueText(String fileName) {
-        textArea.append(DisplayMethods.readFromResourceFile(fileName) + "\n"); // Append the new text with a newline
-        textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
     }
 
     public static synchronized GameWindow getInstance() {
@@ -392,15 +382,14 @@ public class GameWindow extends JFrame {
         return this.topPanel;
     }
 
-    public static void setTextArea(JTextArea textArea) {
-        GameWindow.textArea = textArea;
-    }
-
     public void setInputField(JTextField inputField) {
         this.inputField = inputField;
     }
 
     public void processUserInput(String input) {
+        Rectangle bottom = new Rectangle(0, textArea.getHeight(), 1, 1);
+        textArea.scrollRectToVisible(bottom);
+//        textArea.setCaretPosition(textArea.getDocument().getLength());
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
@@ -467,7 +456,7 @@ public class GameWindow extends JFrame {
                         setMiniMapLocation();
 
                         textArea.setText("");
-                        textArea.append("\nMoved to: " + Main.player.getRoomName());
+                        textArea.append("Moved to: " + Main.player.getRoomName());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -503,6 +492,7 @@ public class GameWindow extends JFrame {
         DisplayMethods.printHeader();
         DisplayMethods.printRoomItems();
         DisplayMethods.printRoomNPC();
+        textArea.setCaretPosition(0);
         inputField.setText("");
     }
 
