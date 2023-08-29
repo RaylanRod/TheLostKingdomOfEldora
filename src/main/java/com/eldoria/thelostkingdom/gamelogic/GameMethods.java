@@ -153,19 +153,19 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 if (item.get("name").equals(itemToGet)) {
                     if("sword".equalsIgnoreCase(itemToGet) && !Main.hasTalkedToPainting){
                         GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
-
+                        return;
                     }
                     if("amulet".equalsIgnoreCase(itemToGet) && Vampire.vampireHealth >= 0){
                         GameWindow.textArea.append("You must defeat the vampire before taking the amulet.\n");
-
+                        return;
                     }
                     if("diamond".equalsIgnoreCase(itemToGet) && !Main.player.getInventory().containsKey("amulet")){
                         GameWindow.textArea.append("You must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.\n");
-
+                        return;
                     }
                     if("key".equalsIgnoreCase(itemToGet) && !GameWindow.hasTalkedToWell){
                         GameWindow.textArea.append("You must first speak into the well to get this item.\n");
-
+                        return;
                     }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");
@@ -188,12 +188,8 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             }
             GameWindow.updateInventoryPanel(inventoryItemList);
         } else {
-            System.out.println(red + "There isn't an item to take..." + white);
-            System.out.print("Press any key to continue...");
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+            GameWindow.textArea.append("There isn't an item to take...");
         }
-        System.out.println("current room array" + curRoomItemsArray);
     }
 
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -201,12 +197,12 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         Map<String, Object> inventory = Main.player.getInventory();
 
         if (inventory == null || inventory.isEmpty()) {
-            System.out.println("Your inventory is empty. Nothing to drop.");
+            GameWindow.textArea.append("Your inventory is empty. Nothing to drop.");
             return;
         }
 
         if (!inventory.containsKey(itemToDrop)) {
-            System.out.println("Item not found in your inventory.");
+            GameWindow.textArea.append("Item not found in your inventory.");
             return;
         }
 
