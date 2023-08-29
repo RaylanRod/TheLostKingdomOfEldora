@@ -90,7 +90,8 @@ public class GameWindow extends JFrame {
         //_________________________________TOP-PANEL_______________________________
         topPanel = new JPanel(new BorderLayout());                           //create top panel
         topPanel.setBounds(0, 0, 800, 400);
-        topPanel.setBackground(Helper.randomColor());
+//        topPanel.setBackground(Helper.randomColor());
+        topPanel.setBackground(new Color(0x051B31));
         mainWindow.add(topPanel);
 
         picPane = Helper.createImagePanel("/pictures/rooms/courtyard.png");
@@ -98,7 +99,7 @@ public class GameWindow extends JFrame {
         topPanel.add(picPane, BorderLayout.CENTER);
 
         JPanel directionPane = addDirectionPanel();
-        directionPane.setBounds(750, 350, 50, 50);
+        directionPane.setBounds(675, 100, 50, 50);
         directionPane.setOpaque(false);
         mainWindow.add(directionPane);
 
@@ -108,7 +109,6 @@ public class GameWindow extends JFrame {
         miniMapPane = Helper.createImagePanel("/pictures/castle-map.png");
         miniMapPane.setOpaque(true);
         miniMapPane.setBounds(0, 400, 200, 200);
-
         setMiniMapLocation();
         mainWindow.add(miniMapPane);
 
@@ -116,7 +116,7 @@ public class GameWindow extends JFrame {
 
         //-------------------BOTTOM-CENTER-NORTH-------------------
         bottomCenterPanel = new JPanel(new BorderLayout());
-        bottomCenterPanel.setBounds(200, 400, 400, 200);
+//        bottomCenterPanel.setBounds(200, 400, 400, 200);
         mainWindow.add(bottomCenterPanel);
 
         JPanel bcNorthPane = new JPanel(new GridLayout(1,4));
@@ -128,25 +128,34 @@ public class GameWindow extends JFrame {
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.setFont(buttonFont);
         helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help", "/pictures/castleimgNofogDark.png");});         //click listener
-        bcNorthPane.add(helpButton);                                         //add to bottom panel
+//        bcNorthPane.add(helpButton);                                         //add to bottom panel
+        helpButton.setBounds(663, 270, 75, 25);
+        helpButton.setOpaque(false);
+        mainWindow.add(helpButton);
 
         //--------------------MAP-BUTTON---------------------
         JButton mapButton = new JButton("Map");                         //create button
         mapButton.setFont(buttonFont);
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-        bcNorthPane.add(mapButton);  //add to bottom panel
+//        bcNorthPane.add(mapButton);  //add to bottom panel
+        mapButton.setBounds(663, 200, 75, 25);
+        mapButton.setOpaque(false);
+        mainWindow.add(mapButton);
 
         //--------------------MUSIC-BUTTON-------------------
 
         //MUSIC PLAYER MENU:
         try {
-            musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
+            musicPlayer = new MusicPlayer("music", "audioFiles/BlackCastle.wav");
         } catch (Exception e) {
             e.printStackTrace();
         }
         JButton launchButton = new JButton("Sound");                     //create button
         launchButton.setFont(buttonFont);
-        bcNorthPane.add(launchButton);                                        //add to bottom panel
+//        bcNorthPane.add(launchButton);                                        //add to bottom panel
+        launchButton.setBounds(663, 235, 75, 25);
+        launchButton.setOpaque(false);
+        mainWindow.add(launchButton);
 
         JPopupMenu menu = new JPopupMenu();                                   //create menu
 
@@ -195,7 +204,10 @@ public class GameWindow extends JFrame {
                 clicker++;
             }
         });
-        bcNorthPane.add(inventoryButton);
+        inventoryButton.setBounds(663, 165, 75, 25);
+        inventoryButton.setOpaque(false);
+        mainWindow.add(inventoryButton);
+//        bcNorthPane.add(inventoryButton);
 
         //----------------------------------BOTTOM-CENTER-SOUTH-------------------------------
         //TEXT AREA: (game text output)
@@ -203,32 +215,35 @@ public class GameWindow extends JFrame {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
-        textArea.setBackground(Helper.randomColor());
+//        textArea.setBackground(Helper.randomColor());
         textArea.setFont(new Font("Arial", Font.ITALIC, 14));
 
         //SCROLL PANE:
         scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(200, 425, 400, 175);
+        scrollPane.setBounds(200, 375, 600, 225);
         mainWindow.add(scrollPane);
+
 
         //---------------------------BOTTOM-RIGHT-PANEL-----------------------------
         //__________________________________________________________________________
 
         bottomRightPanel = new JPanel(new BorderLayout());
-        bottomRightPanel.setBackground(Helper.randomColor());
+//        bottomRightPanel.setBackground(Helper.randomColor());
+        bottomRightPanel.setBackground(new Color(0x051B31));
+        mainWindow.setBackground(new Color(0x051B31));
         bottomRightPanel.setBounds(600, 400, 200, 200);
         mainWindow.add(bottomRightPanel);
 
         //---------------------MINI-INVENTORY-GRIDS-SHOW-----------------------
-        inventoryItems = inventory.getInventory();                            //inventory function
-        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-        bottomRightPanel.add(inventoryPanel); //add to panel
-
-        // Create inventory window and content panel
-        inventoryFrame = new JFrame("Inventory");
-        inventoryFrame.setSize(400, 400);
-        inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
-        inventoryFrame.add(inventoryContentPanel);
+//        inventoryItems = inventory.getInventory();                            //inventory function
+//        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
+//        bottomRightPanel.add(inventoryPanel); //add to panel
+//
+//        // Create inventory window and content panel
+//        inventoryFrame = new JFrame("Inventory");
+//        inventoryFrame.setSize(400, 400);
+//        inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
+//        inventoryFrame.add(inventoryContentPanel);
 
         JPanel brSPane = new JPanel();
         bottomRightPanel.add(brSPane, BorderLayout.SOUTH);
@@ -237,11 +252,15 @@ public class GameWindow extends JFrame {
         inputField.setFont(new Font("Arial", Font.BOLD, 14));
         inputField.setPreferredSize(new Dimension(120, 30));
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-        brSPane.add(inputField);  //add to bottom panel
+//        brSPane.add(inputField);  //add to bottom panel
+        inputField.setBounds(600, 305, 200, 25);
+        mainWindow.add(inputField);
         //SUBMIT BUTTON:
         submitButton = new JButton("GO");    //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
-        brSPane.add(submitButton);               //add to bottom panel
+//        brSPane.add(submitButton);               //add to bottom panel
+        submitButton.setBounds(600, 340, 200, 25);
+        mainWindow.add(submitButton);
 
         //_________________________________________________________________________________________
         processUserInput("go south");
