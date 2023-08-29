@@ -448,7 +448,9 @@ public class GameWindow extends JFrame {
                         if(verbsAndNouns.get(1) == "sword"){
                             textArea.append("\nYou need to talk to the painting to get this item.");
                         }if(verbsAndNouns.get(1) == "amulet"){
-                            textArea.append("\nYou need to defeat the vampire to get this item.");
+                            textArea.append("\nYou must first defeat the vampire to get this item.");
+                        }if(verbsAndNouns.get(1) == "diamond" && !Main.player.getInventory().containsKey("amulet")){
+                            textArea.append("\nYou must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.");
                         }
                         infoPrint();
                         if (winConditionsMet()) {

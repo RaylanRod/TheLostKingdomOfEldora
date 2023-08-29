@@ -145,6 +145,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                         GameWindow.textArea.append("You must defeat the vampire before taking the amulet.\n");
                         return;
                     }
+                    if("diamond".equalsIgnoreCase(itemToGet) && !Main.player.getInventory().containsKey("amulet")){
+                        GameWindow.textArea.append("You must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.\n");
+                        return;
+                    }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");
                     inventory.put(itemName, imageUrl);
