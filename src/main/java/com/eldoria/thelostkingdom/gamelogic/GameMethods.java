@@ -215,7 +215,8 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 GameWindow.textArea.append("You dealt " + playerDamage + " damage to the vampire!\n");
 
                 if (Vampire.vampireHealth <= 0) {
-                    GameWindow.textArea.append("You defeated the vampire!\n");
+                    GameWindow.textArea.append("You defeated the vampire!\nYou can now grab the amulet to free the spirit in the crystal ball.");
+                    GameWindow.inputField.setText("");
                     GameMethods.getItem("ancient amulet of binding", true, 05f);  //need the inventory method here
                     return;
                 }
@@ -226,7 +227,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
 
                 if (!Main.player.isAlive()) {
                     GameWindow.textArea.append("You were defeated by the vampire!\n");
-                    System.exit(0);
+                    System.exit(0); //pretty sure this closes the window
                 }
                 break;
             // You can add more commands here

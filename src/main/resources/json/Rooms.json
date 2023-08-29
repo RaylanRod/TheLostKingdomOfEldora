@@ -297,7 +297,7 @@
       "can_be_used": true
     }],
     "NPC": {
-      "name": "elder vampire",
+      "name": "vampire",
       "dialog": "Player: (Confronts the menacing Elder Vampire) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
     }
   }

@@ -35,7 +35,7 @@ public class GameWindow extends JFrame {
     private JFrame titleFrame;
     JPanel miniMapPane;
     JLabel locationLabel;
-    private static JTextField inputField;
+    public static JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
     private static Map<String, Object> inventoryItems;
@@ -428,6 +428,7 @@ public class GameWindow extends JFrame {
                 case "attack":
                     try {
                         GameMethods.handleCombat(verbsAndNouns.get(0));
+                        inputField.setText("");
                     } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                         e.printStackTrace();
                     }
