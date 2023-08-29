@@ -29,7 +29,6 @@ public class Help {
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, 0, helpDialog.getWidth(), helpDialog.getHeight()); // Adjust size
 
-
         // Create a JTextArea to display the help content
         JTextArea textArea = new JTextArea() {
             @Override

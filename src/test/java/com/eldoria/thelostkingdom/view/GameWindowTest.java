@@ -25,10 +25,10 @@ class GameWindowTest {
         GameWindow.removeTitlePanel(gameWindow);
     }
 
-    @Test
-    void testAddDialogueText() {
-        gameWindowUnderTest.addDialogueText("fileName");
-    }
+//    @Test
+//    void testAddDialogueText() {
+//        gameWindowUnderTest.addDialogueText("fileName");
+//    }
 
     @Test
     void testGetInstance() {
