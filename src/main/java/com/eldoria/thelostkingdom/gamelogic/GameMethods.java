@@ -193,20 +193,21 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
     }
 
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
+        Room currentRoom = Rooms.getRoomById(Main.player.getCurrentRoomId()); // Get the current room
+        List<Map<String, Object>> curRoomItemsArray = currentRoom.getItems(); // Get the items list of the current room
         Map<String, Object> inventory = Main.player.getInventory();
 
         if (inventory == null || inventory.isEmpty()) {
-            GameWindow.textArea.append("Your inventory is empty. Nothing to drop.");
+            System.out.println("Your inventory is empty. Nothing to drop.");
             return;
         }
 
         if (!inventory.containsKey(itemToDrop)) {
-            GameWindow.textArea.append("Item not found in your inventory.");
+            System.out.println("Item not found in your inventory.");
             return;
         }
 
-        Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
+        String droppedItem = (String) inventory.remove(itemToDrop);
         List<ItemBox> inventoryItemList = new ArrayList<>();
         for (Map.Entry<String, Object> entry : inventory.entrySet()) {
             String itemName = entry.getKey();
@@ -217,7 +218,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         GameWindow.updateInventoryPanel(inventoryItemList); // Update inventory panel with updated inventory map
 
         if (droppedItem != null) {
-            curRoomItemsArray.add(droppedItem);
+            Map<String, Object> newItem = new HashMap<>();
+            newItem.put("name", itemToDrop);
+            newItem.put("image", droppedItem);
+            curRoomItemsArray.add(newItem);
             //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/dropItem.wav");
