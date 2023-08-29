@@ -14,6 +14,7 @@ import com.eldoria.thelostkingdom.character.Character;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -140,6 +141,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                         GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
                         return;
                     }
+                    if("amulet".equalsIgnoreCase(itemToGet) && Vampire.vampireHealth >= 0){
+                        GameWindow.textArea.append("You must defeat the vampire before taking the amulet.\n");
+                        return;
+                    }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");
                     inventory.put(itemName, imageUrl);
@@ -226,8 +231,9 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 GameWindow.textArea.append("Vampire dealt " + vampireDamage + " damage to you!\n");
 
                 if (!Main.player.isAlive()) {
-                    GameWindow.textArea.append("You were defeated by the vampire!\n");
-                    System.exit(0); //pretty sure this closes the window
+                    GameWindow.textArea.append("You were defeated by the vampire!\nWould you like to start the game over?");
+//                    startAgain();  //bml
+//                    System.exit(0);  //this closes window w/no warning
                 }
                 break;
             // You can add more commands here
@@ -236,6 +242,15 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 break;
         }
     }
+
+//    public static void startAgain() {//bml
+//        GameWindow.textArea.append("Would you like to start the game over?");
+//        if (GameWindow.inputField.equals("yes")) {
+//            SwingUtilities.invokeLater(() -> new GameWindow());
+//        }if (GameWindow.inputField.equals("no")){
+//            System.exit(0);
+//        }
+//    }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
         //noinspection ConstantConditions
