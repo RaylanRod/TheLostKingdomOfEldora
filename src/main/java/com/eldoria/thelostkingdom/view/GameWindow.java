@@ -25,15 +25,17 @@ import java.util.Map;
 public class GameWindow extends JFrame {
 
     private final Container mainWindow = this;
+    private final JScrollPane scrollPane;
     private JPanel topPanel;
-    private static JPanel bottomLeftPanel;
+    private static JLayeredPane bottomLeftPanel;
     private static JPanel bottomCenterPanel;
     private static JPanel bottomRightPanel;
     private static JPanel picPane;
     public static JTextArea textArea;
     private JFrame titleFrame;
     JPanel miniMapPane;
-    private static JTextField inputField;
+    JLabel locationLabel;
+    public static JTextField inputField;
     private MusicPlayer musicPlayer;
     private Character inventory = new Character();
     private static Map<String, Object> inventoryItems;
@@ -43,6 +45,9 @@ public class GameWindow extends JFrame {
     private static JFrame inventoryFrame; // Reference to the inventory window
     private static JPanel inventoryContentPanel; // Panel inside the inventory window
     private static int clicker = 0;
+    public static boolean hasTalkedToWell = false;
+    private static final int[][] miniMapLocation = new int[][]{{100,575}, {100,525}, {165,575},
+            {35,575}, {95, 480}, {30, 520}, {165, 520}, {160, 480}, {100, 435}, {35, 480}};
 
     public GameWindow() {
 
@@ -83,46 +88,35 @@ public class GameWindow extends JFrame {
         });
 
         //_________________________________TOP-PANEL_______________________________
-
         topPanel = new JPanel(new BorderLayout());                           //create top panel
         topPanel.setBounds(0, 0, 800, 400);
-        topPanel.setBackground(Helper.randomColor());
+//        topPanel.setBackground(Helper.randomColor());
+        topPanel.setBackground(new Color(0x051B31));
         mainWindow.add(topPanel);
 
         picPane = Helper.createImagePanel("/pictures/rooms/courtyard.png");
-//        picPane.setBounds(100, 0, 600, 400);
         picPane.setOpaque(false);
         topPanel.add(picPane, BorderLayout.CENTER);
 
         JPanel directionPane = addDirectionPanel();
-        directionPane.setBounds(750, 350, 50, 50);
+        directionPane.setBounds(675, 100, 50, 50);
         directionPane.setOpaque(false);
         mainWindow.add(directionPane);
 
         //---------------------------BOTTOM-LEFT-PANEL------------------------------
-        bottomLeftPanel = new JPanel();
-        bottomLeftPanel.setLayout(new OverlayLayout(bottomLeftPanel));
-        bottomLeftPanel.setBackground(Helper.randomColor());
-        bottomLeftPanel.setBounds(0, 400, 200, 200);
 
         // MINI MAP:
-        bottomLeftPanel.setLayout(new OverlayLayout(bottomLeftPanel));
-        miniMapPane = Helper.createImagePanel("/pictures/CastleMap.png");
-        miniMapPane.setOpaque(false);
-
-        JLabel locationLabel = new JLabel("X");
-        locationLabel.setForeground(Color.yellow);
-
-        bottomLeftPanel.add(locationLabel);
-        bottomLeftPanel.add(miniMapPane);
-
-        mainWindow.add(bottomLeftPanel);
+        miniMapPane = Helper.createImagePanel("/pictures/castle-map.png");
+        miniMapPane.setOpaque(true);
+        miniMapPane.setBounds(0, 400, 200, 200);
+        setMiniMapLocation();
+        mainWindow.add(miniMapPane);
 
         //______________________________BOTTOM-CENTER-PANEL______________________________
 
         //-------------------BOTTOM-CENTER-NORTH-------------------
         bottomCenterPanel = new JPanel(new BorderLayout());
-        bottomCenterPanel.setBounds(200, 400, 400, 200);
+//        bottomCenterPanel.setBounds(200, 400, 400, 200);
         mainWindow.add(bottomCenterPanel);
 
         JPanel bcNorthPane = new JPanel(new GridLayout(1,4));
@@ -131,30 +125,37 @@ public class GameWindow extends JFrame {
         Font buttonFont = new Font("SansSerif", Font.BOLD, 10);
 
         //--------------------HELP BUTTON-------------------
-
         JButton helpButton = new JButton("Help");                       //create button
         helpButton.setFont(buttonFont);
-        helpButton.addActionListener(e -> {Help.openHelpDialog();});         //click listener
-        bcNorthPane.add(helpButton);                  //add to bottom panel
+        helpButton.addActionListener(e -> {Help.openHelpDialog("/textFiles/Help", "/pictures/castleimgNofogDark.png");});         //click listener
+//        bcNorthPane.add(helpButton);                                         //add to bottom panel
+        helpButton.setBounds(663, 270, 75, 25);
+        helpButton.setOpaque(false);
+        mainWindow.add(helpButton);
 
         //--------------------MAP-BUTTON---------------------
-
-        JButton mapButton = new JButton("Map");    //create button
+        JButton mapButton = new JButton("Map");                         //create button
         mapButton.setFont(buttonFont);
         mapButton.addActionListener(e -> {CastleMap.openMapRef();});         //add listener
-        bcNorthPane.add(mapButton);  //add to bottom panel
+//        bcNorthPane.add(mapButton);  //add to bottom panel
+        mapButton.setBounds(663, 200, 75, 25);
+        mapButton.setOpaque(false);
+        mainWindow.add(mapButton);
 
         //--------------------MUSIC-BUTTON-------------------
 
         //MUSIC PLAYER MENU:
         try {
-            musicPlayer = new MusicPlayer("music", "audioFiles/hauntedCastle.wav");
+            musicPlayer = new MusicPlayer("music", "audioFiles/BlackCastle.wav");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        JButton launchButton = new JButton("Sound");      //create button
+        JButton launchButton = new JButton("Sound");                     //create button
         launchButton.setFont(buttonFont);
-        bcNorthPane.add(launchButton);               //add to bottom panel
+//        bcNorthPane.add(launchButton);                                        //add to bottom panel
+        launchButton.setBounds(663, 235, 75, 25);
+        launchButton.setOpaque(false);
+        mainWindow.add(launchButton);
 
         JPopupMenu menu = new JPopupMenu();                                   //create menu
 
@@ -194,7 +195,6 @@ public class GameWindow extends JFrame {
         });
 
         //------------------INVENTORY-BUTTON---------------------
-
         JButton inventoryButton = new JButton("Inventory");
         inventoryButton.setFont(buttonFont);
         inventoryButton.addActionListener(new ActionListener() {
@@ -204,8 +204,10 @@ public class GameWindow extends JFrame {
                 clicker++;
             }
         });
-        bcNorthPane.add(inventoryButton);
-
+        inventoryButton.setBounds(663, 165, 75, 25);
+        inventoryButton.setOpaque(false);
+        mainWindow.add(inventoryButton);
+//        bcNorthPane.add(inventoryButton);
 
         //----------------------------------BOTTOM-CENTER-SOUTH-------------------------------
         //TEXT AREA: (game text output)
@@ -213,19 +215,22 @@ public class GameWindow extends JFrame {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
-        textArea.setBackground(Helper.randomColor());
+//        textArea.setBackground(Helper.randomColor());
         textArea.setFont(new Font("Arial", Font.ITALIC, 14));
 
         //SCROLL PANE:
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(200, 425, 400, 175);
+        scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(200, 375, 600, 225);
         mainWindow.add(scrollPane);
+
 
         //---------------------------BOTTOM-RIGHT-PANEL-----------------------------
         //__________________________________________________________________________
 
         bottomRightPanel = new JPanel(new BorderLayout());
-        bottomRightPanel.setBackground(Helper.randomColor());
+//        bottomRightPanel.setBackground(Helper.randomColor());
+        bottomRightPanel.setBackground(new Color(0x051B31));
+        mainWindow.setBackground(new Color(0x051B31));
         bottomRightPanel.setBounds(600, 400, 200, 200);
         mainWindow.add(bottomRightPanel);
 
@@ -240,7 +245,6 @@ public class GameWindow extends JFrame {
         inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
         inventoryFrame.add(inventoryContentPanel);
 
-
         JPanel brSPane = new JPanel();
         bottomRightPanel.add(brSPane, BorderLayout.SOUTH);
         //INPUT FIELD:
@@ -248,27 +252,26 @@ public class GameWindow extends JFrame {
         inputField.setFont(new Font("Arial", Font.BOLD, 14));
         inputField.setPreferredSize(new Dimension(120, 30));
         inputField.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase())); //functionality
-        brSPane.add(inputField);  //add to bottom panel
+//        brSPane.add(inputField);  //add to bottom panel
+        inputField.setBounds(600, 305, 200, 25);
+        mainWindow.add(inputField);
         //SUBMIT BUTTON:
         submitButton = new JButton("GO");    //create button
         submitButton.addActionListener(e -> processUserInput(inputField.getText().trim().toLowerCase()));//functionality
-        brSPane.add(submitButton);               //add to bottom panel
+//        brSPane.add(submitButton);               //add to bottom panel
+        submitButton.setBounds(600, 340, 200, 25);
+        mainWindow.add(submitButton);
 
-
-
-//        bottomRightPanel.add(addDirectionPanel());
         //_________________________________________________________________________________________
-
-        //INITIAL WINDOW TIE IN:
-        addDialogueText("textFiles/intro.txt");                     //create initial text
-        this.setVisible(false);                                               //can see the GUI plz
+        processUserInput("go south");
+        this.setVisible(false);
         titleFrame.requestFocusInWindow();
+//        Help.openHelpDialog("/textFiles/intro.txt");
     }
 
     private JPanel createInventoryPanel(Map<String, Object> inventoryItems) {
         JPanel inventoryPanel = new JPanel(new GridLayout(4, 4, 5, 5));
         inventoryPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
         int totalSlots = 4 * 4;
 
         for (int slot = 0; slot < totalSlots; slot++) {
@@ -283,17 +286,14 @@ public class GameWindow extends JFrame {
                 itemLabel.setFont(new Font("Arial", Font.BOLD, 16));
                 slotPanel.add(itemLabel, BorderLayout.CENTER);
             }
-
             inventoryPanel.add(slotPanel);
         }
-
         return inventoryPanel;
     }
 
     public static void updateInventoryPanel(List<ItemBox> inventoryItems) {
         // Clear existing items in the inventory content panel
         inventoryContentPanel.removeAll();
-
         int totalSlots = 4 * 4; // Total number of slots in the grid
 
         // Populate inventory slots based on updated inventory items
@@ -317,12 +317,9 @@ public class GameWindow extends JFrame {
                     itemLabel.setVerticalAlignment(SwingConstants.CENTER);
                     slotPanel.add(itemLabel, BorderLayout.CENTER);
                 }
-
             }
-
             inventoryContentPanel.add(slotPanel);
         }
-
         inventoryContentPanel.revalidate(); // Refresh the inventory content panel
         inventoryContentPanel.repaint();
     }
@@ -349,7 +346,6 @@ public class GameWindow extends JFrame {
                 inventoryContentPanel.add(slotPanel);
             }
         }
-
         inventoryFrame.setVisible(true);
     }
 
@@ -367,17 +363,9 @@ public class GameWindow extends JFrame {
 
     public static void removeTitlePanel(GameWindow gameWindow) {
         Container mainWindow = gameWindow.getMainContainer();
-        JFrame titlePanel = gameWindow.titleFrame;
-
         mainWindow.add(gameWindow.getTopPanel());
-
         mainWindow.validate();
         mainWindow.repaint();
-    }
-
-    public void addDialogueText(String fileName) {
-        textArea.append(DisplayMethods.readFromResourceFile(fileName) + "\n"); // Append the new text with a newline
-        textArea.setCaretPosition(textArea.getDocument().getLength()); // Scroll to the bottom
     }
 
     public static synchronized GameWindow getInstance() {
@@ -395,15 +383,14 @@ public class GameWindow extends JFrame {
         return this.topPanel;
     }
 
-    public static void setTextArea(JTextArea textArea) {
-        GameWindow.textArea = textArea;
-    }
-
     public void setInputField(JTextField inputField) {
         this.inputField = inputField;
     }
 
     public void processUserInput(String input) {
+        Rectangle bottom = new Rectangle(0, textArea.getHeight(), 1, 1);
+        textArea.scrollRectToVisible(bottom);
+
         List<String> verbsAndNouns = TextParser.extractVerbsAndNouns(input);
         if (Main.isExpectingRiddleAnswer) {
             if (input.equals(Main.currentRiddleAnswer)) {
@@ -445,6 +432,7 @@ public class GameWindow extends JFrame {
                 case "attack":
                     try {
                         GameMethods.handleCombat(verbsAndNouns.get(0));
+                        inputField.setText("");
                     } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                         e.printStackTrace();
                     }
@@ -453,20 +441,23 @@ public class GameWindow extends JFrame {
                 case "go":
                     try {
                         GameMethods.moveRoom(verbsAndNouns.get(1), true, 0.5f);
-
                         HashMap<String, String> roomPics = GameMethods.loadJSONFile("json/room-pics.json", HashMap.class);
                         String currentRoomPicPath = roomPics.get(Integer.toString(Main.player.getCurrentRoomId()));
-
                         topPanel.revalidate();
                         topPanel.remove(picPane);
-
                         picPane = Helper.createImagePanel(currentRoomPicPath);
                         picPane.setOpaque(false);
                         topPanel.add(picPane, BorderLayout.CENTER);
+                        mainWindow.remove(locationLabel);
+                        mainWindow.remove(miniMapPane);
                         mainWindow.repaint();
-
+                        setMiniMapLocation();
                         textArea.setText("");
-                        textArea.append("\nMoved to: " + Main.player.getRoomName());
+                        textArea.append("Moved to: " + Main.player.getRoomName());
+                        infoPrint();
+                        if (winConditionsMet()) {
+                            celebrate();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -476,6 +467,16 @@ public class GameWindow extends JFrame {
                         GameMethods.getItem(verbsAndNouns.get(1), true, 0.5f);
                         if(verbsAndNouns.get(1) == "sword"){
                             textArea.append("\nYou need to talk to the painting to get this item.");
+                        }if(verbsAndNouns.get(1) == "amulet"){
+                            textArea.append("\nYou must first defeat the vampire to get this item.");
+                        }if(verbsAndNouns.get(1) == "diamond" && !Main.player.getInventory().containsKey("amulet")){
+                            textArea.append("\nYou must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.");
+                        }if(verbsAndNouns.get(1) == "key" && !hasTalkedToWell){
+                            textArea.append("\nYou must first speak into the well to get this item.\n.");
+                        }
+                        infoPrint();
+                        if (winConditionsMet()) {
+                            celebrate();
                         }else {
                             textArea.append("\nYou attempt to take the " + verbsAndNouns.get(1) + "!");
                         }
@@ -499,14 +500,11 @@ public class GameWindow extends JFrame {
                     break;
             }
         }
-        DisplayMethods.printHeader();
-        DisplayMethods.printRoomItems();
-        DisplayMethods.printRoomNPC();
+        textArea.setCaretPosition(0);
         inputField.setText("");
     }
 
     private JPanel addDirectionPanel() {
-
         JPanel directionPanel = new JPanel(new GridLayout(3, 3));
         directionPanel.setOpaque(false);
 
@@ -546,13 +544,49 @@ public class GameWindow extends JFrame {
                 });
             }
         }
-
         // Add action listeners to the buttons
         upButton.addActionListener(new MoveActionListener("go north"));
         downButton.addActionListener(new MoveActionListener("go south"));
         leftButton.addActionListener(new MoveActionListener("go west"));
         rightButton.addActionListener(new MoveActionListener("go east"));
-
         return directionPanel;
+    }
+
+    private void setMiniMapLocation() {
+        locationLabel = new JLabel("X");
+        int roomIndex = Main.player.getCurrentRoomId() - 1;
+        locationLabel.setBounds(miniMapLocation[roomIndex][0], miniMapLocation[roomIndex][1], 10, 10);
+        locationLabel.setForeground(Color.red);
+        locationLabel.setOpaque(false);
+        mainWindow.add(locationLabel);
+        mainWindow.add(miniMapPane);
+    }
+
+    private static void infoPrint() {
+        DisplayMethods.printHeader();
+        DisplayMethods.printRoomItems();
+        DisplayMethods.printRoomNPC();
+        inputField.setText("");
+    }
+
+    public static boolean winConditionsMet() {
+        if (Main.player.getCurrentRoomId() == 5 && Main.player.getInventory().containsKey("crown") &&
+                Main.player.getInventory().containsKey("ruby") &&
+                Main.player.getInventory().containsKey("emerald") &&
+                Main.player.getInventory().containsKey("diamond") &&
+                Main.player.getInventory().containsKey("topaz")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void celebrate() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        if (winConditionsMet() == true) {
+            Help.openHelpDialog("/textFiles/congratulations.txt", "/pictures/castleimgNofogDark.png");
+            MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/win.wav");
+            fxPlayer.setVolume("fx", (float) 8.0 / 10);
+            fxPlayer.play("fx");
+        }
     }
 }

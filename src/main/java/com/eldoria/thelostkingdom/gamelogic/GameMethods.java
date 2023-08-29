@@ -14,6 +14,7 @@ import com.eldoria.thelostkingdom.character.Character;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -88,11 +89,25 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                     inventoryItemList.add(itemBox);
                 }
                 GameWindow.updateInventoryPanel(inventoryItemList);
-
                 // Notify the player
                 response.append("You received a sword from the interactive painting!\n");
             }
-
+            if ("well".equalsIgnoreCase(npcName)) {
+                GameWindow.hasTalkedToWell = true;                          //enable getting key
+                Map<String, Object> inventory = Main.player.getInventory(); // Add key to player's inventory
+                inventory.put("key", "/resources/pictures/Key.png");        //rock works but not this...
+                // Update game window inventory
+                List<ItemBox> inventoryItemList = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                    String itemName = entry.getKey();
+                    String itemImage = (String) entry.getValue();
+                    ItemBox itemBox = new ItemBox(itemName, itemImage);
+                    inventoryItemList.add(itemBox);
+                }
+                GameWindow.updateInventoryPanel(inventoryItemList);
+//                response.append("You received a key from the spirit of the well!\n"); //not working atm
+                response.append("A key drops from the stones that make the well! You may now obtain it\n");
+            }
         } catch (Exception e) {
             response.append("There isn't any NPC to talk to...");
             response.append("\nPress any key to continue...");
@@ -140,6 +155,18 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                         GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
                         return;
                     }
+                    if("amulet".equalsIgnoreCase(itemToGet) && Vampire.vampireHealth >= 0){
+                        GameWindow.textArea.append("You must defeat the vampire before taking the amulet.\n");
+                        return;
+                    }
+                    if("diamond".equalsIgnoreCase(itemToGet) && !Main.player.getInventory().containsKey("amulet")){
+                        GameWindow.textArea.append("You must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.\n");
+                        return;
+                    }
+                    if("key".equalsIgnoreCase(itemToGet) && !GameWindow.hasTalkedToWell){
+                        GameWindow.textArea.append("You must first speak into the well to get this item.\n");
+                        return;
+                    }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");
                     inventory.put(itemName, imageUrl);
@@ -161,16 +188,13 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             }
             GameWindow.updateInventoryPanel(inventoryItemList);
         } else {
-            System.out.println(red + "There isn't an item to take..." + white);
-            System.out.print("Press any key to continue...");
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+            GameWindow.textArea.append("There isn't an item to take...");
         }
-        System.out.println("current room array" + curRoomItemsArray);
     }
 
     public static void dropItem(String itemToDrop, boolean playFX, float fxVolumeLevel) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<Map<String, Object>> curRoomItemsArray = Rooms.getRoomById(Main.player.getCurrentRoomId()).getItems();
+        Room currentRoom = Rooms.getRoomById(Main.player.getCurrentRoomId()); // Get the current room
+        List<Map<String, Object>> curRoomItemsArray = currentRoom.getItems(); // Get the items list of the current room
         Map<String, Object> inventory = Main.player.getInventory();
 
         if (inventory == null || inventory.isEmpty()) {
@@ -183,7 +207,7 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
             return;
         }
 
-        Map<String, Object> droppedItem = (Map<String, Object>) inventory.remove(itemToDrop);
+        String droppedItem = (String) inventory.remove(itemToDrop);
         List<ItemBox> inventoryItemList = new ArrayList<>();
         for (Map.Entry<String, Object> entry : inventory.entrySet()) {
             String itemName = entry.getKey();
@@ -194,7 +218,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
         GameWindow.updateInventoryPanel(inventoryItemList); // Update inventory panel with updated inventory map
 
         if (droppedItem != null) {
-            curRoomItemsArray.add(droppedItem);
+            Map<String, Object> newItem = new HashMap<>();
+            newItem.put("name", itemToDrop);
+            newItem.put("image", droppedItem);
+            curRoomItemsArray.add(newItem);
             //System.out.println(cyan + "You dropped: " + green + itemToDrop + white);
             if (playFX) {
                 MusicPlayer fxPlayer = new MusicPlayer("fx", "audioFiles/dropItem.wav");
@@ -215,7 +242,8 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 GameWindow.textArea.append("You dealt " + playerDamage + " damage to the vampire!\n");
 
                 if (Vampire.vampireHealth <= 0) {
-                    GameWindow.textArea.append("You defeated the vampire!\n");
+                    GameWindow.textArea.append("You defeated the vampire!\nYou can now grab the amulet to free the spirit in the crystal ball.");
+                    GameWindow.inputField.setText("");
                     GameMethods.getItem("ancient amulet of binding", true, 05f);  //need the inventory method here
                     return;
                 }
@@ -225,8 +253,9 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 GameWindow.textArea.append("Vampire dealt " + vampireDamage + " damage to you!\n");
 
                 if (!Main.player.isAlive()) {
-                    GameWindow.textArea.append("You were defeated by the vampire!\n");
-                    System.exit(0);
+                    GameWindow.textArea.append("You were defeated by the vampire!\nWould you like to start the game over?");
+//                    startAgain();  //bml
+//                    System.exit(0);  //this closes window w/no warning
                 }
                 break;
             // You can add more commands here
@@ -235,6 +264,15 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 break;
         }
     }
+
+//    public static void startAgain() {//bml
+//        GameWindow.textArea.append("Would you like to start the game over?");
+//        if (GameWindow.inputField.equals("yes")) {
+//            SwingUtilities.invokeLater(() -> new GameWindow());
+//        }if (GameWindow.inputField.equals("no")){
+//            System.exit(0);
+//        }
+//    }
 
     public static <T> T loadJSONFile (String path, Class<T> clazz) throws IOException {
         //noinspection ConstantConditions
