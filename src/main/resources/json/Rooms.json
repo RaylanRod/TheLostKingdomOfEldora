@@ -39,7 +39,8 @@
       "name": "diamond",
       "description": "a large, magnificent artifact that once adorned the crown worn on the head of the revered rulers of the kingdom.",
       "usage": "When all four gems are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Diamond.png"
     }],
     "NPC": {
       "name": "crystal ball with a trapped spirit",
@@ -62,7 +63,8 @@
       "name": "key",
       "description": "A regal key marked with the symbol of the lost kingdom's royalty. It opens locked doors and bestows authority upon the bearer.",
       "usage": "Unlocks a mysterious door hidden within the throne room.",
-      "can_be_used": true
+      "can_be_used": true,
+      "image": "/pictures/Key.png"
     }], "NPC": {
     "name": "Well",
     "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \nPlayer: \"I shall do all within my power to lift this curse.\"  \nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" \n\"Player: \"Very well. There is a princess in another castle that I am deeply in love with. I wish that she could see my quest for this kingdom, so that she may know what I would endure for her\" \nCursed Well: Thank you, Hero. You may have the key that unlocks the hidden door behind the throne."
@@ -84,7 +86,8 @@
       "name": "emerald",
       "description": "a large, magnificent artifact that once adorned the crown worn on the head of the revered rulers of the kingdom.",
       "usage": "When all four gems are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Emerald.png"
     }],
     "NPC": {
       "name": "enigma",
@@ -147,7 +150,8 @@
       "name": "ruby",
       "description": "a large, magnificent artifact that once adorned the crown worn on the head of the revered rulers of the kingdom.",
       "usage": "When all four gems are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Ruby.png"
     }],
     "NPC": {
       "name": "enigma",
@@ -212,7 +216,8 @@
       "name": "topaz",
       "description": "a large, magnificent artifact that once adorned the crown worn on the head of the revered rulers of the kingdom.",
       "usage": "When all four gems are collected and returned to the throne room, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Topaz.png"
     }],
     "NPC": {
       "name": "librarian",
@@ -235,7 +240,8 @@
       "name": "sword",
       "description": "A immaculately designed silver sword. The hilt contains a blood red ruby. This perfectly preserved weapon may be what you need to destroy the vampire of the catacombs and retrieve the stolen ruby",
       "usage": "Allows the user to defeat the vampire of the catacombs.",
-      "can_be_used": true
+      "can_be_used": true,
+      "image": "/pictures/Sword.png"
     }],
     "NPC": {
       "name": "interactive painting",
@@ -258,7 +264,8 @@
       "name": "potion",
       "description": "A vial containing a glowing liquid that heals wounds and restores strength. The effects are immediate upon consumption.",
       "usage": "Restores 100% of missing health. ",
-      "can_be_used": true
+      "can_be_used": true,
+      "image": "/pictures/Potion.png"
     }]
   },
   {
@@ -277,7 +284,8 @@
       "name": "crown",
       "description": "a magnificent artifact that once adorned the head of the revered rulers of the kingdom. The royal crown of this kingdoms king. There are four large settings for gems that are missing",
       "usage": "When all four gems are collected and returned to the throne room with this crown, the prophecy will be complete with a new ruler at the reigns over the kingdom.",
-      "can_be_used": false
+      "can_be_used": false,
+      "image": "/pictures/Crown.png"
     }]
   },
   {
@@ -294,7 +302,8 @@
       "name": "amulet",
       "description": "A shimmering amulet said to posses the power to bind spirits and entities. It glows with a faint ethereal light.",
       "usage": "Allows the user to release the spirit from the crystal Ball.",
-      "can_be_used": true
+      "can_be_used": true,
+      "image": "/pictures/Amulet.png"
     }],
     "NPC": {
       "name": "vampire",

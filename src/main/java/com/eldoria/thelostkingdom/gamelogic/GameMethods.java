@@ -153,19 +153,19 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                 if (item.get("name").equals(itemToGet)) {
                     if("sword".equalsIgnoreCase(itemToGet) && !Main.hasTalkedToPainting){
                         GameWindow.textArea.append("You must talk to the painting before taking the sword.\n");
-                        return;
+
                     }
                     if("amulet".equalsIgnoreCase(itemToGet) && Vampire.vampireHealth >= 0){
                         GameWindow.textArea.append("You must defeat the vampire before taking the amulet.\n");
-                        return;
+
                     }
                     if("diamond".equalsIgnoreCase(itemToGet) && !Main.player.getInventory().containsKey("amulet")){
                         GameWindow.textArea.append("You must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.\n");
-                        return;
+
                     }
                     if("key".equalsIgnoreCase(itemToGet) && !GameWindow.hasTalkedToWell){
                         GameWindow.textArea.append("You must first speak into the well to get this item.\n");
-                        return;
+
                     }
                     String itemName = (String) item.get("name");
                     imageUrl = (String) item.get("image");

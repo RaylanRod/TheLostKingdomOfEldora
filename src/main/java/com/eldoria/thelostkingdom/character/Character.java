@@ -140,7 +140,7 @@ public class Character extends Colors {
 //       return currentExits.toString();
 //    }
 
-//    @Override
+//    @OverrideS
 //    public String toString() {
 //        return "******************************************************" +"\n" +
 //                name + "\n" +
