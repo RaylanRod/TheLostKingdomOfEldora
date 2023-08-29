@@ -89,11 +89,25 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                     inventoryItemList.add(itemBox);
                 }
                 GameWindow.updateInventoryPanel(inventoryItemList);
-
                 // Notify the player
                 response.append("You received a sword from the interactive painting!\n");
             }
-
+            if ("well".equalsIgnoreCase(npcName)) {
+                GameWindow.hasTalkedToWell = true;                          //enable getting key
+                Map<String, Object> inventory = Main.player.getInventory(); // Add key to player's inventory
+                inventory.put("key", "/resources/pictures/Key.png");        //rock works but not this...
+                // Update game window inventory
+                List<ItemBox> inventoryItemList = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : inventory.entrySet()) {
+                    String itemName = entry.getKey();
+                    String itemImage = (String) entry.getValue();
+                    ItemBox itemBox = new ItemBox(itemName, itemImage);
+                    inventoryItemList.add(itemBox);
+                }
+                GameWindow.updateInventoryPanel(inventoryItemList);
+//                response.append("You received a key from the spirit of the well!\n"); //not working atm
+                response.append("A key drops from the stones that make the well! You may now obtain it\n");
+            }
         } catch (Exception e) {
             response.append("There isn't any NPC to talk to...");
             response.append("\nPress any key to continue...");
@@ -147,6 +161,10 @@ public class GameMethods extends Colors {  // NEW CODE: all cyan was blue
                     }
                     if("diamond".equalsIgnoreCase(itemToGet) && !Main.player.getInventory().containsKey("amulet")){
                         GameWindow.textArea.append("You must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.\n");
+                        return;
+                    }
+                    if("key".equalsIgnoreCase(itemToGet) && !GameWindow.hasTalkedToWell){
+                        GameWindow.textArea.append("You must first speak into the well to get this item.\n");
                         return;
                     }
                     String itemName = (String) item.get("name");

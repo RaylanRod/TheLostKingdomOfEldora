@@ -45,6 +45,7 @@ public class GameWindow extends JFrame {
     private static JFrame inventoryFrame; // Reference to the inventory window
     private static JPanel inventoryContentPanel; // Panel inside the inventory window
     private static int clicker = 0;
+    public static boolean hasTalkedToWell = false;
     private static final int[][] miniMapLocation = new int[][]{{100,575}, {100,525}, {165,575},
             {35,575}, {95, 480}, {30, 520}, {165, 520}, {160, 480}, {100, 435}, {35, 480}};
 
@@ -451,6 +452,8 @@ public class GameWindow extends JFrame {
                             textArea.append("\nYou must first defeat the vampire to get this item.");
                         }if(verbsAndNouns.get(1) == "diamond" && !Main.player.getInventory().containsKey("amulet")){
                             textArea.append("\nYou must to defeat the elder vampire that guards the catacombs and obtain the amulet to get this item.");
+                        }if(verbsAndNouns.get(1) == "key" && !hasTalkedToWell){
+                            textArea.append("\nYou must first speak into the well to get this item.\n.");
                         }
                         infoPrint();
                         if (winConditionsMet()) {

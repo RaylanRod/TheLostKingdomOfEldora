@@ -49,7 +49,7 @@
   {
     "roomId": 3,
     "name": "The Cursed Well",
-    "description": "A small courtyard with a well, it has been said to grant wishes but cursed to grant at a heavy price.\nThe water in the well reflects dark secrets.\nTo the west,you see the courtyard that began your journey.",
+    "description": "A small courtyard with a well, it has been said to have a spirit cursed within that may grant wishes if your heart is pure. But if your heart is filled with evil it will use those same wishes to punish you.\nThe water in the well reflects dark secrets.\nTo the west,you see the courtyard that began your journey.",
     "exits": {
       "north": null,
       "east": null,
@@ -64,8 +64,8 @@
       "usage": "Unlocks a mysterious door hidden within the throne room.",
       "can_be_used": true
     }], "NPC": {
-    "name": "Cursed Well",
-    "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \nPlayer: \"I shall do all within my power to lift this curse.\"  \nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" "
+    "name": "Well",
+    "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \nPlayer: \"I shall do all within my power to lift this curse.\"  \nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" \n\"Player: \"Very well. There is a princess in another castle that I am deeply in love with. I wish that she could see my quest for this kingdom, so that she may know what I would endure for her\" \nCursed Well: Thank you, Hero. You may have the key that unlocks the hidden door behind the throne."
     }
   },
   {
@@ -136,7 +136,7 @@
   {
     "roomId": 5,
     "name": "The Throne Room",
-    "description": "The grand throne room, now deserted and draped in faded banners of the kingdom.\nThe empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nBehind the throne you find a concealed door, with stairs leading up and down. There is something shiny on the ground.",
+    "description": "The grand throne room, now deserted and draped in faded banners of the kingdom.\nThe empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nTo the west comes a foul stench from a dark corridor.\nYou pull aside a drape behind the throne and find a concealed door with a large lock on it. There is something shiny on the ground.",
     "exits": {
       "north": 9,
       "east": 8,
