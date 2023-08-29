@@ -544,7 +544,6 @@ public class GameWindow extends JFrame {
                 });
             }
         }
-
         // Add action listeners to the buttons
         upButton.addActionListener(new MoveActionListener("go north"));
         downButton.addActionListener(new MoveActionListener("go south"));
