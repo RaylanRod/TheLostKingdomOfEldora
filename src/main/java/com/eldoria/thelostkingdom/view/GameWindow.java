@@ -235,15 +235,15 @@ public class GameWindow extends JFrame {
         mainWindow.add(bottomRightPanel);
 
         //---------------------MINI-INVENTORY-GRIDS-SHOW-----------------------
-//        inventoryItems = inventory.getInventory();                            //inventory function
-//        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
-//        bottomRightPanel.add(inventoryPanel); //add to panel
-//
-//        // Create inventory window and content panel
-//        inventoryFrame = new JFrame("Inventory");
-//        inventoryFrame.setSize(400, 400);
-//        inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
-//        inventoryFrame.add(inventoryContentPanel);
+        inventoryItems = inventory.getInventory();                            //inventory function
+        inventoryPanel = createInventoryPanel(inventoryItems);                //inventory panel
+        bottomRightPanel.add(inventoryPanel); //add to panel
+
+        // Create inventory window and content panel
+        inventoryFrame = new JFrame("Inventory");
+        inventoryFrame.setSize(400, 400);
+        inventoryContentPanel = new JPanel(new GridLayout(4, 4, 5, 5));
+        inventoryFrame.add(inventoryContentPanel);
 
         JPanel brSPane = new JPanel();
         bottomRightPanel.add(brSPane, BorderLayout.SOUTH);
