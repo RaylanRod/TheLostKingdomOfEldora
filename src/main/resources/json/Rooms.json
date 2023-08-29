@@ -20,7 +20,7 @@
     }],
     "NPC": {
       "name": "bardleston",
-      "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \n\nBardleston: \"Ah, young one, the legends of Eldoria have brought you here. An ancient prophecy speaks of a hero who will reassemble the Crown of Light. Are you that hero?\" \n\nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \n\nBardleston: \"Good. There are many places you can start. You may start by seeking the Crystal Ball with a trapped spirit inside, making a wish at the well or consulting the soul trapped in a frame. But I would advise starting in the living gardens to the west. Be aware that the pieces of the crown are guarded by puzzles and spectral foes.\" "
+      "dialog": "Player: (Approaches Bardleston, the wise old bard) \"Greetings, Bardleston. I seek adventure and knowledge. \nCan you guide me on my path?\"  \nBardleston: \"Ah, young one, the legends of Eldoria have brought you here. An ancient prophecy speaks of a hero who will reassemble the Crown of Light. Are you that hero?\" \nPlayer: \"I will do my best to fulfill the prophecy and restore harmony to the kingdom.\" \nBardleston: \"Good. There are many places you can start. You may start by seeking the Crystal Ball with a trapped spirit inside, making a wish at the well or consulting the soul trapped in a frame. But I would advise starting in the living gardens to the west. Be aware that the pieces of the crown are guarded by puzzles and spectral foes.\" "
     }
   },
   {
@@ -43,13 +43,13 @@
     }],
     "NPC": {
       "name": "crystal ball with a trapped spirit",
-      "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \n\nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom. Only a kind and brave soul can release me. Are you that soul?\"  \n\nPlayer: \"I will help you find your freedom, spirit.\"  \n\nSpirit: \"Then you must bring me the amulet that bound me. It will reveal the path to my liberation, and once freed, I shall bestow upon you a missing crown jewel to aid your quest.\" "
+      "dialog": "Player: (Approaches the crystal ball, feeling an ethereal presence) \"Who are you?\"  \nSpirit: \"I am a spirit trapped within this crystal ball, longing for freedom. I can sense you are the hero this kingdom has long yearned for.\"  \nPlayer: \"I will help you find your freedom and restore peace upon this kingdom, spirit.\"  \nSpirit: \"Then you must defeat the elder vampire of the castle catacombs bring me the amulet that bound me. \nIt will reveal the path to my liberation, and once freed, I shall bestow upon you a missing crown jewel to aid your quest.\nBut beware! You should not fight unarmed or you shall be doomed. Seek the spirit in the gallery.\" "
     }
   },
   {
     "roomId": 3,
     "name": "The Cursed Well",
-    "description": "A small courtyard with a well, it has been said to grant wishes but cursed to grant at a heavy price.\nThe water in the well reflects dark secrets.\nTo the west,you see the courtyard that began your journey.",
+    "description": "A small courtyard with a well, it has been said to have a spirit cursed within that may grant wishes if your heart is pure. But if your heart is filled with evil it will use those same wishes to punish you.\nThe water in the well reflects dark secrets.\nTo the west,you see the courtyard that began your journey.",
     "exits": {
       "north": null,
       "east": null,
@@ -64,8 +64,8 @@
       "usage": "Unlocks a mysterious door hidden within the throne room.",
       "can_be_used": true
     }], "NPC": {
-    "name": "Cursed Well",
-    "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \n\nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \n\nPlayer: \"I shall do all within my power to lift this curse.\"  \n\nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" "
+    "name": "Well",
+    "dialog": "Player: (Walks up to the well and looks inside) \"HELLO!\"  \nCursed Well: (Cursed spirit of the well speaks) \"I have longed to hear another voice countless seasons. Are you here to lift the curse placed upon this land?\"  \nPlayer: \"I shall do all within my power to lift this curse.\"  \nCursed Well: \"Very well. Tell me your greatest wish and I shall grant you a key that unlocks the hidden passage behind the throne. The crown stripped of its gems lays there.\" \n\"Player: \"Very well. There is a princess in another castle that I am deeply in love with. I wish that she could see my quest for this kingdom, so that she may know what I would endure for her\" \nCursed Well: Thank you, Hero. You may have the key that unlocks the hidden door behind the throne."
     }
   },
   {
@@ -88,7 +88,7 @@
     }],
     "NPC": {
       "name": "enigma",
-      "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
+      "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
       "riddle": [
         {
           "question": "Blood, phlegm, yellow bile and black bile. The four bodily humors determine a person temperament and illness; if a person is peaceful and reliable, what is their strongest humor?",
@@ -136,7 +136,7 @@
   {
     "roomId": 5,
     "name": "The Throne Room",
-    "description": "The grand throne room, now deserted and draped in faded banners of the kingdom.\nThe empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nBehind the throne you find a concealed door, with stairs leading up and down. There is something shiny on the ground.",
+    "description": "The grand throne room, now deserted and draped in faded banners of the kingdom.\nThe empty throne holds a pivotal secret.\nTo the east, you see a dark curtain concealing a room with what seems to have stars shining through.\nTo the south, you see the door way leading to the ballroom.\nTo the west comes a foul stench from a dark corridor.\nYou pull aside a drape behind the throne and find a concealed door with a large lock on it. There is something shiny on the ground.",
     "exits": {
       "north": 9,
       "east": 8,
@@ -151,7 +151,7 @@
     }],
     "NPC": {
       "name": "enigma",
-      "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \n\nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \n\nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
+      "dialog": "Player: (Encounters a mysterious figure, the Enigma) \"Who are you?\"  \nEnigma: \"Names are but shadows, and I am but a whisper in the wind. Solve my riddles, and I shall grant you hints to guide your path. Fail, and be trapped by the enigma's grasp.\"  \nPlayer: \"I accept the challenge. Lay your riddle before me, O enigmatic one.\"  ",
       "riddle": [
         {
           "question": "Blood, phlegm, yellow bile and black bile. The four bodily humors determine a person temperament and illness; if a person is peaceful and reliable, what is their strongest humor?",
@@ -216,7 +216,7 @@
     }],
     "NPC": {
       "name": "librarian",
-      "dialog": "Player: (Enters the library) \"Greetings, Librarian. I seek knowledge of hte whereabouts of the lost pieces to the crown of the king. Will you aid my noble quest?\"  \n\nLibrarian Ghost: \"Welcome, weary seeker of knowledge. It is said only the true hero of our kingdom may possess the scattered gems of the kings crown. If you show me you have the Emerald that was lost in the living gardens, I will give you the missing amethyst.\" \n\nPlayer: \"Thank you, kind Librarian. I appreciate your assistance.\" "
+      "dialog": "Player: (Enters the library) \"Greetings, Librarian. I seek knowledge of hte whereabouts of the lost pieces to the crown of the king. Will you aid my noble quest?\"  \nLibrarian Ghost: \"Welcome, weary seeker of knowledge. It is said only the true hero of our kingdom may possess the scattered gems of the kings crown. If you show me you have the Emerald that was lost in the living gardens, I will give you the missing amethyst.\" \nPlayer: \"Thank you, kind Librarian. I appreciate your assistance.\" "
     }
   },
   {
@@ -239,7 +239,7 @@
     }],
     "NPC": {
       "name": "interactive painting",
-      "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \n\nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. I cannot be freed until the crown adorned with all of the missing gems has been returned to the throne of the king. But the vampire in the catacombs holds the missing ruby. I shall grant you a weapon that may defeat the vampire.\"  \n\nPlayer: \"How can I free you from this prison?\"  \n\nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
+      "dialog": "Player: (Notices a peculiar painting on the wall) \"Strange, this painting seems to beckon me.\"  \nInteractive Painting: (Spirit within the painting speaks) \"I am a trapped soul, lost in this artwork. I cannot be freed until the crown adorned with all of the missing gems has been returned to the throne of the king. But the vampire in the catacombs holds the missing ruby. I shall grant you a weapon that may defeat the vampire.\"  \nPlayer: \"How can I free you from this prison?\"  \nInteractive Painting: \"Observe the colors and patterns. Replicate the sequence, and my essence shall be freed.\" "
     }
   },
   {
@@ -297,8 +297,8 @@
       "can_be_used": true
     }],
     "NPC": {
-      "name": "elder vampire",
-      "dialog": "Player: (Confronts the menacing Elder Vampire) \"Your reign of darkness ends here, foul creature!\"  \n\nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine, and Eldoria shall cower at my feet.\"  \n\nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
+      "name": "vampire",
+      "dialog": "Player: (Confronts the menacing Elder Vampire) \"Your reign of darkness ends here, foul creature!\"  \nElder Vampire: (Laughs menacingly) \"You dare challenge me, mortal? The Crown of Light will be mine, and Eldoria shall cower at my feet.\"  \nPlayer: \"Your evil ends now!\" (Epic battle ensues between the player and the Elder Vampire, testing the hero's strength and resolve) "
     }
   }
 ]
